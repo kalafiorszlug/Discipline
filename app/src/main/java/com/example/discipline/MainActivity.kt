@@ -53,15 +53,21 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
+            modifier = Modifier
+                .width(370.dp),
             value = loginFieldState,
             onValueChange = { loginFieldState = it },
-            label = { Text("Email:") }
+            label = { Text("Email:") },
+            placeholder = { Text(text = "SamiecSigmaProgress123@hustler.cum") }
         )
 
         TextField(
+            modifier = Modifier
+                .width(370.dp),
             value = passwordFieldState,
             onValueChange = { passwordFieldState = it },
-            label = { Text("Password:") }
+            label = { Text("Password:") },
+            placeholder = { Text(text = "DailyGrind6969") }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -71,7 +77,7 @@ fun LoginScreen() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
-                .fillMaxWidth()
+                .width(350.dp)
         ) {
             Text(text = stringResource(com.example.discipline.R.string.login_with_psswd))
         }
@@ -80,12 +86,28 @@ fun LoginScreen() {
 
         Button(
             onClick = {/*TODO*/},
-            shape = RoundedCornerShape(28.dp),
+            shape = RoundedCornerShape(40.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             modifier = Modifier
-                .fillMaxWidth()
+                .width(350.dp)
         ) {
-            Text(text = stringResource(com.example.discipline.R.string.login_with_google))
+            Box(){
+                Row() {
+                    Column(
+                        modifier = Modifier
+                            .height(20.dp),
+                        verticalArrangement = Arrangement.Center){
+                        Image(
+                            painter = painterResource(R.drawable.google_icon),
+                            contentDescription = null
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(text = stringResource(com.example.discipline.R.string.login_with_google))
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +117,7 @@ fun LoginScreen() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
-                .fillMaxWidth()
+                .width(350.dp)
         ) {
             Text(text = stringResource(com.example.discipline.R.string.sign_up))
         }
