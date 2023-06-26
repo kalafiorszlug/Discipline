@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -37,38 +38,34 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(){
     Column(modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         //stats
         Box(modifier = Modifier
-            .height(50.dp)){
-
-            Column() {
-
-                Row() {
-
-                    Image( modifier = Modifier
-                        .size(100.dp),
-                        painter = painterResource(R.drawable.icons8_task_completed_50),
-                        contentDescription = null)
-
-                    Text(text = "Productivity")
-                }
-
-            }
+            .fillMaxWidth()
+            .height(150.dp)){
         }
+
+        Divider(color = Color.Gray, thickness = 2.dp)
 
         //rewards
-        Box(){
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)){
 
         }
+
+        Divider(color = Color.Gray, thickness = 2.dp)
 
         //tasks
-        Box(){
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(285.dp)){
 
         }
+
+        Divider(color = Color.Gray, thickness = 2.dp)
 
         //score
         Box(){
@@ -80,9 +77,9 @@ fun MainScreen(){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-  Surface(color = Color.LightGray) {
-      DisciplineTheme {
-          MainScreen()
-      }
-  }
+    Surface(color = Color.LightGray) {
+        DisciplineTheme {
+            MainScreen()
+        }
+    }
 }
