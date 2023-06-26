@@ -124,12 +124,55 @@ fun LoginScreen() {
     }
 }
 
+@Composable
+fun MainScreen(){
+    Column(modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+
+        //stats
+        Box(modifier = Modifier
+            .height(50.dp)){
+
+            Column() {
+
+                Row() {
+
+                    Image( modifier = Modifier
+                        .size(100.dp),
+                        painter = painterResource(R.drawable.icons8_task_completed_50),
+                        contentDescription = null)
+
+                    Text(text = "Productivity")
+                }
+
+            }
+        }
+
+        //rewards
+        Box(){
+
+        }
+
+        //tasks
+        Box(){
+
+        }
+
+        //score
+        Box(){
+
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
   Surface(color = Color.LightGray) {
-      DisciplineTheme() {
-          LoginScreen()
+      DisciplineTheme {
+          MainScreen()
       }
   }
 }
