@@ -12,12 +12,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.discipline.ui.theme.DisciplineTheme
 
 
@@ -44,8 +46,26 @@ fun MainScreen(){
         //stats
         Box(modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)){
-        }
+            .height(150.dp)
+            .align(Alignment.CenterHorizontally)){
+            Button(onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)) {
+                Column(modifier = Modifier
+                    .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(modifier = Modifier
+                        .size(200.dp)
+                        .weight(8f),
+                        painter = painterResource(R.drawable.graph_icon),
+                        contentDescription = null
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(modifier = Modifier.weight(2f), text = "Check statistics", fontSize = 15.sp)
+                    }
+                }
+            }
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
