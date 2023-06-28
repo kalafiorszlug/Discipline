@@ -40,7 +40,7 @@ fun LoginScreen() {
             value = loginFieldState,
             onValueChange = { loginFieldState = it },
             label = { Text("Email:") },
-            placeholder = { Text(text = "SamiecSigmaProgress123@hustler.cum") }
+            placeholder = { Text(text = stringResource(R.string.example_email)) }
         )
 
         TextField(
@@ -49,7 +49,7 @@ fun LoginScreen() {
             value = passwordFieldState,
             onValueChange = { passwordFieldState = it },
             label = { Text("Password:") },
-            placeholder = { Text(text = "DailyGrind6969") }
+            placeholder = { Text(text = stringResource(R.string.example_password)) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -61,7 +61,7 @@ fun LoginScreen() {
             modifier = Modifier
                 .width(350.dp)
         ) {
-            Text(text = stringResource(R.string.login_with_psswd))
+            Text(text = stringResource(com.example.discipline.R.string.login_with_password))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -87,7 +87,7 @@ fun LoginScreen() {
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    Text(text = stringResource(R.string.login_with_google))
+                    Text(text = stringResource(com.example.discipline.R.string.login_with_google))
                 }
             }
         }
@@ -101,7 +101,7 @@ fun LoginScreen() {
             modifier = Modifier
                 .width(350.dp)
         ) {
-            Text(text = stringResource(R.string.sign_up))
+            Text(text = stringResource(com.example.discipline.R.string.sign_up))
         }
     }
 }

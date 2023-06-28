@@ -1,7 +1,13 @@
 <resources>
+
     <string name="app_name">Discipline</string>
     <string name="loginMessage">\"Put your login below\"</string>
+
     <string name="login_with_google">Login with Google</string>
-    <string name="login_with_psswd">Login</string>
+    <string name="login_with_password">Login</string>
     <string name="sign_up">Sign up</string>
+
+    <string name="example_password">DailyGrind6969</string>
+    <string name="example_email">SamiecSigmaProgress123@hustler.cum</string>
+
 </resources>
