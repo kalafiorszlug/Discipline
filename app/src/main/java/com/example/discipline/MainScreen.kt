@@ -4,10 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +66,8 @@ fun MainScreen() {
                             )
                             .weight(2f),
                         text = stringResource(R.string.statistics),
-                        fontSize = 15.sp
+                        fontSize = 15.sp,
+                        style = MaterialTheme.typography.body1
                     )
                 }
             }
@@ -135,7 +133,9 @@ fun MainScreen() {
                                 shape = RoundedCornerShape(size = 30.dp)
                             )
                             .weight(2f),
-                        text = "Rewards", fontSize = 15.sp
+                        text = "Rewards",
+                        fontSize = 15.sp,
+                        style = MaterialTheme.typography.body1
                     )
                 }
 
@@ -164,23 +164,23 @@ fun MainScreen() {
                             .weight(8f),
                         horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.Center) {
-                        Text(text = "- Harass women - 20p", fontSize = 20.sp)
+                        Text(text = "- Napadańje kobjet - 20p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Text(text = "- Masturbate - 15p", fontSize = 20.sp)
+                        Text(text = "- Mastórbacjowanie śe - 15p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Text(text = "- Watch little children outside - 30p", fontSize = 20.sp)
+                        Text(text = "- Oglądańje małyh dźieći - 30p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Text(text = "- Lick the pavement - 10p", fontSize = 20.sp)
+                        Text(text = "- Lizańje hodnika - 10p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Text(text = "- Smell eldelry's feet - 15p", fontSize = 20.sp)
+                        Text(text = "- Wdyhańie stup staruha (marek marucha) - 15p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
                     }
                     Column(
                         modifier = Modifier
@@ -189,7 +189,9 @@ fun MainScreen() {
                         Text(
                             modifier = Modifier
                                 .background(color = Color.Green, shape = RoundedCornerShape(size = 30.dp)),
-                            text = "Tasks", fontSize = 15.sp
+                            text = "Tasks",
+                            fontSize = 15.sp,
+                            style = MaterialTheme.typography.body1
                         )
                     }
                 }
@@ -207,7 +209,7 @@ fun MainScreen() {
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center){
-                Text(text = "Credit: 500p", fontSize = 30.sp)
+                Text(text = "Credit: 500p", fontSize = 30.sp, style = MaterialTheme.typography.body1)
             }
         }
     }

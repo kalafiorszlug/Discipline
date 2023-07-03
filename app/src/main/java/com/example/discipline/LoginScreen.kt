@@ -3,10 +3,7 @@ package com.example.discipline
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +58,7 @@ fun LoginScreen() {
             modifier = Modifier
                 .width(350.dp)
         ) {
-            Text(text = stringResource(com.example.discipline.R.string.login_with_password))
+            Text(text = stringResource(com.example.discipline.R.string.login_with_password), style = MaterialTheme.typography.body1)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -87,7 +84,7 @@ fun LoginScreen() {
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    Text(text = stringResource(com.example.discipline.R.string.login_with_google))
+                    Text(text = stringResource(com.example.discipline.R.string.login_with_google), style = MaterialTheme.typography.body1)
                 }
             }
         }
@@ -101,7 +98,7 @@ fun LoginScreen() {
             modifier = Modifier
                 .width(350.dp)
         ) {
-            Text(text = stringResource(com.example.discipline.R.string.sign_up))
+            Text(text = stringResource(com.example.discipline.R.string.sign_up), style = MaterialTheme.typography.body1)
         }
     }
 }
