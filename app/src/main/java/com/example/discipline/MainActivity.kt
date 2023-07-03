@@ -31,11 +31,7 @@ class MainActivity : ComponentActivity() {
             DisciplineTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    if(currentlyDisplayed == 0){
-                        LoginScreen()
-                    } else{
-                        MainScreen()
-                    }
+                    MainScreen()
                 }
             }
         }
@@ -47,12 +43,7 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
   Surface(color = Color.LightGray) {
       DisciplineTheme {
-          currentlyDisplayed++
-          if(currentlyDisplayed == 0){
-              LoginScreen()
-          } else{
-              MainScreen()
-          }
+          RewardScreen()
       }
   }
 }

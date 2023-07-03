@@ -52,7 +52,7 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {/*TODO*/ },
+            onClick = {/*TODO*/},
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
