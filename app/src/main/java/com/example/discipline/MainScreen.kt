@@ -34,7 +34,7 @@ fun MainScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .weight(150f)
                 .align(Alignment.CenterHorizontally)
         )
         {
@@ -82,7 +82,7 @@ fun MainScreen() {
             modifier = Modifier
 
                 .fillMaxWidth()
-                .height(150.dp)
+                .weight(150f)
         ) {
 
             Button(
@@ -148,7 +148,7 @@ fun MainScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(285.dp)
+                .weight(270f)
         ) {
 
             Button(
@@ -201,7 +201,7 @@ fun MainScreen() {
         //credit
         Box(
             modifier = Modifier
-            .fillMaxSize()) {
+            .weight(50f)) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),
