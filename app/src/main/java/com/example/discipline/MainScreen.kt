@@ -62,12 +62,12 @@ fun MainScreen() {
                         modifier = Modifier
                             .background(
                                 color = Color.Green,
-                                shape = RoundedCornerShape(size = 30.dp)
+                                shape = RoundedCornerShape(size = 32.dp)
                             )
-                            .weight(2f),
-                        text = stringResource(R.string.statistics),
-                        fontSize = 15.sp,
-                        style = MaterialTheme.typography.body1
+                            .weight(1.5f),
+                        text = stringResource(R.string.mainscreen_statistics),
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.h1
                     )
                 }
             }
@@ -78,7 +78,6 @@ fun MainScreen() {
         //rewards
         Box(
             modifier = Modifier
-
                 .fillMaxWidth()
                 .weight(150f)
         ) {
@@ -133,9 +132,9 @@ fun MainScreen() {
                                 shape = RoundedCornerShape(size = 30.dp)
                             )
                             .weight(2f),
-                        text = "Rewards",
-                        fontSize = 15.sp,
-                        style = MaterialTheme.typography.body1
+                        text = stringResource(R.string.mainscreen_rewards),
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.h1
                     )
                 }
 
@@ -189,9 +188,9 @@ fun MainScreen() {
                         Text(
                             modifier = Modifier
                                 .background(color = Color.Green, shape = RoundedCornerShape(size = 30.dp)),
-                            text = "Tasks",
-                            fontSize = 15.sp,
-                            style = MaterialTheme.typography.body1
+                            text = stringResource(R.string.mainscreen_tasks),
+                            fontSize = 16.sp,
+                            style = MaterialTheme.typography.h1
                         )
                     }
                 }
@@ -208,7 +207,8 @@ fun MainScreen() {
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center){
+                verticalArrangement = Arrangement.Center)
+            {
                 Text(text = "Credit: 500p", fontSize = 30.sp, style = MaterialTheme.typography.body1)
             }
         }
