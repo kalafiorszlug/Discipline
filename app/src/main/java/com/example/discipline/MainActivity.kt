@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import com.example.discipline.ui.theme.DisciplineTheme
 
 
+public var currentlyDisplayed = 0
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,11 @@ class MainActivity : ComponentActivity() {
             DisciplineTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    MainScreen()
+                    if(currentlyDisplayed == 0){
+                        LoginScreen()
+                    } else{
+                        MainScreen()
+                    }
                 }
             }
         }
@@ -41,7 +47,12 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
   Surface(color = Color.LightGray) {
       DisciplineTheme {
-          MainScreen()
+          currentlyDisplayed++
+          if(currentlyDisplayed == 0){
+              LoginScreen()
+          } else{
+              MainScreen()
+          }
       }
   }
 }

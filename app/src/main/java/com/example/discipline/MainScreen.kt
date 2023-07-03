@@ -38,7 +38,7 @@ fun MainScreen() {
 
             Button(
                 onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
 
                 Column(
@@ -84,7 +84,7 @@ fun MainScreen() {
 
             Button(
                 onClick = {/*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
 
                 Column(
@@ -154,7 +154,7 @@ fun MainScreen() {
                 modifier = Modifier.
                 fillMaxSize(),
                 onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)) {
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
                 Column(
                     modifier = Modifier
                     .fillMaxSize()) {
@@ -205,7 +205,8 @@ fun MainScreen() {
             .weight(50f)) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .background(color = Color. White),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center)
             {
