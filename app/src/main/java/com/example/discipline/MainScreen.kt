@@ -13,12 +13,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -36,7 +37,7 @@ fun MainScreen() {
         {
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(route = DisciplineScreen.StatScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
 
@@ -82,7 +83,7 @@ fun MainScreen() {
         ) {
 
             Button(
-                onClick = {/*TODO*/ },
+                onClick = { navController.navigate(route = DisciplineScreen.RewardScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
 
@@ -152,7 +153,7 @@ fun MainScreen() {
             Button(
                 modifier = Modifier.
                 fillMaxSize(),
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
                 Column(
                     modifier = Modifier
