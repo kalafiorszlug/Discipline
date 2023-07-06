@@ -15,11 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
-// https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png
+// https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
 
 @Composable
 fun MainScreen() {
-
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -206,7 +205,7 @@ fun MainScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color. White),
+                    .background(color = Color.White),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center)
             {

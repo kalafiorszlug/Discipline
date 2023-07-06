@@ -11,9 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
 
     var loginFieldState by remember { mutableStateOf("") }
     var passwordFieldState by remember { mutableStateOf("") }
@@ -52,7 +53,7 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {/*TODO*/},
+            onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
