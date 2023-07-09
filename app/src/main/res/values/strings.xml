@@ -10,8 +10,8 @@
     <string name="example_password">DailyGrind6969</string>
     <string name="example_email">SamiecSigmaProgress123@hustler.cum</string>
 
-    <string name="mainscreen_statistics">statistics</string>
-    <string name="mainscreen_rewards">rewards</string>
-    <string name="mainscreen_tasks">tasks</string>
+    <string name="mainscreen_statistics">ㅤstatisticsㅤ</string>
+    <string name="mainscreen_rewards">ㅤrewardsㅤ</string>
+    <string name="mainscreen_tasks">ㅤtasksㅤ</string>
 
 </resources>
