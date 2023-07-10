@@ -185,7 +185,7 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Molestowanje kobjet", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(text = "Walk a dog", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                             Spacer(modifier = Modifier.width(20.dp))
 
@@ -211,7 +211,7 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Wdyhanje stup staruha", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(text = "Workout", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                             Spacer(modifier = Modifier.width(20.dp))
 
@@ -237,7 +237,7 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Oglondanje malych dzjeć", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(text = "Tidying livingroom", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                             Spacer(modifier = Modifier.width(20.dp))
 
@@ -266,7 +266,7 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Lizanje hodnika", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(text = "Eating a healthy dinner", fontSize = 20.sp, style = MaterialTheme.typography.body1)
 
                             Spacer(modifier = Modifier.width(20.dp))
 
