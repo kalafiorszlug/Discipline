@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -23,6 +25,9 @@ import androidx.navigation.NavHostController
 @Composable
 fun MainScreen(navController: NavHostController) {
     var credit by remember { mutableStateOf(0) }
+    var buttonsColor by remember { mutableStateOf(Color.White) }
+    var todoTextStyle by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var isClicked by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -155,18 +160,20 @@ fun MainScreen(navController: NavHostController) {
         ) {
 
             Button(
-                modifier = Modifier.
-                fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+            ) {
                 Column(
                     modifier = Modifier
-                    .fillMaxSize()) {
+                        .fillMaxSize()
+                ) {
                     Column(
                         modifier = Modifier
                             .weight(8f),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.Center) {
+                        verticalArrangement = Arrangement.Center
+                    ) {
 
                         Row(
                             modifier = Modifier
@@ -174,22 +181,35 @@ fun MainScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             OutlinedButton(
-                                modifier = Modifier.
-                                    size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                modifier = Modifier.size(15.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColor),
                                 shape = CircleShape,
-                                onClick = { credit += 15 }
+                                onClick = {
+                                    isClicked = true
+                                }
                             ) {
+                            }
 
+                            if (isClicked == true){
+                                buttonsColor = Color.LightGray
+                                todoTextStyle = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Walk a dog", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "Walking a dog",
+                                fontSize = 20.sp,
+                                style = todoTextStyle
+                            )
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "15p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "15p",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -200,8 +220,7 @@ fun MainScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             OutlinedButton(
-                                modifier = Modifier.
-                                size(15.dp),
+                                modifier = Modifier.size(15.dp),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                                 shape = CircleShape,
                                 onClick = { credit += 30 }
@@ -211,11 +230,19 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Workout", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "Working out",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "30p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "30p",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -226,8 +253,7 @@ fun MainScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             OutlinedButton(
-                                modifier = Modifier.
-                                size(15.dp),
+                                modifier = Modifier.size(15.dp),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                                 shape = CircleShape,
                                 onClick = { credit += 20 }
@@ -237,11 +263,19 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Tidying livingroom", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "Tidying livingroom",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "20p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "20p",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -252,8 +286,7 @@ fun MainScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             OutlinedButton(
-                                modifier = Modifier.
-                                size(15.dp),
+                                modifier = Modifier.size(15.dp),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                                 shape = CircleShape,
                                 onClick = { credit += 15 }
@@ -266,11 +299,19 @@ fun MainScreen(navController: NavHostController) {
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "Eating a healthy dinner", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "Eating a healthy dinner",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
 
                             Spacer(modifier = Modifier.width(20.dp))
 
-                            Text(text = "15p", fontSize = 20.sp, style = MaterialTheme.typography.body1)
+                            Text(
+                                text = "15p",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -279,10 +320,14 @@ fun MainScreen(navController: NavHostController) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Text(
                             modifier = Modifier
-                                .background(color = colorResource(R.color.light_green), shape = RoundedCornerShape(size = 30.dp)),
+                                .background(
+                                    color = colorResource(R.color.light_green),
+                                    shape = RoundedCornerShape(size = 30.dp)
+                                ),
                             text = stringResource(R.string.mainscreen_tasks),
                             fontSize = 16.sp,
                             style = MaterialTheme.typography.h1
@@ -297,18 +342,28 @@ fun MainScreen(navController: NavHostController) {
         //credit
         Box(
             modifier = Modifier
-            .weight(50f)) {
+                .weight(50f)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Color.White),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center)
+                verticalArrangement = Arrangement.Center
+            )
             {
                 Row() {
-                    Text(text = "Credit: ", fontSize = 30.sp, style = MaterialTheme.typography.body1)
+                    Text(
+                        text = "Credit: ",
+                        fontSize = 30.sp,
+                        style = MaterialTheme.typography.body1
+                    )
 
-                    Text(text = credit.toString(), fontSize = 30.sp, style = MaterialTheme.typography.body1)
+                    Text(
+                        text = credit.toString(),
+                        fontSize = 30.sp,
+                        style = MaterialTheme.typography.body1
+                    )
                 }
             }
         }
