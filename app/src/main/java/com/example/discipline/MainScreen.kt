@@ -25,9 +25,21 @@ import androidx.navigation.NavHostController
 @Composable
 fun MainScreen(navController: NavHostController) {
     var credit by remember { mutableStateOf(0) }
-    var buttonsColor by remember { mutableStateOf(Color.White) }
-    var todoTextStyle by remember { mutableStateOf(TextStyle(color = Color.Black)) }
-    var isClicked by remember { mutableStateOf(false) }
+    var buttonColor1 by remember { mutableStateOf(Color.White) }
+    var buttonColor2 by remember { mutableStateOf(Color.White) }
+    var buttonColor3 by remember { mutableStateOf(Color.White) }
+    var buttonColor4 by remember { mutableStateOf(Color.White) }
+    var buttonColor5 by remember { mutableStateOf(Color.White) }
+    var isClicked1 by remember { mutableStateOf(false) }
+    var todoTextStyle1 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var isClicked2 by remember { mutableStateOf(false) }
+    var todoTextStyle2 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var isClicked3 by remember { mutableStateOf(false) }
+    var todoTextStyle3 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var isClicked4 by remember { mutableStateOf(false) }
+    var todoTextStyle4 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var isClicked5 by remember { mutableStateOf(false) }
+    var todoTextStyle5 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
 
     Column(
         modifier = Modifier
@@ -109,7 +121,7 @@ fun MainScreen(navController: NavHostController) {
                     ) {
                         Image(
                             modifier = Modifier
-                                .size(200.dp)
+                                .size(75.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.ig_icon),
                             contentDescription = null
@@ -117,7 +129,7 @@ fun MainScreen(navController: NavHostController) {
 
                         Image(
                             modifier = Modifier
-                                .size(200.dp)
+                                .size(75.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.yt_icon),
                             contentDescription = null
@@ -125,7 +137,7 @@ fun MainScreen(navController: NavHostController) {
 
                         Image(
                             modifier = Modifier
-                                .size(120.dp)
+                                .size(75.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.snap_icon),
                             contentDescription = null
@@ -182,17 +194,19 @@ fun MainScreen(navController: NavHostController) {
                         ) {
                             OutlinedButton(
                                 modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColor),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor1),
                                 shape = CircleShape,
                                 onClick = {
-                                    isClicked = true
+                                    credit += 15
+                                    isClicked1 = true
                                 }
                             ) {
                             }
 
-                            if (isClicked == true){
-                                buttonsColor = Color.LightGray
-                                todoTextStyle = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                            if (isClicked1) {
+                                buttonColor1 = Color.Black
+                                todoTextStyle1 =
+                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -200,7 +214,7 @@ fun MainScreen(navController: NavHostController) {
                             Text(
                                 text = "Walking a dog",
                                 fontSize = 20.sp,
-                                style = todoTextStyle
+                                style = todoTextStyle1
                             )
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -221,11 +235,20 @@ fun MainScreen(navController: NavHostController) {
                         ) {
                             OutlinedButton(
                                 modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor2),
                                 shape = CircleShape,
-                                onClick = { credit += 30 }
+                                onClick = {
+                                    credit += 30
+                                    isClicked2 = true
+                                }
                             ) {
 
+                            }
+
+                            if (isClicked2) {
+                                buttonColor2 = Color.Black
+                                todoTextStyle2 =
+                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -233,7 +256,7 @@ fun MainScreen(navController: NavHostController) {
                             Text(
                                 text = "Working out",
                                 fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
+                                style = todoTextStyle2
                             )
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -254,11 +277,20 @@ fun MainScreen(navController: NavHostController) {
                         ) {
                             OutlinedButton(
                                 modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor3),
                                 shape = CircleShape,
-                                onClick = { credit += 20 }
+                                onClick = {
+                                    credit += 20
+                                    isClicked3 = true
+                                }
                             ) {
 
+                            }
+
+                            if (isClicked3) {
+                                buttonColor3 = Color.Black
+                                todoTextStyle3 =
+                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -266,7 +298,7 @@ fun MainScreen(navController: NavHostController) {
                             Text(
                                 text = "Tidying livingroom",
                                 fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
+                                style = todoTextStyle3
                             )
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -286,15 +318,22 @@ fun MainScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             OutlinedButton(
-                                modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                modifier = Modifier
+                                    .size(15.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor4),
                                 shape = CircleShape,
-                                onClick = { credit += 15 }
+                                onClick = {
+                                    credit += 15
+                                    isClicked4 = true
+                                }
                             ) {
-                                Image(
-                                    painter = painterResource(R.drawable.tick),
-                                    contentDescription = null
-                                )
+
+                            }
+
+                            if (isClicked4) {
+                                buttonColor4 = Color.Black
+                                todoTextStyle4 =
+                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -302,7 +341,7 @@ fun MainScreen(navController: NavHostController) {
                             Text(
                                 text = "Eating a healthy dinner",
                                 fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
+                                style = todoTextStyle4
                             )
 
                             Spacer(modifier = Modifier.width(20.dp))
@@ -316,6 +355,44 @@ fun MainScreen(navController: NavHostController) {
 
                         Spacer(modifier = Modifier.height(10.dp))
 
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedButton(
+                                modifier = Modifier.size(15.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor5),
+                                shape = CircleShape,
+                                onClick = {
+                                    credit += 15
+                                    isClicked5 = true
+                                }
+                            ) {
+                            }
+
+                            if (isClicked5) {
+                                buttonColor5 = Color.Black
+                                todoTextStyle5 =
+                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                            }
+
+                            Spacer(modifier = Modifier.width(20.dp))
+
+                            Text(
+                                text = "Consuming pornography",
+                                fontSize = 20.sp,
+                                style = todoTextStyle5
+                            )
+
+                            Spacer(modifier = Modifier.width(20.dp))
+
+                            Text(
+                                text = "15p",
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.body1
+                            )
+                        }
                     }
                     Column(
                         modifier = Modifier
@@ -335,13 +412,14 @@ fun MainScreen(navController: NavHostController) {
                     }
                 }
             }
-        }
+                }
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
         //credit
         Box(
             modifier = Modifier
+                .fillMaxWidth()
                 .weight(50f)
         ) {
             Column(
