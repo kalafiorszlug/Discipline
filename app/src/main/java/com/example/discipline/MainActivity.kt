@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.discipline.ui.RegisterScreen
 import com.example.discipline.ui.theme.DisciplineTheme
 
 enum class DisciplineScreen() {
@@ -21,7 +22,9 @@ enum class DisciplineScreen() {
     LoginScreen,
     StatScreen,
     RewardScreen,
-    TaskScreen
+    TaskScreen,
+    RegisterScreen,
+    RegisterScreen2
 }
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +51,8 @@ fun AppNavigator(){
     ){
         composable(route = DisciplineScreen.LoginScreen.name){ LoginScreen(navController = navController)}
         composable(route = DisciplineScreen.MainScreen.name){ MainScreen(navController = navController)}
+        composable(route = DisciplineScreen.RegisterScreen.name) { RegisterScreen(navController = navController) }
+        composable(route = DisciplineScreen.RegisterScreen2.name) { RegisterScreen2(navController = navController) }
         composable(route = DisciplineScreen.StatScreen.name){ StatScreen()}
         composable(route = DisciplineScreen.RewardScreen.name){ RewardScreen()}
         composable(route = DisciplineScreen.TaskScreen.name){ TaskScreen()}

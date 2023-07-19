@@ -32,6 +32,7 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Pole loginu
         TextField(
             modifier = Modifier
                 .width(370.dp),
@@ -41,6 +42,7 @@ fun LoginScreen(navController: NavHostController) {
             placeholder = { Text(text = stringResource(R.string.example_email)) }
         )
 
+        // Pole hasła
         TextField(
             modifier = Modifier
                 .width(370.dp),
@@ -52,6 +54,7 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Przycisk logowania
         Button(
             onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
@@ -64,6 +67,7 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Przycisk logowania przy uzyciu google
         Button(
             onClick = {/*TODO*/},
             shape = RoundedCornerShape(40.dp),
@@ -92,8 +96,9 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Przycisk rejestracji
         Button(
-            onClick = {/*TODO*/},
+            onClick = {navController.navigate(route = DisciplineScreen.RegisterScreen.name)},
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
