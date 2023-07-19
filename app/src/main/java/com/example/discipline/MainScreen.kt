@@ -421,11 +421,11 @@ fun MainScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(50f)
+                .background(color = Color.White)
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.White),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             )
