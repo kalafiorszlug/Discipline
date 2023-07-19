@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun MainScreen(navController: NavHostController) {
+
     var credit by remember { mutableStateOf(0) }
     var buttonColor1 by remember { mutableStateOf(Color.White) }
     var buttonColor2 by remember { mutableStateOf(Color.White) }
@@ -45,8 +46,7 @@ fun MainScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
+    ) {
 
         //stats
         Box(
@@ -54,8 +54,7 @@ fun MainScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .weight(150f)
                 .align(Alignment.CenterHorizontally)
-        )
-        {
+        ) {
 
             Button(
                 onClick = { navController.navigate(route = DisciplineScreen.StatScreen.name) },
@@ -66,8 +65,7 @@ fun MainScreen(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
-                )
-                {
+                ) {
 
                     Image(
                         modifier = Modifier
@@ -115,13 +113,16 @@ fun MainScreen(navController: NavHostController) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
+                    Spacer(modifier = Modifier.height(35.dp))
+
                     Row(
                         modifier = Modifier
                             .weight(8f)
                     ) {
+
                         Image(
                             modifier = Modifier
-                                .size(75.dp)
+                                .size(90.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.ig_icon),
                             contentDescription = null
@@ -129,7 +130,7 @@ fun MainScreen(navController: NavHostController) {
 
                         Image(
                             modifier = Modifier
-                                .size(75.dp)
+                                .size(90.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.yt_icon),
                             contentDescription = null
@@ -137,7 +138,7 @@ fun MainScreen(navController: NavHostController) {
 
                         Image(
                             modifier = Modifier
-                                .size(75.dp)
+                                .size(90.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.snap_icon),
                             contentDescription = null
@@ -430,6 +431,9 @@ fun MainScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.Center
             )
             {
+
+                Spacer(modifier = Modifier.height(10.dp))
+
                 Row() {
                     Text(
                         text = "Credit: ",

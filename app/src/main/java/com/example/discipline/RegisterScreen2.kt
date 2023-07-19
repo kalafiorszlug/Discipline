@@ -51,8 +51,6 @@ fun RegisterScreen2(navController: NavController) {
     var loginFieldState by remember { mutableStateOf("") }
     var passwordFieldState by remember { mutableStateOf("") }
 
-    
-
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -95,6 +93,7 @@ fun RegisterScreen2(navController: NavController) {
             onValueChange = {passwordFieldState = it },
             label = { Text(text = "Password: ") },
             shape = RoundedCornerShape(30.dp),
+
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -110,7 +109,5 @@ fun RegisterScreen2(navController: NavController) {
                 style = MaterialTheme.typography.h1
             )
         }
-
     }
-
 }

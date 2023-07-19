@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun RewardScreen() {
+
     var credit by remember { mutableStateOf(0) }
     var numberOfRewards by remember { mutableStateOf(5) }
     val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
@@ -25,20 +26,24 @@ fun RewardScreen() {
     val prices = listOf(150, 115, 120, 100, 200)
 
     Column(
+
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
+
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(9f)
                 .background(color = Color.White)
+
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -81,9 +86,11 @@ fun RewardScreen() {
             }
         }
 
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.White)){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.White))
+        {
             OutlinedButton(
                 onClick = {/*TODO*/ },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),

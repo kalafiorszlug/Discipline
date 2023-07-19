@@ -20,15 +20,18 @@ fun LoginScreen(navController: NavHostController) {
     var loginFieldState by remember { mutableStateOf("") }
     var passwordFieldState by remember { mutableStateOf("") }
 
-    Box(modifier = Modifier.
-    fillMaxSize()
-        .background(color = Color.White)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White))
+    {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
             Image(
                 painter = painterResource(R.drawable.simple_logo),
                 contentDescription = null
@@ -36,44 +39,46 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TextField(
+            OutlinedTextField(
                 modifier = Modifier
                     .width(370.dp),
                 value = loginFieldState,
                 onValueChange = { loginFieldState = it },
                 label = { Text("Email:") },
-                placeholder = { Text(text = stringResource(R.string.example_email)) }
+                placeholder = { Text(text = stringResource(R.string.example_email)) },
+                shape = RoundedCornerShape(30.dp)
             )
 
-            TextField(
+            OutlinedTextField(
                 modifier = Modifier
                     .width(370.dp),
                 value = passwordFieldState,
                 onValueChange = { passwordFieldState = it },
                 label = { Text("Password:") },
-                placeholder = { Text(text = stringResource(R.string.example_password)) }
+                placeholder = { Text(text = stringResource(R.string.example_password)) },
+                shape = RoundedCornerShape(30.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             OutlinedButton(
                 onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
-                    .width(350.dp)
+                    .width(320.dp)
             ) {
                 Text(text = stringResource(R.string.login_with_password), style = MaterialTheme.typography.body1)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // Spacer(modifier = Modifier.height(5.dp))
 
             OutlinedButton(
                 onClick = {/*TODO*/},
                 shape = RoundedCornerShape(40.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 modifier = Modifier
-                    .width(350.dp)
+                    .width(320.dp)
             ) {
                 Box(){
                     Row() {
@@ -94,14 +99,14 @@ fun LoginScreen(navController: NavHostController) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // Spacer(modifier = Modifier.height(10.dp))
 
             OutlinedButton(
-                onClick = {/*TODO*/},
+                onClick = {navController.navigate(route = DisciplineScreen.RegisterScreen.name)},
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
-                    .width(350.dp)
+                    .width(320.dp)
             ) {
                 Text(text = stringResource(R.string.sign_up), style = MaterialTheme.typography.body1)
             }
