@@ -14,9 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.discipline.ui.theme.Purple200
 import com.example.discipline.ui.theme.Purple500
-import com.example.discipline.ui.theme.Purple700
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
@@ -33,7 +31,7 @@ fun LoginScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Image(
