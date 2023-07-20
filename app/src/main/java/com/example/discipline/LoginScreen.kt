@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.discipline.ui.theme.Purple200
+import com.example.discipline.ui.theme.Purple500
+import com.example.discipline.ui.theme.Purple700
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
@@ -46,7 +50,14 @@ fun LoginScreen(navController: NavHostController) {
                 onValueChange = { loginFieldState = it },
                 label = { Text("Email:") },
                 placeholder = { Text(text = stringResource(R.string.example_email)) },
-                shape = RoundedCornerShape(30.dp)
+                shape = RoundedCornerShape(30.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Color.Gray,
+                    unfocusedLabelColor = Color.Gray,
+                    focusedBorderColor = Purple500,
+                    focusedLabelColor = Purple500,
+                    placeholderColor = Color.Gray
+                )
             )
 
             OutlinedTextField(
@@ -56,14 +67,25 @@ fun LoginScreen(navController: NavHostController) {
                 onValueChange = { passwordFieldState = it },
                 label = { Text("Password:") },
                 placeholder = { Text(text = stringResource(R.string.example_password)) },
-                shape = RoundedCornerShape(30.dp)
+                shape = RoundedCornerShape(30.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Color.Gray,
+                    unfocusedLabelColor = Color.Gray,
+                    focusedBorderColor = Purple500,
+                    focusedLabelColor = Purple500,
+                    placeholderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(25.dp))
 
             OutlinedButton(
                 onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.DarkGray,
+                ),
+                border = BorderStroke(1.dp, color = Color.Gray),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
                     .width(320.dp)
@@ -76,7 +98,11 @@ fun LoginScreen(navController: NavHostController) {
             OutlinedButton(
                 onClick = {/*TODO*/},
                 shape = RoundedCornerShape(40.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.DarkGray,
+                ),
+                border = BorderStroke(1.dp, color = Color.Gray),
                 modifier = Modifier
                     .width(320.dp)
             ) {
@@ -103,7 +129,11 @@ fun LoginScreen(navController: NavHostController) {
 
             OutlinedButton(
                 onClick = {navController.navigate(route = DisciplineScreen.RegisterScreen.name)},
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.DarkGray,
+                ),
+                border = BorderStroke(1.dp, color = Color.Gray),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
                     .width(320.dp)
