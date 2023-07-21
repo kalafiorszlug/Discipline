@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
@@ -19,7 +20,7 @@ import com.example.discipline.ui.theme.Purple500
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
-    var loginFieldState by remember { mutableStateOf("") }
+    var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
     var passwordFieldState by remember { mutableStateOf("") }
 
     Box(
