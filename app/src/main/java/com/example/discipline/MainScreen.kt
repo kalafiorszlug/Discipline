@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,14 @@ import androidx.navigation.NavHostController
 fun MainScreen(navController: NavHostController) {
 
     var credit by remember { mutableStateOf(0) }
+    val creditCounter by animateIntAsState(
+        targetValue = credit,
+        animationSpec = tween(
+            durationMillis = 700,
+            easing = FastOutSlowInEasing
+        )
+    )
+
     var buttonColor1 by remember { mutableStateOf(Color.White) }
     var buttonColor2 by remember { mutableStateOf(Color.White) }
     var buttonColor3 by remember { mutableStateOf(Color.White) }
@@ -442,7 +451,7 @@ fun MainScreen(navController: NavHostController) {
                     )
 
                     Text(
-                        text = credit.toString(),
+                        text = creditCounter.toString(),
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1
                     )

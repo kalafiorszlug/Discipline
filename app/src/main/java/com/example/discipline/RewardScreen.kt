@@ -1,5 +1,10 @@
 package com.example.discipline
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -17,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.example.discipline.ui.theme.Purple500
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun RewardScreen() {
 
@@ -29,6 +37,9 @@ fun RewardScreen() {
     val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
     val titles = listOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
     val prices = listOf(150, 115, 120, 100, 200)
+
+    var visible by remember { mutableStateOf(true)}
+    val density = LocalDensity.current
 
     Column(
 
@@ -112,17 +123,31 @@ fun RewardScreen() {
             }
         }
 
-        if (rewardCreating){
-            Popup(alignment = Alignment.Center) {
-                Box(modifier = Modifier
-                    .background(color = Color.White)
-                    .size(400.dp)
-                    .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
+        AnimatedVisibility(
+            visible = rewardCreating,
+
+            enter = slideInVertically(
+                initialOffsetY = {-500},
+                animationSpec = tween(200, 0, easing = LinearEasing)
+            ),
+
+            exit = slideOutVertically() + shrinkVertically() + fadeOut()
+        ) {
+            Popup(
+                alignment = Alignment.Center
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(color = Color.White)
+                        .size(400.dp)
+                        .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
                 ) {
-                    Column(modifier = Modifier
-                        .fillMaxSize(),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -161,9 +186,11 @@ fun RewardScreen() {
 
                         Spacer(modifier = Modifier.height(5.dp))
 
-                        Text(text = "*optional*",
+                        Text(
+                            text = "*optional*",
                             fontSize = 10.sp,
-                            style = MaterialTheme.typography.h1)
+                            style = MaterialTheme.typography.h1
+                        )
 
                         OutlinedButton(
                             onClick = { appOrWebsiteBlocking = true },
@@ -177,7 +204,7 @@ fun RewardScreen() {
                             )
                         }
 
-                        if (appOrWebsiteBlocking){
+                        if (appOrWebsiteBlocking) {
                             Spacer(modifier = Modifier.height(3.dp))
 
                             OutlinedTextField(
@@ -205,8 +232,12 @@ fun RewardScreen() {
                             onClick = {
                                 rewardCreating = false
                                 blurRadius = 0
-                                      },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.light_green)),
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    R.color.light_green
+                                )
+                            ),
                             shape = RoundedCornerShape(28.dp),
                         ) {
                             Text(
@@ -220,6 +251,7 @@ fun RewardScreen() {
                 }
             }
         }
+
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
