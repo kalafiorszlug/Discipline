@@ -3,6 +3,7 @@ package com.example.discipline
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,9 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import com.example.discipline.ui.theme.Purple500
 
 @Composable
@@ -24,7 +28,9 @@ fun RewardScreen() {
     var numberOfRewards by remember { mutableStateOf(5) }
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
-    var rewardsTitleFieldState by remember { mutableStateOf("") }
+    var rewardsTitleFieldState by remember { mutableStateOf(TextFieldValue("")) }
+    var rewardsCostFieldState by remember { mutableStateOf(TextFieldValue("")) }
+    var rewardsTimeFieldState by remember { mutableStateOf(TextFieldValue("")) }
     var blurRadius by remember { mutableStateOf(0) }
     val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
     val titles = listOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
@@ -63,6 +69,7 @@ fun RewardScreen() {
                             .height(145.dp)
                             .padding(3.dp)
                     ) {
+
                         Column(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -113,7 +120,10 @@ fun RewardScreen() {
         }
 
         if (rewardCreating){
-            Popup(alignment = Alignment.Center) {
+            Popup(
+                alignment = Alignment.Center,
+                properties = PopupProperties(focusable = true)
+            ) {
                 Box(modifier = Modifier
                     .background(color = Color.White)
                     .size(400.dp)
@@ -132,6 +142,7 @@ fun RewardScreen() {
                             label = { Text("How will you reward yourself?") },
                             placeholder = { Text("Enter reward's title.") },
                             shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -145,11 +156,12 @@ fun RewardScreen() {
                             modifier = Modifier
                                 .width(370.dp)
                                 .padding(3.dp),
-                            value = rewardsTitleFieldState,
-                            onValueChange = { rewardsTitleFieldState = it },
+                            value = rewardsCostFieldState,
+                            onValueChange = { rewardsCostFieldState = it },
                             label = { Text("What will be the cost?") },
                             placeholder = { Text("Enter a value.") },
                             shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -184,11 +196,12 @@ fun RewardScreen() {
                                 modifier = Modifier
                                     .width(200.dp)
                                     .padding(3.dp),
-                                value = rewardsTitleFieldState,
-                                onValueChange = { rewardsTitleFieldState = it },
+                                value = rewardsTimeFieldState,
+                                onValueChange = { rewardsTimeFieldState = it },
                                 label = { Text("Time the app/website will be unlocked for:") },
                                 placeholder = { Text("Enter duration in hours.") },
                                 shape = RoundedCornerShape(30.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = Color.Gray,
                                     unfocusedLabelColor = Color.Gray,
