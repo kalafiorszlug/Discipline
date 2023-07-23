@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,25 +23,25 @@ import androidx.navigation.NavHostController
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
-    var credit by remember { mutableStateOf(0) }
-    var buttonColor1 by remember { mutableStateOf(Color.White) }
-    var buttonColor2 by remember { mutableStateOf(Color.White) }
-    var buttonColor3 by remember { mutableStateOf(Color.White) }
-    var buttonColor4 by remember { mutableStateOf(Color.White) }
-    var buttonColor5 by remember { mutableStateOf(Color.White) }
-    var isClicked1 by remember { mutableStateOf(false) }
-    var todoTextStyle1 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
-    var isClicked2 by remember { mutableStateOf(false) }
-    var todoTextStyle2 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
-    var isClicked3 by remember { mutableStateOf(false) }
-    var todoTextStyle3 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
-    var isClicked4 by remember { mutableStateOf(false) }
-    var todoTextStyle4 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
-    var isClicked5 by remember { mutableStateOf(false) }
-    var todoTextStyle5 by remember { mutableStateOf(TextStyle(color = Color.Black)) }
+    var credit by remember { mutableStateOf(viewModel.credit) }
+    val tasksTitles = listOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa")
+    val tasksPayoff = listOf(15, 20, 30, 25, 20)
+    val buttonsColors by remember {
+        mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
+    }
+    val todoTextStyles by remember {
+        mutableStateOf(mutableListOf(TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black)))
+    }
+
+    val buttonsClicked by remember {
+        mutableStateOf(mutableListOf(false, false, false, false, false))
+    }
+
+    val numberOfTasks by remember { mutableStateOf(tasksTitles.size) }
 
     Column(
         modifier = Modifier
@@ -56,7 +57,7 @@ fun MainScreen(navController: NavHostController) {
                 .align(Alignment.CenterHorizontally)
         ) {
 
-            Button(
+            OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.StatScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
@@ -92,8 +93,6 @@ fun MainScreen(navController: NavHostController) {
             }
         }
 
-        Divider(color = Color.Gray, thickness = 2.dp)
-
         //rewards
         Box(
             modifier = Modifier
@@ -101,7 +100,7 @@ fun MainScreen(navController: NavHostController) {
                 .weight(150f)
         ) {
 
-            Button(
+            OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.RewardScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
@@ -172,7 +171,7 @@ fun MainScreen(navController: NavHostController) {
                 .weight(270f)
         ) {
 
-            Button(
+            OutlinedButton(
                 modifier = Modifier.fillMaxSize(),
                 onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
@@ -188,212 +187,49 @@ fun MainScreen(navController: NavHostController) {
                         verticalArrangement = Arrangement.Center
                     ) {
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedButton(
-                                modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor1),
-                                shape = CircleShape,
-                                onClick = {
-                                    credit += 15
-                                    isClicked1 = true
-                                }
-                            ) {
-                            }
-
-                            if (isClicked1) {
-                                buttonColor1 = Color.Black
-                                todoTextStyle1 =
-                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                            }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Walking a dog",
-                                fontSize = 20.sp,
-                                style = todoTextStyle1
-                            )
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "15p",
-                                fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedButton(
-                                modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor2),
-                                shape = CircleShape,
-                                onClick = {
-                                    credit += 30
-                                    isClicked2 = true
-                                }
-                            ) {
-
-                            }
-
-                            if (isClicked2) {
-                                buttonColor2 = Color.Black
-                                todoTextStyle2 =
-                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                            }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Working out",
-                                fontSize = 20.sp,
-                                style = todoTextStyle2
-                            )
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "30p",
-                                fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedButton(
-                                modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor3),
-                                shape = CircleShape,
-                                onClick = {
-                                    credit += 20
-                                    isClicked3 = true
-                                }
-                            ) {
-
-                            }
-
-                            if (isClicked3) {
-                                buttonColor3 = Color.Black
-                                todoTextStyle3 =
-                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                            }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Tidying livingroom",
-                                fontSize = 20.sp,
-                                style = todoTextStyle3
-                            )
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "20p",
-                                fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedButton(
+                        repeat(numberOfTasks){
+                            Row(
                                 modifier = Modifier
-                                    .size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor4),
-                                shape = CircleShape,
-                                onClick = {
-                                    credit += 15
-                                    isClicked4 = true
-                                }
+                                    .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
+                                OutlinedButton(
+                                    modifier = Modifier.size(15.dp),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
+                                    shape = CircleShape,
+                                    onClick = {
+                                        viewModel.credit += tasksPayoff[it]
+                                        credit = viewModel.credit
+                                        buttonsColors[it] = Color.Black
+                                        buttonsClicked[it] = true
+                                    }
+                                ) {
+                                }
 
+                                if (buttonsClicked[it]) {
+                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                                }
+
+                                Spacer(modifier = Modifier.width(20.dp))
+
+                                Text(
+                                    text = tasksTitles[it],
+                                    fontSize = 20.sp,
+                                    style = todoTextStyles[it]
+                                )
+
+                                Spacer(modifier = Modifier.width(20.dp))
+
+                                Text(
+                                    text = "${tasksPayoff[it]}p",
+                                    fontSize = 20.sp,
+                                    style = MaterialTheme.typography.body1
+                                )
                             }
 
-                            if (isClicked4) {
-                                buttonColor4 = Color.Black
-                                todoTextStyle4 =
-                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                            }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Eating a healthy dinner",
-                                fontSize = 20.sp,
-                                style = todoTextStyle4
-                            )
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "15p",
-                                fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
-                            )
+                            Spacer(modifier = Modifier.height(10.dp))
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedButton(
-                                modifier = Modifier.size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor5),
-                                shape = CircleShape,
-                                onClick = {
-                                    credit += 15
-                                    isClicked5 = true
-                                }
-                            ) {
-                            }
-
-                            if (isClicked5) {
-                                buttonColor5 = Color.Black
-                                todoTextStyle5 =
-                                    LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                            }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Consuming pornography",
-                                fontSize = 20.sp,
-                                style = todoTextStyle5
-                            )
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "15p",
-                                fontSize = 20.sp,
-                                style = MaterialTheme.typography.body1
-                            )
-                        }
                     }
                     Column(
                         modifier = Modifier
