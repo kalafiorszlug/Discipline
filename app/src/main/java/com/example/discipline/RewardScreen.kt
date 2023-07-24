@@ -1,13 +1,13 @@
 package com.example.discipline
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -34,14 +34,23 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
     var rewardsTitleFieldState by remember { mutableStateOf("") }
+    var rewardsPriceFieldState by remember { mutableStateOf("") }
+    var rewardsDurationFieldState by remember { mutableStateOf("") }
     var blurRadius by remember { mutableStateOf(0) }
     val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
     val titles = listOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
     val prices = listOf(150, 115, 120, 100, 200)
     val numberOfRewards by remember { mutableStateOf(titles.size) }
 
-    var visible by remember { mutableStateOf(true)}
-    val density = LocalDensity.current
+    var popupFinalOffset by remember { mutableStateOf(2000) }
+
+    val popupOffset by animateIntAsState(
+        targetValue = popupFinalOffset,
+        animationSpec = tween(
+            durationMillis = 100,
+            easing = FastOutSlowInEasing
+        )
+    )
 
     Column(
 
@@ -129,18 +138,14 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        AnimatedVisibility(
-            visible = rewardCreating,
+        if (rewardCreating){
 
-            enter = slideInVertically(
-                initialOffsetY = {-500},
-                animationSpec = tween(200, 0, easing = LinearEasing)
-            ),
+            popupFinalOffset = 0
 
-            exit = slideOutVertically() + shrinkVertically() + fadeOut()
-        ) {
             Popup(
-                alignment = Alignment.Center
+                offset = IntOffset(0, popupOffset),
+                alignment = Alignment.Center,
+                properties = PopupProperties(focusable = true)
             ) {
                 Box(
                     modifier = Modifier
@@ -154,6 +159,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -165,11 +171,11 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Color.Gray,
-                                unfocusedLabelColor = Color.Gray,
+                                unfocusedBorderColor = Gray,
+                                unfocusedLabelColor = Gray,
                                 focusedBorderColor = Purple500,
                                 focusedLabelColor = Purple500,
-                                placeholderColor = Color.Gray
+                                placeholderColor = Gray
                             )
                         )
 
@@ -177,18 +183,18 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             modifier = Modifier
                                 .width(370.dp)
                                 .padding(3.dp),
-                            value = rewardsTitleFieldState,
-                            onValueChange = { rewardsTitleFieldState = it },
+                            value = rewardsPriceFieldState,
+                            onValueChange = { rewardsPriceFieldState = it },
                             label = { Text("What will be the cost?") },
                             placeholder = { Text("Enter a value.") },
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Color.Gray,
-                                unfocusedLabelColor = Color.Gray,
+                                unfocusedBorderColor = Gray,
+                                unfocusedLabelColor = Gray,
                                 focusedBorderColor = Purple500,
                                 focusedLabelColor = Purple500,
-                                placeholderColor = Color.Gray
+                                placeholderColor = Gray
                             )
                         )
 
@@ -219,18 +225,18 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                 modifier = Modifier
                                     .width(200.dp)
                                     .padding(3.dp),
-                                value = rewardsTitleFieldState,
-                                onValueChange = { rewardsTitleFieldState = it },
+                                value = rewardsDurationFieldState,
+                                onValueChange = { rewardsDurationFieldState = it },
                                 label = { Text("Time the app/website will be unlocked for:") },
                                 placeholder = { Text("Enter duration in hours.") },
                                 shape = RoundedCornerShape(30.dp),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    unfocusedBorderColor = Color.Gray,
-                                    unfocusedLabelColor = Color.Gray,
+                                    unfocusedBorderColor = Gray,
+                                    unfocusedLabelColor = Gray,
                                     focusedBorderColor = Purple500,
                                     focusedLabelColor = Purple500,
-                                    placeholderColor = Color.Gray
+                                    placeholderColor = Gray
                                 )
                             )
                         }
@@ -239,6 +245,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                         OutlinedButton(
                             onClick = {
+                                popupFinalOffset = 1500
                                 rewardCreating = false
                                 blurRadius = 0
                             },
