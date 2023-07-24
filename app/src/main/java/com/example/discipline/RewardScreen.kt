@@ -22,14 +22,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
+import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun RewardScreen() {
+fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
-    var credit by remember { mutableStateOf(0) }
-    var numberOfRewards by remember { mutableStateOf(5) }
+    var credit by remember { mutableStateOf(viewModel.credit) }
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
     var rewardsTitleFieldState by remember { mutableStateOf("") }
@@ -37,6 +38,7 @@ fun RewardScreen() {
     val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
     val titles = listOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
     val prices = listOf(150, 115, 120, 100, 200)
+    val numberOfRewards by remember { mutableStateOf(titles.size) }
 
     var visible by remember { mutableStateOf(true)}
     val density = LocalDensity.current
@@ -66,7 +68,10 @@ fun RewardScreen() {
             ) {
                 repeat(numberOfRewards){
                     OutlinedButton(
-                        onClick = {/*TODO*/ },
+                        onClick = {
+                            viewModel.credit -= prices[it]
+                            credit = viewModel.credit
+                                  },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                         shape = RoundedCornerShape(28.dp),
                         modifier = Modifier
@@ -74,6 +79,7 @@ fun RewardScreen() {
                             .height(145.dp)
                             .padding(3.dp)
                     ) {
+
                         Column(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -157,6 +163,7 @@ fun RewardScreen() {
                             label = { Text("How will you reward yourself?") },
                             placeholder = { Text("Enter reward's title.") },
                             shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -175,6 +182,7 @@ fun RewardScreen() {
                             label = { Text("What will be the cost?") },
                             placeholder = { Text("Enter a value.") },
                             shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -216,6 +224,7 @@ fun RewardScreen() {
                                 label = { Text("Time the app/website will be unlocked for:") },
                                 placeholder = { Text("Enter duration in hours.") },
                                 shape = RoundedCornerShape(30.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = Color.Gray,
                                     unfocusedLabelColor = Color.Gray,
@@ -252,8 +261,7 @@ fun RewardScreen() {
             }
         }
 
-
-        Divider(color = Color.Gray, thickness = 2.dp)
+        Divider(color = Gray, thickness = 2.dp)
 
         Box(
             modifier = Modifier
