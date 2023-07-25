@@ -4,8 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,7 +23,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import kotlinx.coroutines.delay
 
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
@@ -45,6 +42,10 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         mutableStateOf(mutableListOf(TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black)))
     }
 
+    val buttonsClicked by remember {
+        mutableStateOf(mutableListOf(false, false, false, false, false))
+    }
+
     val creditCounter by animateIntAsState(
         targetValue = credit,
         animationSpec = tween(
@@ -52,10 +53,6 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             easing = FastOutSlowInEasing
         )
     )
-
-    val buttonsClicked by remember {
-        mutableStateOf(mutableListOf(false, false, false, false, false))
-    }
 
     val numberOfTasks by remember { mutableStateOf(tasksTitles.size) }
 

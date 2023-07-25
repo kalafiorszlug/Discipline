@@ -105,7 +105,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                             Text(text = titles[it], style = MaterialTheme.typography.body1, color = Black)
 
-                            Spacer(modifier = Modifier.height(2.dp))
+                            Spacer(modifier = Modifier.width(2.dp))
 
                             Text(modifier = Modifier
                                 .background(
