@@ -1,9 +1,14 @@
 package com.example.discipline
 
-import androidx.compose.animation.core.*
-import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +25,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.delay
 
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
@@ -30,9 +36,11 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
     var credit by remember { mutableStateOf(viewModel.credit) }
     val tasksTitles = listOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa")
     val tasksPayoff = listOf(15, 20, 30, 25, 20)
+
     val buttonsColors by remember {
         mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
     }
+
     val todoTextStyles by remember {
         mutableStateOf(mutableListOf(TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black)))
     }
@@ -95,7 +103,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             .weight(1.5f),
                         text = stringResource(R.string.mainscreen_statistics),
                         fontSize = 16.sp,
-                        style = MaterialTheme.typography.h1
+                        style = MaterialTheme.typography.h1,
+                        color = Color.Black
                     )
                 }
             }
@@ -165,7 +174,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             .weight(2f),
                         text = stringResource(R.string.mainscreen_rewards),
                         fontSize = 16.sp,
-                        style = MaterialTheme.typography.h1
+                        style = MaterialTheme.typography.h1,
+                        color = Color.Black
                     )
                 }
 
@@ -186,10 +196,12 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
             ) {
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
+
                     Column(
                         modifier = Modifier
                             .weight(8f),
@@ -200,11 +212,14 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         repeat(numberOfTasks){
                             Row(
                                 modifier = Modifier
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .height(25.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 OutlinedButton(
-                                    modifier = Modifier.size(15.dp),
+                                    modifier = Modifier
+                                        .border(1.dp, color = Color.Black, shape = CircleShape)
+                                        .size(15.dp),
                                     colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                     shape = CircleShape,
                                     onClick = {
@@ -213,8 +228,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                         buttonsColors[it] = Color.Black
                                         buttonsClicked[it] = true
                                     }
-                                ) {
-                                }
+                                ) {}
 
                                 if (buttonsClicked[it]) {
                                     todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
@@ -222,25 +236,36 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
-                                Text(
-                                    text = tasksTitles[it],
-                                    fontSize = 20.sp,
-                                    style = todoTextStyles[it]
-                                )
+                                AnimatedVisibility(
+                                    visible = !buttonsClicked[it],
+                                ){
+                                    Text(
+                                        text = tasksTitles[it],
+                                        fontSize = 20.sp,
+                                        style = todoTextStyles[it],
+                                        color = Color.Black
+                                    )
+                                }
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
-                                Text(
-                                    text = "${tasksPayoff[it]}p",
-                                    fontSize = 20.sp,
-                                    style = MaterialTheme.typography.body1
-                                )
+                                AnimatedVisibility(
+                                    visible = !buttonsClicked[it]
+                                ){
+                                    Text(
+                                        text = "${tasksPayoff[it]}p",
+                                        fontSize = 20.sp,
+                                        style = MaterialTheme.typography.body1,
+                                        color = Color.Black
+                                    )
+                                }
+
                             }
 
                             Spacer(modifier = Modifier.height(10.dp))
                         }
-
                     }
+
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -252,14 +277,16 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                     color = colorResource(R.color.light_green),
                                     shape = RoundedCornerShape(size = 30.dp)
                                 ),
+
                             text = stringResource(R.string.mainscreen_tasks),
                             fontSize = 16.sp,
-                            style = MaterialTheme.typography.h1
+                            style = MaterialTheme.typography.h1,
+                            color = Color.Black
                         )
                     }
                 }
             }
-                }
+        }
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
@@ -275,8 +302,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            )
-            {
+            ) {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -284,13 +310,15 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     Text(
                         text = "Credit: ",
                         fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black
                     )
 
                     Text(
                         text = creditCounter.toString(),
                         fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black
                     )
                 }
             }

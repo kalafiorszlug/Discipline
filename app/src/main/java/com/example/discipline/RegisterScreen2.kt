@@ -46,7 +46,7 @@ private fun CustomTextField(
 } */
 
 @Composable
-fun RegisterScreen2(navController: NavController) {
+fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
 
     var loginFieldState by remember { mutableStateOf("") }
     var passwordFieldState by remember { mutableStateOf("") }
@@ -59,7 +59,7 @@ fun RegisterScreen2(navController: NavController) {
     ) {
 
         Text(
-            text = "Hi ",
+            text = "Hi ${viewModel.userName}",
             style = MaterialTheme.typography.h1
         )
 

@@ -52,8 +52,8 @@ fun AppNavigator(){
     ){
         composable(route = DisciplineScreen.LoginScreen.name){ LoginScreen(navController = navController)}
         composable(route = DisciplineScreen.MainScreen.name){ MainScreen(navController = navController, viewModel)}
-        composable(route = DisciplineScreen.RegisterScreen.name) { RegisterScreen(navController = navController) }
-        composable(route = DisciplineScreen.RegisterScreen2.name) { RegisterScreen2(navController = navController) }
+        composable(route = DisciplineScreen.RegisterScreen.name) { RegisterScreen(navController = navController, viewModel) }
+        composable(route = DisciplineScreen.RegisterScreen2.name) { RegisterScreen2(navController = navController, viewModel) }
         composable(route = DisciplineScreen.StatScreen.name){ StatScreen()}
         composable(route = DisciplineScreen.RewardScreen.name){ RewardScreen(navController = navController, viewModel)}
         composable(route = DisciplineScreen.TaskScreen.name){ TaskScreen()}

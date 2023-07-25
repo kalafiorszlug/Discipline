@@ -1,9 +1,7 @@
 package com.example.discipline
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -87,6 +86,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             .fillMaxWidth()
                             .height(145.dp)
                             .padding(3.dp)
+                            .border(1.dp, color = Gray, shape = RoundedCornerShape(28.dp))
                     ) {
 
                         Column(
@@ -103,7 +103,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                 contentDescription = null
                             )
 
-                            Text(text = titles[it], style = MaterialTheme.typography.body1)
+                            Text(text = titles[it], style = MaterialTheme.typography.body1, color = Black)
 
                             Spacer(modifier = Modifier.height(2.dp))
 
@@ -111,7 +111,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                 .background(
                                     color = colorResource(R.color.light_green),
                                     shape = RoundedCornerShape(size = 30.dp)),
-                                    text = "ㅤprice: ${prices[it]}pㅤ", style = MaterialTheme.typography.h1)
+                                    text = "ㅤprice: ${prices[it]}pㅤ", style = MaterialTheme.typography.h1, color = Black)
                         }
                     }
                 }
@@ -134,7 +134,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     .padding(2.dp)
                     .align(Alignment.Center)
             ) {
-                Text(text = "+ Add a reward", style = MaterialTheme.typography.h1)
+                Text(text = "+ Add a reward", style = MaterialTheme.typography.h1, color = Black)
             }
         }
 
@@ -153,6 +153,7 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         .size(400.dp)
                         .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
                 ) {
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
@@ -203,7 +204,8 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         Text(
                             text = "*optional*",
                             fontSize = 10.sp,
-                            style = MaterialTheme.typography.h1
+                            style = MaterialTheme.typography.h1,
+                            color = Black
                         )
 
                         OutlinedButton(
@@ -214,7 +216,8 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             Text(
                                 "Chose an app/website to be the reward",
                                 fontSize = 16.sp,
-                                style = MaterialTheme.typography.body1
+                                style = MaterialTheme.typography.body1,
+                                color = Black
                             )
                         }
 
@@ -259,7 +262,8 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             Text(
                                 "Done!",
                                 fontSize = 16.sp,
-                                style = MaterialTheme.typography.h1
+                                style = MaterialTheme.typography.h1,
+                                color = Black
                             )
                         }
 
@@ -287,13 +291,15 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     Text(
                         text = "Credit: ",
                         fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = Black
                     )
 
                     Text(
                         text = credit.toString(),
                         fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = Black
                     )
                 }
             }

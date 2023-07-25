@@ -2,17 +2,20 @@ package com.example.discipline.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.discipline.DisciplineScreen
-import com.example.discipline.RegisterScreen2
+import com.example.discipline.SharedViewModel
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController, viewModel: SharedViewModel) {
 
     var nicknameFieldState by remember { mutableStateOf("") }
 
@@ -37,11 +40,6 @@ fun RegisterScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        /*
-        TODO - Customowe pole tekstowe
-        https://medium.com/@kamranramzan098/styling-custom-textfield-in-jectpack-compose-ui-7050bd82d019
-         */
-
         // Pole loginu
         OutlinedTextField(
 
@@ -54,6 +52,9 @@ fun RegisterScreen(navController: NavController) {
             shape = RoundedCornerShape(30.dp),
 
         )
+
+        // Zapisywanie nicku
+        viewModel.userName = nicknameFieldState
 
         Spacer(modifier = Modifier.height(10.dp))
 
