@@ -1,6 +1,6 @@
 package com.example.discipline
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
@@ -27,12 +27,17 @@ import androidx.navigation.NavHostController
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
     var credit by remember { mutableStateOf(viewModel.credit) }
-    val tasksTitles = listOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa")
-    val tasksPayoff = listOf(15, 20, 30, 25, 20)
+    val tasksTitles by remember {
+        mutableStateOf(mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu"))
+    }
+    val tasksPayoff by remember {
+        mutableStateOf(mutableListOf(15, 20, 30, 25, 20, 25, 10, 15))
+    }
 
     val buttonsColors by remember {
         mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
@@ -206,7 +211,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         verticalArrangement = Arrangement.Center
                     ) {
 
-                        repeat(numberOfTasks){
+                        repeat(5){
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -229,26 +234,40 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                                 if (buttonsClicked[it]) {
                                     todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                                    tasksTitles.removeAt(it)
+                                    tasksPayoff.removeAt(it)
+                                    buttonsClicked[it] = false
+                                } else{
+                                    buttonsColors[it] = Color.White
+                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
                                 }
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
-                                AnimatedVisibility(
-                                    visible = !buttonsClicked[it],
-                                ){
+                                AnimatedContent(
+                                    targetState = tasksTitles[it],
+                                    transitionSpec = {
+                                        slideInVertically { height -> height } + fadeIn() with
+                                        slideOutVertically { height -> -height } + fadeOut()
+                                    }
+                                ){targetContent->
                                     Text(
-                                        text = tasksTitles[it],
+                                        text = targetContent,
                                         fontSize = 20.sp,
                                         style = todoTextStyles[it],
                                         color = Color.Black
                                     )
                                 }
-
+                                
                                 Spacer(modifier = Modifier.width(20.dp))
 
-                                AnimatedVisibility(
-                                    visible = !buttonsClicked[it]
-                                ){
+                                AnimatedContent(
+                                    targetState = tasksPayoff[it],
+                                    transitionSpec = {
+                                        slideInVertically { height -> height } + fadeIn() with
+                                                slideOutVertically { height -> -height } + fadeOut()
+                                    }
+                                ){targetContent->
                                     Text(
                                         text = "${tasksPayoff[it]}p",
                                         fontSize = 20.sp,
@@ -257,8 +276,9 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                     )
                                 }
 
-                            }
+                                Spacer(modifier = Modifier.width(20.dp))
 
+                            }
                             Spacer(modifier = Modifier.height(10.dp))
                         }
                     }
