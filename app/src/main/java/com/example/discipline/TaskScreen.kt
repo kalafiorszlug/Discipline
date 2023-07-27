@@ -4,7 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Build
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
@@ -35,8 +35,7 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 import java.util.*
-
-@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
 
@@ -46,9 +45,13 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
     var tasksTitleFieldState by remember { mutableStateOf("") }
     var rewardsPriceFieldState by remember { mutableStateOf("") }
     var blurRadius by remember { mutableStateOf(0) }
-    val tasksTitles = mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa")
-    val tasksPayoff = mutableListOf(15, 20, 30, 25, 20)
-    val numberOfTasks by remember { mutableStateOf(tasksTitles.size) }
+
+    val tasksTitles by remember {
+        mutableStateOf(mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu"))
+    }
+    val tasksPayoff by remember {
+        mutableStateOf(mutableListOf(15, 20, 30, 25, 20, 25, 10, 15))
+    }
 
     val buttonsColors by remember {
         mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
@@ -61,6 +64,8 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
     val buttonsClicked by remember {
         mutableStateOf(mutableListOf(false, false, false, false, false))
     }
+
+    val numberOfTasks by remember { mutableStateOf(tasksTitles.size) }
 
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -115,7 +120,7 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                repeat(numberOfTasks){
+                repeat(5){
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -123,7 +128,7 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        Spacer(modifier = Modifier.width(20.dp))
+                        Spacer(modifier = Modifier.width(15.dp))
 
                         OutlinedButton(
                             modifier = Modifier
@@ -137,19 +142,30 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                                 buttonsColors[it] = Color.Black
                                 buttonsClicked[it] = true
                             }
-                        ) {}
+                        ) {
+
+                        }
 
                         if (buttonsClicked[it]) {
                             todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                            tasksTitles.removeAt(it)
+                            tasksPayoff.removeAt(it)
+                        } else {
+                            buttonsColors[it] = Color.White
+                            todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
                         }
 
-                        Spacer(modifier = Modifier.width(20.dp))
+                        Spacer(modifier = Modifier.width(15.dp))
 
-                        AnimatedVisibility(
-                            visible = !buttonsClicked[it],
-                        ){
+                        AnimatedContent(
+                            targetState = tasksTitles[it],
+                            transitionSpec = {
+                                slideInVertically { height -> height } + fadeIn() with
+                                        slideOutVertically { height -> -height } + fadeOut()
+                            }
+                        ){targetContent->
                             Text(
-                                text = tasksTitles[it],
+                                text = targetContent,
                                 fontSize = 20.sp,
                                 style = todoTextStyles[it],
                                 color = Color.Black
@@ -158,22 +174,24 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
 
                         Spacer(modifier = Modifier.width(20.dp))
 
-                        AnimatedVisibility(
-                            visible = !buttonsClicked[it]
-                        ){
-                            Text(modifier = Modifier
-                                    .background(
-                                        color = colorResource(R.color.light_green),
-                                        shape = RoundedCornerShape(size = 20.dp)),
-                                text = "ㅤ${tasksPayoff[it]}pㅤ",
+                        AnimatedContent(
+                            targetState = tasksPayoff[it],
+                            transitionSpec = {
+                                slideInVertically { height -> height } + fadeIn() with
+                                        slideOutVertically { height -> -height } + fadeOut()
+                            }
+                        ){targetContent->
+                            Text(
+                                text = "${tasksPayoff[it]}p",
                                 fontSize = 20.sp,
                                 style = MaterialTheme.typography.body1,
                                 color = Color.Black
                             )
                         }
 
-                    }
+                        Spacer(modifier = Modifier.width(20.dp))
 
+                    }
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }
