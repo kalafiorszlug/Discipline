@@ -59,7 +59,7 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
     ) {
 
         Text(
-            text = "Hi ${viewModel.userName}",
+            text = "Hi ${viewModel.userName}!",
             style = MaterialTheme.typography.h1
         )
 

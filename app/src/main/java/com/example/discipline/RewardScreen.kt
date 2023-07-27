@@ -29,7 +29,7 @@ import com.example.discipline.ui.theme.Purple500
 @Composable
 fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
-    var credit by remember { mutableStateOf(viewModel.credit) }
+    var credit by remember { mutableStateOf(viewModel.credits) }
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
     var rewardsTitleFieldState by remember { mutableStateOf("") }
@@ -77,8 +77,8 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 repeat(numberOfRewards){
                     OutlinedButton(
                         onClick = {
-                            viewModel.credit -= prices[it]
-                            credit = viewModel.credit
+                            viewModel.credits -= prices[it]
+                            credit = viewModel.credits
                                   },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                         shape = RoundedCornerShape(28.dp),

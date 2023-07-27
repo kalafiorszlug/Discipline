@@ -40,7 +40,7 @@ import java.util.*
 @Composable
 fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
 
-    var credit by remember { mutableStateOf(viewModel.credit) }
+    var credit by remember { mutableStateOf(viewModel.credits) }
     var taskCreating by remember { mutableStateOf(false) }
     var deadlineChoosing by remember { mutableStateOf(false) }
     var tasksTitleFieldState by remember { mutableStateOf("") }
@@ -132,8 +132,8 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                             colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                             shape = CircleShape,
                             onClick = {
-                                viewModel.credit += tasksPayoff[it]
-                                credit = viewModel.credit
+                                viewModel.credits += tasksPayoff[it]
+                                credit = viewModel.credits
                                 buttonsColors[it] = Color.Black
                                 buttonsClicked[it] = true
                             }

@@ -31,7 +31,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
-    var credit by remember { mutableStateOf(viewModel.credit) }
+    var credit by remember { mutableStateOf(viewModel.credits) }
     val tasksTitles by remember {
         mutableStateOf(mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu"))
     }
@@ -225,8 +225,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                     colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                     shape = CircleShape,
                                     onClick = {
-                                        viewModel.credit += tasksPayoff[it]
-                                        credit = viewModel.credit
+                                        viewModel.credits += tasksPayoff[it]
+                                        credit = viewModel.credits
                                         buttonsColors[it] = Color.Black
                                         buttonsClicked[it] = true
                                     }
