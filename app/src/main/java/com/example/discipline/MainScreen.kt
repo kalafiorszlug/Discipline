@@ -32,11 +32,11 @@ import androidx.navigation.NavHostController
 fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
     var credit by remember { mutableStateOf(viewModel.credits) }
-    val tasksTitles by remember {
-        mutableStateOf(mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu"))
+    var tasksTitles by remember {
+        mutableStateOf(viewModel.tasksTitles)
     }
-    val tasksPayoff by remember {
-        mutableStateOf(mutableListOf(15, 20, 30, 25, 20, 25, 10, 15))
+    var tasksPayoff by remember {
+        mutableStateOf(viewModel.tasksPayoff)
     }
 
     val buttonsColors by remember {
@@ -58,8 +58,6 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             easing = FastOutSlowInEasing
         )
     )
-
-    val numberOfTasks by remember { mutableStateOf(tasksTitles.size) }
 
     Column(
         modifier = Modifier
@@ -208,78 +206,109 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         modifier = Modifier
                             .weight(8f),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Top
                     ) {
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                        repeat(5){
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(25.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                OutlinedButton(
+                        if (viewModel.numberOfTasks >= 1){
+                            repeat(viewModel.numberOfTasks){
+                                Row(
                                     modifier = Modifier
-                                        .border(1.dp, color = Color.Black, shape = CircleShape)
-                                        .size(15.dp),
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
-                                    shape = CircleShape,
-                                    onClick = {
-                                        viewModel.credits += tasksPayoff[it]
-                                        credit = viewModel.credits
-                                        buttonsColors[it] = Color.Black
-                                        buttonsClicked[it] = true
-                                    }
-                                ) {}
+                                        .fillMaxWidth()
+                                        .height(25.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    OutlinedButton(
+                                        modifier = Modifier
+                                            .border(1.dp, color = Color.Black, shape = CircleShape)
+                                            .size(15.dp),
+                                        colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
+                                        shape = CircleShape,
+                                        onClick = {
+                                            viewModel.credits += tasksPayoff[it]
+                                            credit = viewModel.credits
+                                            buttonsColors[it] = Color.Black
+                                            buttonsClicked[it] = true
+                                        }
+                                    ) {}
 
-                                if (buttonsClicked[it]) {
-                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-                                    tasksTitles.removeAt(it)
-                                    tasksPayoff.removeAt(it)
-                                    buttonsClicked[it] = false
-                                } else{
-                                    buttonsColors[it] = Color.White
-                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
+                                    if (buttonsClicked[it]) {
+                                        todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+
+                                        if (tasksTitles.size <= 6){
+                                            viewModel.numberOfTasks -= 1
+                                        }
+
+                                        viewModel.tasksTitles.removeAt(it)
+                                        tasksTitles = viewModel.tasksTitles
+
+                                        tasksPayoff.removeAt(it)
+                                        tasksPayoff = viewModel.tasksPayoff
+
+                                        buttonsClicked[it] = false
+                                    } else{
+                                        buttonsColors[it] = Color.White
+                                        todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
+                                    }
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    AnimatedContent(
+                                        targetState = tasksTitles[it],
+                                        transitionSpec = {
+                                            slideInVertically { height -> height } + fadeIn() with
+                                                    slideOutVertically { height -> -height } + fadeOut()
+                                        }
+                                    ){targetContent->
+                                        Text(
+                                            text = targetContent,
+                                            fontSize = 20.sp,
+                                            style = todoTextStyles[it],
+                                            color = Color.Black
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    AnimatedContent(
+                                        targetState = tasksPayoff[it],
+                                        transitionSpec = {
+                                            slideInVertically { height -> height } + fadeIn() with
+                                                    slideOutVertically { height -> -height } + fadeOut()
+                                        }
+                                    ){targetContent->
+                                        Text(
+                                            text = "${tasksPayoff[it]}p",
+                                            fontSize = 20.sp,
+                                            style = MaterialTheme.typography.body1,
+                                            color = Color.Black
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
                                 }
-
-                                Spacer(modifier = Modifier.width(20.dp))
-
-                                AnimatedContent(
-                                    targetState = tasksTitles[it],
-                                    transitionSpec = {
-                                        slideInVertically { height -> height } + fadeIn() with
-                                        slideOutVertically { height -> -height } + fadeOut()
-                                    }
-                                ){targetContent->
+                                Spacer(modifier = Modifier.height(10.dp))
+                            }
+                        } else {
+                            AnimatedContent(
+                                targetState = "All planned tasks done!",
+                                transitionSpec = {
+                                    slideInHorizontally { width -> width } + fadeIn() with
+                                            slideOutHorizontally { width -> -width } + fadeOut()
+                                }
+                            ){targetContent->
+                                Box(modifier =
+                                Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center){
                                     Text(
                                         text = targetContent,
-                                        fontSize = 20.sp,
-                                        style = todoTextStyles[it],
+                                        fontSize = 35.sp,
+                                        style = MaterialTheme.typography.h1,
                                         color = Color.Black
                                     )
                                 }
-                                
-                                Spacer(modifier = Modifier.width(20.dp))
-
-                                AnimatedContent(
-                                    targetState = tasksPayoff[it],
-                                    transitionSpec = {
-                                        slideInVertically { height -> height } + fadeIn() with
-                                                slideOutVertically { height -> -height } + fadeOut()
-                                    }
-                                ){targetContent->
-                                    Text(
-                                        text = "${tasksPayoff[it]}p",
-                                        fontSize = 20.sp,
-                                        style = MaterialTheme.typography.body1,
-                                        color = Color.Black
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.width(20.dp))
-
                             }
-                            Spacer(modifier = Modifier.height(10.dp))
                         }
                     }
 
