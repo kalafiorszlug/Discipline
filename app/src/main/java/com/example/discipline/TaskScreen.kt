@@ -153,10 +153,10 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                                 tasksPayoff.removeAt(it)
                                 tasksPayoff = viewModel.tasksPayoff
 
+                                buttonsClicked[it] = false
+                            } else {
                                 buttonsColors[it] = Color.White
                                 todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
-
-                                buttonsClicked[it] = false
                             }
 
                             Spacer(modifier = Modifier.width(20.dp))
