@@ -332,6 +332,7 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                             onClick = {
                                 viewModel.tasksTitles += tasksTitleFieldState
                                 viewModel.tasksPayoff += tasksPayoffFieldState.toInt()
+                                viewModel.numberOfTasks += 1
                                 popupFinalOffset = 1500
                                 taskCreating = false
                                 blurRadius = 0
