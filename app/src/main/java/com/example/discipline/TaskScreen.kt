@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,15 +51,15 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
     }
 
     val buttonsColors by remember {
-        mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
+        mutableStateOf(mutableListOf(Color.White))
     }
 
     val todoTextStyles by remember {
-        mutableStateOf(mutableListOf(TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black), TextStyle(color = Color.Black)))
+        mutableStateOf(mutableListOf(TextStyle(color = Color.Black)))
     }
 
     val buttonsClicked by remember {
-        mutableStateOf(mutableListOf(false, false, false, false, false))
+        mutableStateOf(mutableListOf(false))
     }
 
     val context = LocalContext.current
@@ -91,6 +90,14 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
         )
     )
 
+    if (tasksTitles.size > buttonsColors.size){
+        repeat(tasksTitles.size - buttonsColors.size){
+            buttonsColors += Color.White
+            todoTextStyles += TextStyle(color = Color.Black)
+            buttonsClicked += false
+        }
+    }
+
     Column(
 
         modifier = Modifier
@@ -116,8 +123,8 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
 
-                if (viewModel.numberOfTasks >= 1){
-                    repeat(viewModel.numberOfTasks){
+                if (tasksTitles.size > 0){
+                    repeat(tasksTitles.size){
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -136,28 +143,18 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                                     viewModel.credits += tasksPayoff[it]
                                     credit = viewModel.credits
                                     buttonsColors[it] = Color.Black
-                                    buttonsClicked[it] = true
+
+                                    tasksTitles.removeAt(it)
+                                    tasksTitles = viewModel.tasksTitles
+
+                                    viewModel.tasksPayoff.removeAt(it)
+                                    tasksPayoff = viewModel.tasksPayoff
+
+                                    buttonsClicked.removeAt(it)
+                                    todoTextStyles.removeAt(it)
+                                    buttonsColors.removeAt(it)
                                 }
                             ) {}
-
-                            if (buttonsClicked[it]) {
-                                todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-
-                                if (tasksTitles.size <= 6){
-                                    viewModel.numberOfTasks -= 1
-                                }
-
-                                viewModel.tasksTitles.removeAt(it)
-                                tasksTitles = viewModel.tasksTitles
-
-                                tasksPayoff.removeAt(it)
-                                tasksPayoff = viewModel.tasksPayoff
-
-                                buttonsClicked[it] = false
-                            } else {
-                                buttonsColors[it] = Color.White
-                                todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
-                            }
 
                             Spacer(modifier = Modifier.width(20.dp))
 
@@ -192,9 +189,6 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                                     color = Color.Black
                                 )
                             }
-
-                            Spacer(modifier = Modifier.width(20.dp))
-
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                     }
@@ -332,7 +326,6 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                             onClick = {
                                 viewModel.tasksTitles += tasksTitleFieldState
                                 viewModel.tasksPayoff += tasksPayoffFieldState.toInt()
-                                viewModel.numberOfTasks += 1
                                 popupFinalOffset = 1500
                                 taskCreating = false
                                 blurRadius = 0
@@ -391,4 +384,5 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
         }
     }
 }
+
 

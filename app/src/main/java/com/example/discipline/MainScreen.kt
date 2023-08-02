@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import kotlin.math.*
 
 // link do konceptu zeby nie trzeba bylo tego ciagle szukac
 // https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
@@ -210,8 +211,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     ) {
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        if (viewModel.numberOfTasks >= 1){
-                            repeat(viewModel.numberOfTasks){
+                        if (viewModel.tasksTitles.size >= 1){
+                            repeat(min(tasksTitles.size, 5)){
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -228,23 +229,19 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                             viewModel.credits += tasksPayoff[it]
                                             credit = viewModel.credits
                                             buttonsColors[it] = Color.Black
+
+                                            viewModel.tasksTitles.removeAt(it)
+                                            tasksTitles = viewModel.tasksTitles
+
+                                            viewModel.tasksPayoff.removeAt(it)
+                                            tasksPayoff = viewModel.tasksPayoff
+
                                             buttonsClicked[it] = true
                                         }
                                     ) {}
 
                                     if (buttonsClicked[it]) {
                                         todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
-
-                                        if (tasksTitles.size <= 6){
-                                            viewModel.numberOfTasks -= 1
-                                        }
-
-                                        viewModel.tasksTitles.removeAt(it)
-                                        tasksTitles = viewModel.tasksTitles
-
-                                        tasksPayoff.removeAt(it)
-                                        tasksPayoff = viewModel.tasksPayoff
-
                                         buttonsClicked[it] = false
                                     } else{
                                         buttonsColors[it] = Color.White
