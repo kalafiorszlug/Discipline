@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
@@ -25,10 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlin.math.*
 
-// link do konceptu zeby nie trzeba bylo tego ciagle szukac
-// https://cdn.discordapp.com/attachments/674290787705421876/1091435114409500692/koncept.png=
-
 @OptIn(ExperimentalAnimationApi::class)
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
@@ -268,14 +267,14 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                     Spacer(modifier = Modifier.width(20.dp))
 
                                     AnimatedContent(
-                                        targetState = tasksPayoff[it],
+                                        targetState = "${tasksPayoff[it]}p",
                                         transitionSpec = {
                                             slideInVertically { height -> height } + fadeIn() with
                                                     slideOutVertically { height -> -height } + fadeOut()
                                         }
                                     ){targetContent->
                                         Text(
-                                            text = "${tasksPayoff[it]}p",
+                                            text = targetContent,
                                             fontSize = 20.sp,
                                             style = MaterialTheme.typography.body1,
                                             color = Color.Black
@@ -349,7 +348,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Row() {
+                Row {
                     Text(
                         text = "Credit: ",
                         fontSize = 30.sp,

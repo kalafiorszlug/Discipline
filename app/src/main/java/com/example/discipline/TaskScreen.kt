@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.animation.*
@@ -29,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 import java.util.*
+@SuppressLint("MutableCollectionMutableState")
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
+fun TaskScreen(viewModel: SharedViewModel){
 
     var credit by remember { mutableStateOf(viewModel.credits) }
     var taskCreating by remember { mutableStateOf(false) }
@@ -176,14 +177,14 @@ fun TaskScreen(navController: NavHostController, viewModel: SharedViewModel){
                             Spacer(modifier = Modifier.width(20.dp))
 
                             AnimatedContent(
-                                targetState = tasksPayoff[it],
+                                targetState = "${tasksPayoff[it]}p",
                                 transitionSpec = {
                                     slideInVertically { height -> height } + fadeIn() with
                                             slideOutVertically { height -> -height } + fadeOut()
                                 }
                             ){targetContent->
                                 Text(
-                                    text = "${tasksPayoff[it]}p",
+                                    text = targetContent,
                                     fontSize = 20.sp,
                                     style = MaterialTheme.typography.body1,
                                     color = Color.Black
