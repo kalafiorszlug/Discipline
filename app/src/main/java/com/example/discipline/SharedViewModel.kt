@@ -10,6 +10,7 @@ class SharedViewModel: ViewModel() {
 
     var tasksTitles = mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu")
     var tasksPayoff = mutableListOf(15, 20, 30, 25, 20, 25, 10, 15)
+    var tasksDeadlines = mutableListOf("27/8/2023", "1.1.2024", "-", "-", "-", "30.9.2023", "11.10.2023", "-")
     var numberOfTasks = 5
 
     var userName = ""

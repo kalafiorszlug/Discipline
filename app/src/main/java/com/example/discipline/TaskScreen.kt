@@ -13,17 +13,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -32,10 +36,13 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.discipline.ui.theme.Purple500
 import java.util.*
+
 @SuppressLint("MutableCollectionMutableState")
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun TaskScreen(viewModel: SharedViewModel){
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     var credit by remember { mutableStateOf(viewModel.credits) }
     var taskCreating by remember { mutableStateOf(false) }
@@ -126,71 +133,107 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                 if (tasksTitles.size > 0){
                     repeat(tasksTitles.size){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(25.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Spacer(modifier = Modifier.width(20.dp))
-
-                            OutlinedButton(
+                        Column() {
+                            Row(
                                 modifier = Modifier
-                                    .border(1.dp, color = Color.Black, shape = CircleShape)
-                                    .size(15.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
-                                shape = CircleShape,
-                                onClick = {
-                                    viewModel.credits += tasksPayoff[it]
-                                    credit = viewModel.credits
-                                    buttonsColors[it] = Color.Black
+                                    .fillMaxWidth()
+                                    .height(25.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Spacer(modifier = Modifier.width(20.dp))
 
-                                    tasksTitles.removeAt(it)
-                                    tasksTitles = viewModel.tasksTitles
+                                OutlinedButton(
+                                    modifier = Modifier
+                                        .border(1.dp, color = Color.Black, shape = CircleShape)
+                                        .size(15.dp),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
+                                    shape = CircleShape,
+                                    onClick = {
+                                        viewModel.credits += tasksPayoff[it]
+                                        credit = viewModel.credits
+                                        buttonsColors[it] = Color.Black
 
-                                    viewModel.tasksPayoff.removeAt(it)
-                                    tasksPayoff = viewModel.tasksPayoff
+                                        tasksTitles.removeAt(it)
+                                        tasksTitles = viewModel.tasksTitles
 
-                                    buttonsClicked.removeAt(it)
-                                    todoTextStyles.removeAt(it)
-                                    buttonsColors.removeAt(it)
+                                        viewModel.tasksPayoff.removeAt(it)
+                                        tasksPayoff = viewModel.tasksPayoff
+
+                                        viewModel.tasksDeadlines.removeAt(it)
+
+                                        buttonsClicked.removeAt(it)
+                                        todoTextStyles.removeAt(it)
+                                        buttonsColors.removeAt(it)
+                                    }
+                                ) {}
+
+                                Spacer(modifier = Modifier.width(20.dp))
+
+                                AnimatedContent(
+                                    targetState = tasksTitles[it],
+                                    transitionSpec = {
+                                        slideInVertically { height -> height } + fadeIn() with
+                                                slideOutVertically { height -> -height } + fadeOut()
+                                    }
+                                ){targetContent->
+                                    Text(
+                                        text = targetContent,
+                                        fontSize = 20.sp,
+                                        style = todoTextStyles[it],
+                                        color = Color.Black
+                                    )
                                 }
-                            ) {}
 
-                            Spacer(modifier = Modifier.width(20.dp))
+                                Spacer(modifier = Modifier.width(20.dp))
 
-                            AnimatedContent(
-                                targetState = tasksTitles[it],
-                                transitionSpec = {
-                                    slideInVertically { height -> height } + fadeIn() with
-                                            slideOutVertically { height -> -height } + fadeOut()
+                                AnimatedContent(
+                                    targetState = "ㅤ${tasksPayoff[it]}pㅤ",
+                                    transitionSpec = {
+                                        slideInVertically { height -> height } + fadeIn() with
+                                                slideOutVertically { height -> -height } + fadeOut()
+                                    }
+                                ){targetContent->
+                                    Text(
+                                        modifier = Modifier
+                                            .background(
+                                                color = Color.LightGray,
+                                                shape = RoundedCornerShape(size = 30.dp)
+                                            ),
+                                        text = targetContent,
+                                        fontSize = 20.sp,
+                                        style = MaterialTheme.typography.body1,
+                                        color = Color.Black
+                                    )
                                 }
-                            ){targetContent->
-                                Text(
-                                    text = targetContent,
-                                    fontSize = 20.sp,
-                                    style = todoTextStyles[it],
-                                    color = Color.Black
-                                )
                             }
 
-                            Spacer(modifier = Modifier.width(20.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                            AnimatedContent(
-                                targetState = "${tasksPayoff[it]}p",
-                                transitionSpec = {
-                                    slideInVertically { height -> height } + fadeIn() with
-                                            slideOutVertically { height -> -height } + fadeOut()
+                            Row() {
+                                Spacer(modifier = Modifier.width(55.dp))
+
+                                AnimatedContent(
+                                    targetState = "ㅤdeadline: ${viewModel.tasksDeadlines[it]}ㅤ",
+                                    transitionSpec = {
+                                        slideInVertically { height -> height } + fadeIn() with
+                                                slideOutVertically { height -> -height } + fadeOut()
+                                    }
+                                ){targetContent->
+                                    Text(
+                                        modifier = Modifier
+                                            .background(
+                                                color = colorResource(R.color.light_green),
+                                                shape = RoundedCornerShape(size = 30.dp)
+                                            ),
+                                        text = targetContent,
+                                        fontSize = 10.sp,
+                                        style = MaterialTheme.typography.h1,
+                                        color = Color.Black
+                                    )
                                 }
-                            ){targetContent->
-                                Text(
-                                    text = targetContent,
-                                    fontSize = 20.sp,
-                                    style = MaterialTheme.typography.body1,
-                                    color = Color.Black
-                                )
                             }
                         }
+                        
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 } else {
@@ -270,7 +313,9 @@ fun TaskScreen(viewModel: SharedViewModel){
                             label = { Text("Define your goal.") },
                             placeholder = { Text("Enter task's title.") },
                             shape = RoundedCornerShape(30.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
+                            keyboardActions = KeyboardActions(onDone = {keyboardController?.hide()}),
+                            singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -290,6 +335,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                             placeholder = { Text("Enter a value.") },
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,
                                 unfocusedLabelColor = Color.Gray,
@@ -319,6 +365,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                         if (deadlineChoosing) {
                             datePicker.show()
+                            deadlineChoosing = false
                         }
 
                         Spacer(modifier = Modifier.height(3.dp))
@@ -327,9 +374,13 @@ fun TaskScreen(viewModel: SharedViewModel){
                             onClick = {
                                 viewModel.tasksTitles += tasksTitleFieldState
                                 viewModel.tasksPayoff += tasksPayoffFieldState.toInt()
+                                viewModel.tasksDeadlines += selectedDateText
+                                tasksTitleFieldState = ""
+                                tasksPayoffFieldState = ""
+                                selectedDateText = ""
                                 popupFinalOffset = 1500
-                                taskCreating = false
                                 blurRadius = 0
+                                taskCreating = false
                             },
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = colorResource(
