@@ -1,7 +1,9 @@
 package com.example.discipline
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +16,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,12 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
+fun RewardScreen(viewModel: SharedViewModel) {
 
     var credit by remember { mutableStateOf(viewModel.credits) }
     var rewardCreating by remember { mutableStateOf(false) }
@@ -36,10 +38,19 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
     var rewardsPriceFieldState by remember { mutableStateOf("") }
     var rewardsDurationFieldState by remember { mutableStateOf("") }
     var blurRadius by remember { mutableStateOf(0) }
-    val images = listOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
-    val titles = listOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
-    val prices = listOf(150, 115, 120, 100, 200)
-    val numberOfRewards by remember { mutableStateOf(titles.size) }
+    var images = mutableListOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
+    var titles = mutableListOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
+    var prices = mutableListOf(150, 115, 120, 100, 200)
+    var error by remember {
+        mutableStateOf(mutableListOf("", "", "", "", ""))
+    }
+
+    var numberOfRewards by remember { mutableStateOf(titles.size) }
+
+    var displayError by remember { mutableStateOf(false) }
+
+    var enoughCredit by remember { mutableStateOf(false) }
+    var priceForPurchasePopup = 0
 
     var popupFinalOffset by remember { mutableStateOf(2000) }
 
@@ -77,14 +88,19 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 repeat(numberOfRewards){
                     OutlinedButton(
                         onClick = {
-                            viewModel.credits -= prices[it]
-                            credit = viewModel.credits
+                            if (viewModel.credits >= prices[it]){
+                                blurRadius = 15
+                                enoughCredit = true
+                                priceForPurchasePopup = prices[it]
+                            } else {
+                                error[it] = "You can't afford this"
+                            }
                                   },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                         shape = RoundedCornerShape(28.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(145.dp)
+                            .height(170.dp)
                             .padding(3.dp)
                             .border(1.dp, color = Gray, shape = RoundedCornerShape(28.dp))
                     ) {
@@ -112,6 +128,73 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                     color = colorResource(R.color.light_green),
                                     shape = RoundedCornerShape(size = 30.dp)),
                                     text = "ㅤprice: ${prices[it]}pㅤ", style = MaterialTheme.typography.h1, color = Black)
+
+                            AnimatedContent(
+                                targetState = error[it],
+                                transitionSpec = {
+                                    slideInHorizontally { width -> width } + fadeIn() with
+                                            slideOutVertically { width -> -width } + fadeOut()
+                                }
+                            ){targetContent->
+                                Text(
+                                    text = targetContent,
+                                    fontSize = 10.sp,
+                                    style = MaterialTheme.typography.h1,
+                                    color = Red
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (enoughCredit){
+
+            popupFinalOffset = 0
+
+            Popup(
+                offset = IntOffset(0, popupOffset),
+                alignment = Alignment.Center,
+                properties = PopupProperties(focusable = true)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(color = Color.White)
+                        .size(400.dp)
+                        .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
+                ) {
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Text(text = "Are you sure you want to buy this reward?", style = MaterialTheme.typography.body1, color = Black)
+
+                        Text(text = "After the purchase you will be left with: ${viewModel.credits - priceForPurchasePopup}", style = MaterialTheme.typography.body1, color = Black)
+
+                        OutlinedButton(
+                            onClick = {
+                                popupFinalOffset = 1500
+                                enoughCredit = false
+                                blurRadius = 0
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    R.color.light_green
+                                )
+                            ),
+                            shape = RoundedCornerShape(28.dp),
+                        ) {
+                            Text(
+                                "Purchase",
+                                fontSize = 16.sp,
+                                style = MaterialTheme.typography.h1,
+                                color = Black
+                            )
                         }
                     }
                 }
@@ -306,4 +389,3 @@ fun RewardScreen(navController: NavHostController, viewModel: SharedViewModel) {
         }
     }
 }
-
