@@ -29,6 +29,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,6 +99,14 @@ fun TaskScreen(viewModel: SharedViewModel){
         )
     )
 
+    val creditCounter by animateIntAsState(
+        targetValue = credit,
+        animationSpec = tween(
+            durationMillis = 700,
+            easing = FastOutSlowInEasing
+        )
+    )
+
     if (tasksTitles.size > buttonsColors.size){
         repeat(tasksTitles.size - buttonsColors.size){
             buttonsColors += Color.White
@@ -151,7 +160,6 @@ fun TaskScreen(viewModel: SharedViewModel){
                                     onClick = {
                                         viewModel.credits += tasksPayoff[it]
                                         credit = viewModel.credits
-                                        buttonsColors[it] = Color.Black
 
                                         tasksTitles.removeAt(it)
                                         tasksTitles = viewModel.tasksTitles
@@ -164,8 +172,19 @@ fun TaskScreen(viewModel: SharedViewModel){
                                         buttonsClicked.removeAt(it)
                                         todoTextStyles.removeAt(it)
                                         buttonsColors.removeAt(it)
+
+                                        buttonsClicked[it] = true
                                     }
                                 ) {}
+
+                                if (buttonsClicked[it]) {
+                                    buttonsColors[it] = Color.Black
+                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
+                                    buttonsClicked[it] = false
+                                } else{
+                                    buttonsColors[it] = Color.White
+                                    todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
+                                }
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
@@ -350,6 +369,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                         OutlinedButton(
                             modifier = Modifier
                                 .width(370.dp)
+                                .border(1.dp, color = Color.Black, shape = CircleShape)
                                 .padding(3.dp),
                             onClick = { deadlineChoosing = true },
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
@@ -419,14 +439,7 @@ fun TaskScreen(viewModel: SharedViewModel){
             {
                 Row {
                     Text(
-                        text = "Credit: ",
-                        fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1,
-                        color = Color.Black
-                    )
-
-                    Text(
-                        text = credit.toString(),
+                        text = "Credit: $creditCounter",
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1,
                         color = Color.Black

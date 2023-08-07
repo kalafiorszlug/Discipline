@@ -31,7 +31,6 @@ import com.example.discipline.ui.theme.Purple500
 @Composable
 fun RewardScreen(viewModel: SharedViewModel) {
 
-    var credit by remember { mutableStateOf(viewModel.credits) }
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
     var rewardsTitleFieldState by remember { mutableStateOf("") }
@@ -49,8 +48,10 @@ fun RewardScreen(viewModel: SharedViewModel) {
 
     var displayError by remember { mutableStateOf(false) }
 
+    var pushIterator = 0
+
     var enoughCredit by remember { mutableStateOf(false) }
-    var priceForPurchasePopup = 0
+    var priceForPurchasePopup by remember { mutableStateOf(0) }
 
     var popupFinalOffset by remember { mutableStateOf(2000) }
 
@@ -58,6 +59,15 @@ fun RewardScreen(viewModel: SharedViewModel) {
         targetValue = popupFinalOffset,
         animationSpec = tween(
             durationMillis = 100,
+            easing = FastOutSlowInEasing
+        )
+    )
+
+
+    val creditCounter by animateIntAsState(
+        targetValue = viewModel.credits,
+        animationSpec = tween(
+            durationMillis = 700,
             easing = FastOutSlowInEasing
         )
     )
@@ -93,7 +103,8 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 enoughCredit = true
                                 priceForPurchasePopup = prices[it]
                             } else {
-                                error[it] = "You can't afford this"
+                                pushIterator = it
+                                displayError = true
                             }
                                   },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
@@ -104,6 +115,11 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             .padding(3.dp)
                             .border(1.dp, color = Gray, shape = RoundedCornerShape(28.dp))
                     ) {
+
+                        if(displayError){
+                            error[pushIterator] = "You can't afford this."
+                            displayError = false
+                        }
 
                         Column(
                             modifier = Modifier
@@ -172,13 +188,22 @@ fun RewardScreen(viewModel: SharedViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Text(text = "Are you sure you want to buy this reward?", style = MaterialTheme.typography.body1, color = Black)
+                        Text(modifier = Modifier
+                                .padding(30.dp),
+                            text = "Are you sure you want to buy this reward?",
+                            style = MaterialTheme.typography.h1,
+                            color = Black, fontSize = 25.sp)
 
-                        Text(text = "After the purchase you will be left with: ${viewModel.credits - priceForPurchasePopup}", style = MaterialTheme.typography.body1, color = Black)
+                        Text(modifier = Modifier
+                                .padding(30.dp),
+                            text = "After the purchase you will be left with ${viewModel.credits - priceForPurchasePopup} points.",
+                            style = MaterialTheme.typography.body1,
+                            color = Black, fontSize = 20.sp)
 
                         OutlinedButton(
                             onClick = {
                                 popupFinalOffset = 1500
+                                viewModel.credits -= priceForPurchasePopup
                                 enoughCredit = false
                                 blurRadius = 0
                             },
@@ -372,14 +397,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
             {
                 Row {
                     Text(
-                        text = "Credit: ",
-                        fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1,
-                        color = Black
-                    )
-
-                    Text(
-                        text = credit.toString(),
+                        text = "Credit: $creditCounter",
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1,
                         color = Black

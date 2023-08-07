@@ -235,6 +235,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                             viewModel.tasksPayoff.removeAt(it)
                                             tasksPayoff = viewModel.tasksPayoff
 
+                                            viewModel.tasksDeadlines.removeAt(it)
+
                                             buttonsClicked[it] = true
                                         }
                                     ) {}
@@ -350,14 +352,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                 Row {
                     Text(
-                        text = "Credit: ",
-                        fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1,
-                        color = Color.Black
-                    )
-
-                    Text(
-                        text = creditCounter.toString(),
+                        text = "Credit: $creditCounter",
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1,
                         color = Color.Black
