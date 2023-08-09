@@ -392,9 +392,18 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                         OutlinedButton(
                             onClick = {
-                                viewModel.tasksTitles += tasksTitleFieldState
-                                viewModel.tasksPayoff += tasksPayoffFieldState.toInt()
-                                viewModel.tasksDeadlines += selectedDateText
+                                if (tasksTitleFieldState != ""){
+                                    viewModel.tasksTitles += tasksTitleFieldState
+                                }
+
+                                if (tasksTitleFieldState != ""){
+                                    viewModel.tasksPayoff += tasksPayoffFieldState.toInt()
+                                }
+
+                                if (tasksTitleFieldState != ""){
+                                    viewModel.tasksDeadlines += selectedDateText
+                                }
+
                                 tasksTitleFieldState = ""
                                 tasksPayoffFieldState = ""
                                 selectedDateText = ""
