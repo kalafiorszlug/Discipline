@@ -47,7 +47,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
     var streakExplanation by remember { mutableStateOf(false) }
 
-    val barChartInputsPercent = mutableListOf(10, 20, 30)
+    val barChartInputsPercent = mutableListOf(3, 5, 4, 7, 1, 6, 9)
+    val daysOfTheWeek = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
     val defaultMaxHeight = 200
     val borderColor = Color.Black
     val density = LocalDensity.current
@@ -78,43 +79,70 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                     modifier = Modifier
                         .background(Color.White)
                         .padding(4.dp)
-                        .size(width = 350.dp, height = 200.dp),
+                        .size(width = 370.dp, height = 230.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Row(
-                        modifier = Modifier.then(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(defaultMaxHeight.dp)
-                                .drawBehind {
-                                    // draw X-Axis
-                                    drawLine(
-                                        color = borderColor,
-                                        start = Offset(0f, size.height),
-                                        end = Offset(size.width, size.height),
-                                        strokeWidth = strokeWidth
-                                    )
-                                    // draw Y-Axis
-                                    drawLine(
-                                        color = borderColor,
-                                        start = Offset(0f, 0f),
-                                        end = Offset(0f, size.height),
-                                        strokeWidth = strokeWidth
-                                    )
+                    Column() {
+                        Row() {
+                            Spacer(modifier = Modifier.width(10.dp))
+                            
+                            Column() {
+                                repeat(barChartInputsPercent.max()){
+                                    Text(text = (barChartInputsPercent.max() - it).toString())
                                 }
-                        ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.Bottom
-                    ) {
-                        repeat(barChartInputsPercent.size){
+                            }
 
-                            Spacer(
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp)
-                                    .height((barChartInputsPercent[it] * constant).dp)
-                                    .weight(1f)
-                                    .background(colorResource(R.color.light_green))
-                            )
+                            Column() {
+                                Row(
+                                    modifier = Modifier.then(
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .height(defaultMaxHeight.dp)
+                                            .drawBehind {
+                                                // draw X-Axis
+                                                drawLine(
+                                                    color = borderColor,
+                                                    start = Offset(50f, size.height),
+                                                    end = Offset(size.width, size.height),
+                                                    strokeWidth = strokeWidth
+                                                )
+                                                // draw Y-Axis
+                                                drawLine(
+                                                    color = borderColor,
+                                                    start = Offset(50f, 0f),
+                                                    end = Offset(50f, size.height),
+                                                    strokeWidth = strokeWidth
+                                                )
+                                            }
+                                    ),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.Bottom
+                                ) {
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    repeat(barChartInputsPercent.size){
+                                        Spacer(
+                                            modifier = Modifier
+                                                .padding(horizontal = 5.dp, vertical = 1.dp)
+                                                .height((barChartInputsPercent[it] * constant).dp)
+                                                .weight(1f)
+                                                .background(colorResource(R.color.light_green))
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(5.dp))
+
+                                Row() {
+                                    Spacer(modifier = Modifier.width(28.dp))
+
+                                    repeat(daysOfTheWeek.size){
+                                        Text(text = daysOfTheWeek[it])
+
+                                        Spacer(modifier = Modifier.width(25.dp))
+                                    }
+                                }
+                            }
                         }
                     }
 
