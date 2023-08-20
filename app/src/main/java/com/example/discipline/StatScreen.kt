@@ -16,12 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import java.util.*
 
 @Composable
 fun RowScope.Bar(
@@ -47,13 +49,25 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
     var streakExplanation by remember { mutableStateOf(false) }
 
-    val barChartInputsPercent = mutableListOf(3, 5, 4, 7, 1, 6, 9)
-    val daysOfTheWeek = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
+    val tasksThroughoutTheWeek = mutableListOf(3, 5, 4, 7, 1, 6, 9)
+    val daysOfTheWeek = listOf("sun", "mon", "tue", "wed", "thu", "fri", "sat")
+    var numberOfCharts = 1
     val defaultMaxHeight = 200
     val borderColor = Color.Black
     val density = LocalDensity.current
     val strokeWidth = with(density) { 2.dp.toPx() }
-    val constant = defaultMaxHeight/barChartInputsPercent.max()
+    val constant = defaultMaxHeight/tasksThroughoutTheWeek.max()
+
+    val calendar = Calendar.getInstance()
+    val dayOfTheWeek = (calendar[Calendar.DAY_OF_WEEK])
+
+    val localDensity = LocalDensity.current
+    var xAxisWidth by remember {
+        mutableStateOf(0.dp)
+    }
+    var textWidth by remember {
+        mutableStateOf(0.dp)
+    }
 
     Column(
         modifier = Modifier
@@ -71,9 +85,9 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             horizontalArrangement = Arrangement.Center
         ) {
 
-            repeat(3){
+            repeat(numberOfCharts){
 
-                Spacer(modifier = Modifier.width(30.dp))
+                Spacer(modifier = Modifier.width(15.dp))
 
                 Box(
                     modifier = Modifier
@@ -87,8 +101,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                             Spacer(modifier = Modifier.width(10.dp))
                             
                             Column() {
-                                repeat(barChartInputsPercent.max()){
-                                    Text(text = (barChartInputsPercent.max() - it).toString())
+                                repeat(tasksThroughoutTheWeek.max()){
+                                    Text(text = (tasksThroughoutTheWeek.max() - it).toString())
                                 }
                             }
 
@@ -98,6 +112,10 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                                         Modifier
                                             .fillMaxWidth()
                                             .height(defaultMaxHeight.dp)
+                                            .onGloballyPositioned { coordinates ->
+                                                xAxisWidth =
+                                                    with(localDensity) { coordinates.size.width.toDp() }
+                                            }
                                             .drawBehind {
                                                 // draw X-Axis
                                                 drawLine(
@@ -120,26 +138,37 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                                 ) {
                                     Spacer(modifier = Modifier.width(20.dp))
 
-                                    repeat(barChartInputsPercent.size){
+                                    repeat(dayOfTheWeek){
                                         Spacer(
                                             modifier = Modifier
                                                 .padding(horizontal = 5.dp, vertical = 1.dp)
-                                                .height((barChartInputsPercent[it] * constant).dp)
+                                                .height((tasksThroughoutTheWeek[it] * constant).dp)
                                                 .weight(1f)
                                                 .background(colorResource(R.color.light_green))
                                         )
                                     }
                                 }
 
+                                var y = (xAxisWidth - (dayOfTheWeek * 5).dp) / dayOfTheWeek
+
+                                var x = 5.dp + (y - textWidth) / 2
+
                                 Spacer(modifier = Modifier.height(5.dp))
 
                                 Row() {
-                                    Spacer(modifier = Modifier.width(28.dp))
+                                    Spacer(modifier = Modifier.width(12.dp))
 
-                                    repeat(daysOfTheWeek.size){
-                                        Text(text = daysOfTheWeek[it])
+                                    repeat(dayOfTheWeek){
+                                        Spacer(modifier = Modifier.width(x))
 
-                                        Spacer(modifier = Modifier.width(25.dp))
+                                        Text(modifier = Modifier
+                                            .onGloballyPositioned { coordinates ->
+                                                textWidth =
+                                                    with(localDensity) { coordinates.size.width.toDp() }
+                                            },
+                                            text = daysOfTheWeek[it])
+
+                                        Spacer(modifier = Modifier.width(x - 10.dp))
                                     }
                                 }
                             }
@@ -226,7 +255,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                      */
                 }
 
-                Spacer(modifier = Modifier.width(30.dp))
+                Spacer(modifier = Modifier.width(15.dp))
 
             }
         }
