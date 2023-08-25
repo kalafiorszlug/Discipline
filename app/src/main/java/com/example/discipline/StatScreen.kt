@@ -97,162 +97,60 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     Column() {
-                        Row() {
-                            Spacer(modifier = Modifier.width(10.dp))
-                            
-                            Column() {
-                                repeat(tasksThroughoutTheWeek.max()){
-                                    Text(text = (tasksThroughoutTheWeek.max() - it).toString())
-                                }
-                            }
-
-                            Column() {
-                                Row(
-                                    modifier = Modifier.then(
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .height(defaultMaxHeight.dp)
-                                            .onGloballyPositioned { coordinates ->
-                                                xAxisWidth =
-                                                    with(localDensity) { coordinates.size.width.toDp() }
-                                            }
-                                            .drawBehind {
-                                                // draw X-Axis
-                                                drawLine(
-                                                    color = borderColor,
-                                                    start = Offset(50f, size.height),
-                                                    end = Offset(size.width, size.height),
-                                                    strokeWidth = strokeWidth
-                                                )
-                                                // draw Y-Axis
-                                                drawLine(
-                                                    color = borderColor,
-                                                    start = Offset(50f, 0f),
-                                                    end = Offset(50f, size.height),
-                                                    strokeWidth = strokeWidth
-                                                )
-                                            }
-                                    ),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.Bottom
-                                ) {
-                                    Spacer(modifier = Modifier.width(20.dp))
-
-                                    repeat(dayOfTheWeek){
-                                        Spacer(
-                                            modifier = Modifier
-                                                .padding(horizontal = 5.dp, vertical = 1.dp)
-                                                .height((tasksThroughoutTheWeek[it] * constant).dp)
-                                                .weight(1f)
-                                                .background(colorResource(R.color.light_green))
+                        Row(
+                            modifier = Modifier.then(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(defaultMaxHeight.dp)
+                                    .onGloballyPositioned { coordinates ->
+                                        xAxisWidth =
+                                            with(localDensity) { coordinates.size.width.toDp() }
+                                    }
+                                    .drawBehind {
+                                        // draw X-Axis
+                                        drawLine(
+                                            color = borderColor,
+                                            start = Offset(50f, size.height),
+                                            end = Offset(size.width, size.height),
+                                            strokeWidth = strokeWidth
                                         )
                                     }
-                                }
-
-                                var y = (xAxisWidth - (dayOfTheWeek * 5).dp) / dayOfTheWeek
-
-                                var x = 5.dp + (y - textWidth) / 2
-
-                                Spacer(modifier = Modifier.height(5.dp))
-
-                                Row() {
-                                    Spacer(modifier = Modifier.width(12.dp))
-
-                                    repeat(dayOfTheWeek){
-                                        Spacer(modifier = Modifier.width(x))
-
-                                        Text(modifier = Modifier
-                                            .onGloballyPositioned { coordinates ->
-                                                textWidth =
-                                                    with(localDensity) { coordinates.size.width.toDp() }
-                                            },
-                                            text = daysOfTheWeek[it])
-
-                                        Spacer(modifier = Modifier.width(x - 10.dp))
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    /*
-
-                    Canvas(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        val paddingSpace = 20.dp
-                        val xValues = listOf(1, 2, 3)
-                        val yValues = listOf(1, 2, 3)
-                        val points = listOf(1.0, 2.0, 3.0)
-                        val verticalStep = 1
-                        val textPaint = Paint()
-                        var coordinates = mutableListOf(PointF(0.0f, 0.0f))
-                        var controlPoints1 = mutableListOf(PointF(0.0f, 0.0f))
-                        var controlPoints2 = mutableListOf(PointF(0.0f, 0.0f))
-
-                        val xAxisSpace = (size.width - paddingSpace.toPx()) / xValues.size
-                        val yAxisSpace = size.height / yValues.size
-                        /** placing x axis points */
-                        for (i in xValues.indices) {
-                            drawContext.canvas.nativeCanvas.drawText(
-                                "${xValues[i]}",
-                                xAxisSpace * (i + 1),
-                                size.height - 30,
-                                textPaint
-                            )
-                        }
-                        /** placing y axis points */
-                        for (i in yValues.indices) {
-                            drawContext.canvas.nativeCanvas.drawText(
-                                "${yValues[i]}",
-                                paddingSpace.toPx() / 2f,
-                                size.height - yAxisSpace * (i + 1),
-                                textPaint
-                            )
-                        }
-
-                        /** placing points */
-                        for (i in points.indices) {
-                            val x1 = xAxisSpace * xValues[i]
-                            val y1 = size.height - (yAxisSpace * (points[i]/verticalStep.toFloat()))
-                            coordinates.add(PointF(x1.toFloat(),y1.toFloat()))
-                            /** drawing circles to indicate all the points */
-                            drawCircle(
-                                color = Color.Black,
-                                radius = 10f,
-                                center = Offset(x1.toFloat(),y1.toFloat())
-                            )
-                        }
-
-                        for (i in 1 until coordinates.size) {
-                            controlPoints1.add(PointF((coordinates[i].x + coordinates[i - 1].x) / 2, coordinates[i - 1].y))
-                            controlPoints2.add(PointF((coordinates[i].x + coordinates[i - 1].x) / 2, coordinates[i].y))
-                        }
-
-                        /** drawing the path */
-                        val stroke = Path().apply {
-                            reset()
-                            moveTo(coordinates.first().x, coordinates.first().y)
-                            for (i in 0 until coordinates.size - 1) {
-                                cubicTo(
-                                    controlPoints1[i].x,controlPoints1[i].y,
-                                    controlPoints2[i].x,controlPoints2[i].y,
-                                    coordinates[i + 1].x,coordinates[i + 1].y
+                            ),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.Bottom
+                        ) {
+                            Spacer(modifier = Modifier.width(15.dp))
+                            
+                            repeat(dayOfTheWeek){
+                                Spacer(
+                                    modifier = Modifier
+                                        .padding(horizontal = 5.dp, vertical = 1.dp)
+                                        .height((tasksThroughoutTheWeek[it] * constant).dp)
+                                        .weight(1f)
+                                        .background(colorResource(R.color.light_green))
                                 )
                             }
                         }
 
-                        drawPath(
-                            stroke,
-                            color = Color.Black,
-                            style = Stroke(
-                                width = 5f,
-                                cap = StrokeCap.Round
-                            )
-                        )
-                    }
+                        var y = (xAxisWidth - (dayOfTheWeek * 5).dp) / dayOfTheWeek
 
-                     */
+                        var x = 5.dp + (y - textWidth) / 2
+
+                        Spacer(modifier = Modifier.height(5.dp))
+
+                        Row() {
+                            repeat(dayOfTheWeek){
+                                Spacer(modifier = Modifier.width(x))
+
+                                Text(modifier = Modifier
+                                    .onGloballyPositioned { coordinates ->
+                                        textWidth =
+                                            with(localDensity) { coordinates.size.width.toDp() }
+                                    },
+                                    text = daysOfTheWeek[it])
+                            }
+                        }
+                    }
                 }
 
                 Spacer(modifier = Modifier.width(15.dp))
