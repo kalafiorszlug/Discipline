@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -23,7 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import java.util.*
+import java.lang.Integer.max
 
 @Composable
 fun RowScope.Bar(
@@ -44,22 +45,22 @@ fun RowScope.Bar(
 
 }
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
     var streakExplanation by remember { mutableStateOf(false) }
 
-    val tasksThroughoutTheWeek = mutableListOf(3, 5, 4, 7, 1, 6, 9)
+    val tasksThroughoutTheWeek by remember {
+        mutableStateOf(viewModel.tasksThroughoutTheWeek)
+    }
     val daysOfTheWeek = listOf("sun", "mon", "tue", "wed", "thu", "fri", "sat")
     var numberOfCharts = 1
     val defaultMaxHeight = 200
     val borderColor = Color.Black
     val density = LocalDensity.current
     val strokeWidth = with(density) { 2.dp.toPx() }
-    val constant = defaultMaxHeight/tasksThroughoutTheWeek.max()
-
-    val calendar = Calendar.getInstance()
-    val dayOfTheWeek = (calendar[Calendar.DAY_OF_WEEK])
+    val constant = defaultMaxHeight/max(tasksThroughoutTheWeek.max(), 1)
 
     val localDensity = LocalDensity.current
     var xAxisWidth by remember {
@@ -121,7 +122,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                         ) {
                             Spacer(modifier = Modifier.width(15.dp))
                             
-                            repeat(dayOfTheWeek){
+                            repeat(viewModel.dayOfTheWeek){
                                 Spacer(
                                     modifier = Modifier
                                         .padding(horizontal = 5.dp, vertical = 1.dp)
@@ -132,14 +133,14 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                             }
                         }
 
-                        var y = (xAxisWidth - (dayOfTheWeek * 5).dp) / dayOfTheWeek
+                        var y = (xAxisWidth - (viewModel.dayOfTheWeek * 5).dp) / viewModel.dayOfTheWeek
 
                         var x = 5.dp + (y - textWidth) / 2
 
                         Spacer(modifier = Modifier.height(5.dp))
 
                         Row() {
-                            repeat(dayOfTheWeek){
+                            repeat(viewModel.dayOfTheWeek){
                                 Spacer(modifier = Modifier.width(x))
 
                                 Text(modifier = Modifier
@@ -148,6 +149,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                                             with(localDensity) { coordinates.size.width.toDp() }
                                     },
                                     text = daysOfTheWeek[it])
+
+                                Spacer(modifier = Modifier.width(x))
                             }
                         }
                     }

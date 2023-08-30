@@ -51,6 +51,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         mutableStateOf(mutableListOf(false, false, false, false, false))
     }
 
+    var save = viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek - 1]
+
     val creditCounter by animateIntAsState(
         targetValue = credit,
         animationSpec = tween(
@@ -236,6 +238,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                             tasksPayoff = viewModel.tasksPayoff
 
                                             viewModel.tasksDeadlines.removeAt(it)
+
+                                            viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek - 1] = save + 1
 
                                             buttonsClicked[it] = true
                                         }

@@ -173,6 +173,8 @@ fun TaskScreen(viewModel: SharedViewModel){
                                         todoTextStyles.removeAt(it)
                                         buttonsColors.removeAt(it)
 
+                                        viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek] =+ 1
+
                                         buttonsClicked[it] = true
                                     }
                                 ) {}
