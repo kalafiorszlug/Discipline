@@ -174,6 +174,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                         buttonsColors.removeAt(it)
 
                                         viewModel.creditsAllTime += tasksPayoff[it]
+                                        viewModel.completedTasks += 1
 
                                         viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek] =+ 1
 
