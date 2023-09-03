@@ -13,10 +13,9 @@ class SharedViewModel: ViewModel() {
     val dayOfTheWeek = (calendar[Calendar.DAY_OF_WEEK])
     val tasksThroughoutTheWeek = mutableListOf(0, 0, 0, 0, 0, 0, 0)
 
-    var tasksTitles = mutableListOf("Masturbacja", "Prześladowanie kobiet", "Ludobójstwo", "Lizanie chodnika", "Libacja alkoholowa", "Nazistowski salut", "Komunistyczny wiec", "Konsumpcja Uranu")
+    var tasksTitles = mutableListOf("writing essay", "working out", "meditating", "studying", "programming", "doing homework", "running a marathon", "uranium consumption")
     var tasksPayoff = mutableListOf(15, 20, 30, 25, 20, 25, 10, 15)
-    var tasksDeadlines = mutableListOf("27/8/2023", "1.1.2024", "-", "-", "-", "30.9.2023", "11.10.2023", "-")
-    var numberOfTasks = 5
+    var tasksDeadlines = mutableListOf("27.9.2023", "4.9.2023", "-", "-", "-", "30.9.2023", "11.10.2023", "-")
 
     var userName = ""
 

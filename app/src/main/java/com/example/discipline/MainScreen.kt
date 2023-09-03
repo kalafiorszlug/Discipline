@@ -239,6 +239,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                                             viewModel.tasksDeadlines.removeAt(it)
 
+                                            viewModel.creditsAllTime += tasksPayoff[it]
+
                                             viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek - 1] = save + 1
 
                                             buttonsClicked[it] = true

@@ -72,7 +72,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -111,7 +112,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                                         // draw X-Axis
                                         drawLine(
                                             color = borderColor,
-                                            start = Offset(50f, size.height),
+                                            start = Offset(0f, size.height),
                                             end = Offset(size.width, size.height),
                                             strokeWidth = strokeWidth
                                         )
@@ -120,8 +121,6 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.Bottom
                         ) {
-                            Spacer(modifier = Modifier.width(15.dp))
-                            
                             repeat(viewModel.dayOfTheWeek){
                                 Spacer(
                                     modifier = Modifier

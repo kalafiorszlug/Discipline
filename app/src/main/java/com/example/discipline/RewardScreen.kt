@@ -38,7 +38,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
     var rewardsDurationFieldState by remember { mutableStateOf("") }
     var blurRadius by remember { mutableStateOf(0) }
     var images = mutableListOf(R.drawable.yt_icon, R.drawable.ig_icon, R.drawable.snap_icon, R.drawable.twitter_icon, R.drawable.tiktok_icon)
-    var titles = mutableListOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks like a retard")
+    var titles = mutableListOf("watching YouTube", "Instagram scrolling", "unlocking Snapchat", "unlocking Twitter", "watching TikToks")
     var prices = mutableListOf(150, 115, 120, 100, 200)
     var error by remember {
         mutableStateOf(mutableListOf("", "", "", "", ""))
@@ -204,6 +204,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             onClick = {
                                 popupFinalOffset = 1500
                                 viewModel.credits -= priceForPurchasePopup
+                                viewModel.creditsSpentAllTime += priceForPurchasePopup
                                 enoughCredit = false
                                 blurRadius = 0
                             },
