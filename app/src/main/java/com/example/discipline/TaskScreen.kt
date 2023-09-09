@@ -337,8 +337,9 @@ fun TaskScreen(viewModel: SharedViewModel){
                             label = { Text("Define your goal.") },
                             placeholder = { Text("Enter task's title.") },
                             shape = RoundedCornerShape(30.dp),
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
-                            keyboardActions = KeyboardActions(onDone = {keyboardController?.hide()}),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                            keyboardActions = KeyboardActions(
+                                onDone = {keyboardController?.hide()}),
                             singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Color.Gray,

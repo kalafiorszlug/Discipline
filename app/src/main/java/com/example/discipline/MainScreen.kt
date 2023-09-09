@@ -77,7 +77,11 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
             OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.StatScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .padding(3.dp)
             ) {
 
                 Column(
@@ -112,8 +116,6 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        Divider(color = Color.Gray, thickness = 2.dp)
-
         //rewards
         Box(
             modifier = Modifier
@@ -123,7 +125,11 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
             OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.RewardScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .padding(3.dp)
             ) {
 
                 Column(
@@ -184,8 +190,6 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        Divider(color = Color.Gray, thickness = 2.dp)
-
         //tasks
         Box(
             modifier = Modifier
@@ -194,9 +198,12 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         ) {
 
             OutlinedButton(
-                modifier = Modifier.fillMaxSize(),
                 onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .padding(3.dp)
             ) {
 
                 Column(

@@ -5,23 +5,31 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
     var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
     var passwordFieldState by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = Modifier
@@ -49,6 +57,10 @@ fun LoginScreen(navController: NavHostController) {
                 onValueChange = { loginFieldState = it },
                 label = { Text("Email:") },
                 placeholder = { Text(text = stringResource(R.string.example_email)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onDone = {keyboardController?.hide()}),
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color.Gray,
@@ -66,6 +78,11 @@ fun LoginScreen(navController: NavHostController) {
                 onValueChange = { passwordFieldState = it },
                 label = { Text("Password:") },
                 placeholder = { Text(text = stringResource(R.string.example_password)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onDone = {keyboardController?.hide()}),
+                visualTransformation = PasswordVisualTransformation(),
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color.Gray,

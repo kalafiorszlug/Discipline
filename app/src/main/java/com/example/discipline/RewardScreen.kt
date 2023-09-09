@@ -11,12 +11,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,7 +29,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.discipline.ui.theme.Purple500
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun RewardScreen(viewModel: SharedViewModel) {
 
@@ -54,6 +56,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
     var priceForPurchasePopup by remember { mutableStateOf(0) }
 
     var popupFinalOffset by remember { mutableStateOf(2000) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val popupOffset by animateIntAsState(
         targetValue = popupFinalOffset,
@@ -278,6 +281,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             onValueChange = { rewardsTitleFieldState = it },
                             label = { Text("How will you reward yourself?") },
                             placeholder = { Text("Enter reward's title.") },
+                            singleLine = true,
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -299,6 +303,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             placeholder = { Text("Enter a value.") },
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Gray,
                                 unfocusedLabelColor = Gray,
