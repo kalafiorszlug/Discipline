@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.discipline.ui.theme.Purple500
 
@@ -43,9 +44,10 @@ fun LoginScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(
-                painter = painterResource(R.drawable.simple_logo),
-                contentDescription = null
+            Text(
+                text = "Discipline",
+                style = MaterialTheme.typography.h1,
+                fontSize = 80.sp
             )
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -63,7 +63,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -73,6 +74,12 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 .fillMaxWidth()
                 .weight(150f)
                 .align(Alignment.CenterHorizontally)
+                .padding(
+                    start = 15.dp,
+                    top = 7.dp,
+                    end = 15.dp,
+                    bottom = 7.dp
+                )
         ) {
 
             OutlinedButton(
@@ -83,35 +90,36 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
                     .padding(3.dp)
             ) {
-
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .weight(8f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
                     Image(
                         modifier = Modifier
-                            .size(200.dp)
-                            .weight(8f),
+                            .size(170.dp),
                         painter = painterResource(R.drawable.graph_icon),
                         contentDescription = null
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
+                    Column(
                         modifier = Modifier
-                            .background(
-                                color = colorResource(R.color.light_green),
-                                shape = RoundedCornerShape(size = 32.dp)
-                            )
-                            .weight(1.5f),
-                        text = stringResource(R.string.mainscreen_statistics),
-                        fontSize = 16.sp,
-                        style = MaterialTheme.typography.h1,
-                        color = Color.Black
-                    )
+                            .weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .background(
+                                    color = colorResource(R.color.light_green),
+                                    shape = RoundedCornerShape(size = 32.dp)
+                                ),
+                            text = stringResource(R.string.mainscreen_statistics),
+                            fontSize = 16.sp,
+                            style = MaterialTheme.typography.h1,
+                            color = Color.Black
+                        )
+                    }
                 }
             }
         }
@@ -121,6 +129,12 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(150f)
+                .padding(
+                    start = 15.dp,
+                    top = 7.dp,
+                    end = 15.dp,
+                    bottom = 7.dp
+                )
         ) {
 
             OutlinedButton(
@@ -135,7 +149,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
+                    verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
@@ -143,7 +157,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                     Row(
                         modifier = Modifier
-                            .weight(8f)
+                            .weight(7f)
                     ) {
 
                         Image(
@@ -171,22 +185,25 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                    Text(
-                        modifier = Modifier
-                            .background(
-                                color = colorResource(R.color.light_green),
-                                shape = RoundedCornerShape(size = 30.dp)
-                            )
-                            .weight(2f),
-                        text = stringResource(R.string.mainscreen_rewards),
-                        fontSize = 16.sp,
-                        style = MaterialTheme.typography.h1,
-                        color = Color.Black
-                    )
+                    Column(modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .background(
+                                    color = colorResource(R.color.light_green),
+                                    shape = RoundedCornerShape(size = 30.dp)
+                                ),
+                            text = stringResource(R.string.mainscreen_rewards),
+                            fontSize = 16.sp,
+                            style = MaterialTheme.typography.h1,
+                            color = Color.Black
+                        )
+                    }
                 }
-
             }
         }
 
@@ -195,6 +212,12 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(270f)
+                .padding(
+                    start = 15.dp,
+                    top = 7.dp,
+                    end = 15.dp,
+                    bottom = 7.dp
+                )
         ) {
 
             OutlinedButton(
