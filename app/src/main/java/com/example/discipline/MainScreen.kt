@@ -20,6 +20,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -298,6 +299,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                         Text(
                                             text = targetContent,
                                             fontSize = 20.sp,
+                                            fontWeight = FontWeight.Normal,
                                             style = todoTextStyles[it],
                                             color = Color.Black
                                         )
@@ -315,7 +317,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                         Text(
                                             text = targetContent,
                                             fontSize = 20.sp,
-                                            style = MaterialTheme.typography.body1,
+                                            style = MaterialTheme.typography.body2,
                                             color = Color.Black
                                         )
                                     }
