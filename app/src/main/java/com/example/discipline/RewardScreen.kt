@@ -138,7 +138,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 contentDescription = null
                             )
 
-                            Text(text = titles[it], style = MaterialTheme.typography.body1, color = Black)
+                            Text(text = titles[it], style = MaterialTheme.typography.h2, color = Black)
 
                             Spacer(modifier = Modifier.width(2.dp))
 
