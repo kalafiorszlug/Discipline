@@ -164,11 +164,6 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         
         Spacer(modifier = Modifier.height(50.dp))
 
-        Column(modifier = Modifier,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-
-        }
         Text(text = "Statistics", fontSize = 30.sp, style = MaterialTheme.typography.h1)
         
         Spacer(modifier = Modifier.height(10.dp))

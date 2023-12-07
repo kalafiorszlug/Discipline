@@ -140,7 +140,9 @@ fun TaskScreen(viewModel: SharedViewModel){
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
 
-                if (tasksTitles.size > 0){
+                if (tasksTitles.size >= 1){
+                    buttonsClicked[0] = false
+                    todoTextStyles[0] = TextStyle(color = Color.Black)
                     repeat(tasksTitles.size){
                         Column() {
                             Row(
@@ -160,30 +162,25 @@ fun TaskScreen(viewModel: SharedViewModel){
                                     onClick = {
                                         viewModel.credits += tasksPayoff[it]
                                         credit = viewModel.credits
+                                        buttonsColors[it] = Color.Black
 
-                                        tasksTitles.removeAt(it)
+                                        viewModel.tasksTitles.removeAt(it)
                                         tasksTitles = viewModel.tasksTitles
+
+                                        viewModel.tasksDeadlines.removeAt(it)
+
+                                        viewModel.creditsAllTime += tasksPayoff[it]
 
                                         viewModel.tasksPayoff.removeAt(it)
                                         tasksPayoff = viewModel.tasksPayoff
 
-                                        viewModel.tasksDeadlines.removeAt(it)
-
-                                        buttonsClicked.removeAt(it)
-                                        todoTextStyles.removeAt(it)
-                                        buttonsColors.removeAt(it)
-
-                                        viewModel.creditsAllTime += tasksPayoff[it]
                                         viewModel.completedTasks += 1
-
-                                        viewModel.tasksThroughoutTheWeek[viewModel.dayOfTheWeek] =+ 1
 
                                         buttonsClicked[it] = true
                                     }
                                 ) {}
 
                                 if (buttonsClicked[it]) {
-                                    buttonsColors[it] = Color.Black
                                     todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                                     buttonsClicked[it] = false
                                 } else{
@@ -261,6 +258,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 } else {
+                    buttonsClicked
                     Spacer(modifier = Modifier.width(50.dp))
 
                     AnimatedContent(
@@ -464,5 +462,6 @@ fun TaskScreen(viewModel: SharedViewModel){
         }
     }
 }
+
 
 
