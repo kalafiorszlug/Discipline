@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import java.lang.Integer.max
 
+// Funkcja odpowiadająca za wykres
 @Composable
 fun RowScope.Bar(
     value: Int,
@@ -42,7 +43,6 @@ fun RowScope.Bar(
             .weight(1f)
             .background(color)
     )
-
 }
 
 @SuppressLint("MutableCollectionMutableState")
@@ -53,6 +53,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
     var creditsExplanation by remember { mutableStateOf(false) }
     var tasksExplanation by remember { mutableStateOf(false) }
 
+    // Zmienne pomagające przy tworzeniu wykresu
     val tasksThroughoutTheWeek by remember {
         mutableStateOf(viewModel.tasksThroughoutTheWeek)
     }
@@ -72,6 +73,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         mutableStateOf(0.dp)
     }
 
+    // Kolumna trzymająca cały ekran
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,6 +84,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Wykres reprezentujący statystyki
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -168,6 +171,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         
         Spacer(modifier = Modifier.height(10.dp))
 
+        // Tekst z passą zadań i wytłumaczeniem passy
         TextButton(
             onClick = {
                 streakExplanation = !streakExplanation
@@ -189,12 +193,14 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             )
         }
 
+        // Tekst tłumaczący passę
         AnimatedVisibility(
             visible = streakExplanation
         ) {
             Text(text = "Number of days in a row which you have completed tasks in", fontSize = 14.sp, style = MaterialTheme.typography.h3)
         }
 
+        // Tekst z ilością kredytów
         TextButton(
             onClick = {
                 creditsExplanation = !creditsExplanation
@@ -216,12 +222,14 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             )
         }
 
+        // Tekst tłumaczący kredyty
         AnimatedVisibility(
             visible = creditsExplanation
         ) {
             Text(text = "Number of points that allow you claiming rewards", fontSize = 14.sp, style = MaterialTheme.typography.h3)
         }
 
+        // Tekst z ilością wykonanych zadań
         TextButton(
             onClick = {
                 tasksExplanation = !tasksExplanation
@@ -243,12 +251,14 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             )
         }
 
+        // Tekst tłumaczący statystykę wykonanych zadań
         AnimatedVisibility(
             visible = tasksExplanation
         ) {
             Text(text = "Number of tasks completed through out your whole journey", fontSize = 14.sp, style = MaterialTheme.typography.h3)
         }
 
+        // Teksty z rekordami statystyk w aplikacji
         Text(text = "Best all time streak : ${viewModel.bestStreak} days", fontSize = 16.sp, style = MaterialTheme.typography.body2)
         Text(text = "Total credits spent: ${viewModel.creditsSpentAllTime}", fontSize = 16.sp, style = MaterialTheme.typography.body2)
 

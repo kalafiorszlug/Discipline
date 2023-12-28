@@ -28,15 +28,20 @@ import com.example.discipline.ui.theme.Purple500
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
+    // Zmienne
     var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
     var passwordFieldState by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+
+    // Kontener całego ekranu
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White))
     {
+
+        // Kolumna trzymająca logo i wszystkie przyciski oraz pola tekstowe
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -44,6 +49,7 @@ fun LoginScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            // TODO * Miejsce na logo
             Text(
                 text = "Discipline",
                 style = MaterialTheme.typography.h1,
@@ -52,17 +58,22 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Pole tekstowe na maila
             OutlinedTextField(
                 modifier = Modifier
                     .width(370.dp),
+
                 value = loginFieldState,
                 onValueChange = { loginFieldState = it },
+
                 label = { Text("Email:") },
                 placeholder = { Text(text = stringResource(R.string.example_email)) },
+
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = {keyboardController?.hide()}),
+
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color.Gray,
@@ -73,18 +84,23 @@ fun LoginScreen(navController: NavHostController) {
                 )
             )
 
+            // Pole na hasło
             OutlinedTextField(
                 modifier = Modifier
                     .width(370.dp),
+
                 value = passwordFieldState,
                 onValueChange = { passwordFieldState = it },
+
                 label = { Text("Password:") },
                 placeholder = { Text(text = stringResource(R.string.example_password)) },
+
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = {keyboardController?.hide()}),
                 visualTransformation = PasswordVisualTransformation(),
+
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = Color.Gray,
@@ -97,22 +113,27 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(25.dp))
 
+            // Przycisk logowania
             OutlinedButton(
+                modifier = Modifier
+                    .width(320.dp),
+
                 onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
+
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.White,
                     contentColor = Color.DarkGray,
                 ),
                 border = BorderStroke(1.dp, color = Color.Gray),
                 shape = RoundedCornerShape(28.dp),
-                modifier = Modifier
-                    .width(320.dp)
+
             ) {
                 Text(text = stringResource(R.string.login_with_password), style = MaterialTheme.typography.body1)
             }
 
             // Spacer(modifier = Modifier.height(5.dp))
 
+            // Przycisk logowania przy użyciu konta google
             OutlinedButton(
                 onClick = {/*TODO*/},
                 shape = RoundedCornerShape(40.dp),
@@ -145,6 +166,7 @@ fun LoginScreen(navController: NavHostController) {
 
             // Spacer(modifier = Modifier.height(10.dp))
 
+            // Przycisk rejestracji
             OutlinedButton(
                 onClick = {navController.navigate(route = DisciplineScreen.RegisterScreen.name)},
                 colors = ButtonDefaults.buttonColors(

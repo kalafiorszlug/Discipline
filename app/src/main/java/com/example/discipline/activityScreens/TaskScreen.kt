@@ -91,6 +91,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
     var popupFinalOffset by remember { mutableStateOf(2000) }
 
+    // Animacja popapu (kurwa jebac to gowno pierdolone)
     val popupOffset by animateIntAsState(
         targetValue = popupFinalOffset,
         animationSpec = tween(
@@ -99,6 +100,7 @@ fun TaskScreen(viewModel: SharedViewModel){
         )
     )
 
+    // Animacja kredytów
     val creditCounter by animateIntAsState(
         targetValue = credit,
         animationSpec = tween(
@@ -107,6 +109,7 @@ fun TaskScreen(viewModel: SharedViewModel){
         )
     )
 
+    // Warunek dorabiania właściwości przycisków do nowo dodanych zadań
     if (tasksTitles.size > buttonsColors.size){
         repeat(tasksTitles.size - buttonsColors.size){
             buttonsColors += Color.White
@@ -115,6 +118,7 @@ fun TaskScreen(viewModel: SharedViewModel){
         }
     }
 
+    // Kolumna trzymająca cały ekran
     Column(
 
         modifier = Modifier
@@ -123,6 +127,8 @@ fun TaskScreen(viewModel: SharedViewModel){
         verticalArrangement = Arrangement.Center
 
     ) {
+
+        // Kontener trzymający wszystkie zadania
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,6 +137,8 @@ fun TaskScreen(viewModel: SharedViewModel){
                 .blur(blurRadius.dp)
 
         ) {
+
+            // Kolumna wyświetlająca dostępne zadania
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -145,14 +153,17 @@ fun TaskScreen(viewModel: SharedViewModel){
                     todoTextStyles[0] = TextStyle(color = Color.Black)
                     repeat(tasksTitles.size){
                         Column() {
+
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(25.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
+
                                 Spacer(modifier = Modifier.width(20.dp))
 
+                                // Przycisk do odznaczenia wykonanego zadania
                                 OutlinedButton(
                                     modifier = Modifier
                                         .border(1.dp, color = Color.Black, shape = CircleShape)
@@ -160,6 +171,8 @@ fun TaskScreen(viewModel: SharedViewModel){
                                     colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                     shape = CircleShape,
                                     onClick = {
+
+                                        // Zmienianie wszystkich zmiennych po wykonaniu zadania
                                         viewModel.credits += tasksPayoff[it]
                                         credit = viewModel.credits
                                         buttonsColors[it] = Color.Black
@@ -190,6 +203,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
+                                // Animacja zmieniająca tytuły dostępnych zadań
                                 AnimatedContent(
                                     targetState = tasksTitles[it],
                                     transitionSpec = {
@@ -207,6 +221,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                                 Spacer(modifier = Modifier.width(20.dp))
 
+                                // Animacja zmieniająca punkty za wykonanie zadania
                                 AnimatedContent(
                                     targetState = "ㅤ${tasksPayoff[it]}pㅤ",
                                     transitionSpec = {
@@ -230,6 +245,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                             Spacer(modifier = Modifier.height(5.dp))
 
+                            // Rząd trzymający ostateczny termin wykonania zadania
                             Row() {
                                 Spacer(modifier = Modifier.width(55.dp))
 
@@ -257,10 +273,13 @@ fun TaskScreen(viewModel: SharedViewModel){
                         
                         Spacer(modifier = Modifier.height(10.dp))
                     }
+
+                    // Spełnienie warunku wszystkich wykonanych zadań
                 } else {
                     buttonsClicked
                     Spacer(modifier = Modifier.width(50.dp))
 
+                    // Jeżeli wszystkie zadania zostały wykonane, wyświetl tekst zaznaczający to
                     AnimatedContent(
                         targetState = "All planned tasks done!",
                         transitionSpec = {
@@ -283,11 +302,14 @@ fun TaskScreen(viewModel: SharedViewModel){
             }
         }
 
+        // Kontener trzymający przycisk tworzenia nowego zadania
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color.White))
         {
+
+            // Przycisk odpowiadający tworzeniu nowego zadania
             OutlinedButton(
                 onClick = {
                     taskCreating = true
@@ -303,6 +325,7 @@ fun TaskScreen(viewModel: SharedViewModel){
             }
         }
 
+        // Jeżeli kliknięto przycisk, wyświetl ekran odpowiadający tworzeniu nowego zadania
         if (taskCreating){
 
             popupFinalOffset = 0
@@ -312,6 +335,8 @@ fun TaskScreen(viewModel: SharedViewModel){
                 alignment = Alignment.Center,
                 properties = PopupProperties(focusable = true)
             ) {
+
+                // Kontener trzymający ekran tworzenia nowego zadaniu
                 Box(
                     modifier = Modifier
                         .background(color = Color.White)
@@ -326,6 +351,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
+                        // Pole tekstowe z nazwą nowego zadania
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -348,6 +374,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                             )
                         )
 
+                        // Pole tekstowe z nagrodą za wykonanie zadania
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -370,6 +397,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                         Spacer(modifier = Modifier.height(5.dp))
 
+                        // Przycisk z wyborem treminu wykonania zadania
                         OutlinedButton(
                             modifier = Modifier
                                 .width(370.dp)
@@ -387,6 +415,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                             )
                         }
 
+                        // Jeżeli kliknięto przycisk, wyświetl kalendarz aby wybrać termin wykonania zadania
                         if (deadlineChoosing) {
                             datePicker.show()
                             deadlineChoosing = false
@@ -394,6 +423,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                         Spacer(modifier = Modifier.height(3.dp))
 
+                        // Przycisk zatwierdzający tworzenie nowego zadania
                         OutlinedButton(
                             onClick = {
                                 if (tasksTitleFieldState != ""){
@@ -437,6 +467,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
+        // Kontener z aktualną ilością kredytów
         Box(
             modifier = Modifier
                 .fillMaxWidth()

@@ -99,7 +99,7 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate(route = DisciplineScreen.AppInfo.name) },
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
                 .width(100.dp)

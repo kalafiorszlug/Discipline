@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ import com.example.discipline.ui.theme.Purple500
 @Composable
 fun RewardScreen(viewModel: SharedViewModel) {
 
+    // Zmienne odpowiadające za dostępne nagrody
     var rewardCreating by remember { mutableStateOf(false) }
     var appOrWebsiteBlocking by remember { mutableStateOf(false) }
     var rewardsTitleFieldState by remember { mutableStateOf("") }
@@ -58,6 +61,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
     var popupFinalOffset by remember { mutableStateOf(2000) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    // JEBANA ANIMACJA POPAPU
     val popupOffset by animateIntAsState(
         targetValue = popupFinalOffset,
         animationSpec = tween(
@@ -65,7 +69,6 @@ fun RewardScreen(viewModel: SharedViewModel) {
             easing = FastOutSlowInEasing
         )
     )
-
 
     val creditCounter by animateIntAsState(
         targetValue = viewModel.credits,
@@ -75,14 +78,14 @@ fun RewardScreen(viewModel: SharedViewModel) {
         )
     )
 
+    // Kolumna trzymająca cały ekran
     Column(
-
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-
     ) {
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,6 +94,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                 .blur(blurRadius.dp)
 
         ) {
+            // Kolumna trzymająca dostępne nagrody
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -98,7 +102,10 @@ fun RewardScreen(viewModel: SharedViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                // Wyświetlanie nagród
                 repeat(numberOfRewards){
+
+                    // Przycisk odpowiadający danej nagrodzie
                     OutlinedButton(
                         onClick = {
                             if (viewModel.credits >= prices[it]){
@@ -119,17 +126,21 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             .border(1.dp, color = Gray, shape = RoundedCornerShape(28.dp))
                     ) {
 
+                        // Jeżeli użytkownikowi brakuje punktów, wyświetl błąd
                         if(displayError){
                             error[pushIterator] = "You can't afford this."
                             displayError = false
                         }
 
+                        // Kolumna trzymająca nazwę, ikonę oraz cenę nagrody
                         Column(
                             modifier = Modifier
                                 .fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
+
+                            // Ikona nagrody
                             Image(
                                 modifier = Modifier
                                     .size(75.dp)
@@ -138,16 +149,19 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 contentDescription = null
                             )
 
+                            // Tytuł nagrody
                             Text(text = titles[it], style = MaterialTheme.typography.h2, color = Black)
 
                             Spacer(modifier = Modifier.width(2.dp))
 
+                            // Cena nagrody
                             Text(modifier = Modifier
                                 .background(
                                     color = colorResource(R.color.light_green),
                                     shape = RoundedCornerShape(size = 30.dp)),
                                     text = "ㅤprice: ${prices[it]}pㅤ", style = MaterialTheme.typography.h1, color = Black)
 
+                            // Animacja wyświetlania się błedu
                             AnimatedContent(
                                 targetState = error[it],
                                 transitionSpec = {
@@ -168,10 +182,12 @@ fun RewardScreen(viewModel: SharedViewModel) {
             }
         }
 
+        // Jeżeli masz wystarczjąco kredytów na nagrodę, wyświetl ekran potwierdzenia
         if (enoughCredit){
 
             popupFinalOffset = 0
 
+            // Popup trzymający ekran potwierdzenia
             Popup(
                 offset = IntOffset(0, popupOffset),
                 alignment = Alignment.Center,
@@ -184,6 +200,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                         .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
                 ) {
 
+                    // Kolumna trzymająca przycisk potwierdzenia oraz wszystkie napisy
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
@@ -191,18 +208,21 @@ fun RewardScreen(viewModel: SharedViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
+                        // Napis pytający czy na pewno chcesz kupić nagrodę
                         Text(modifier = Modifier
                                 .padding(30.dp),
                             text = "Are you sure you want to buy this reward?",
                             style = MaterialTheme.typography.h1,
                             color = Black, fontSize = 25.sp)
 
+                        // Napis wyświetlający z jaką ilością kredytów zostaniesz po zakupie nagrody
                         Text(modifier = Modifier
                                 .padding(30.dp),
                             text = "After the purchase you will be left with ${viewModel.credits - priceForPurchasePopup} points.",
                             style = MaterialTheme.typography.body1,
                             color = Black, fontSize = 20.sp)
 
+                        // Przycisk potwerdzający kupno nagrody
                         OutlinedButton(
                             onClick = {
                                 popupFinalOffset = 1500
@@ -230,6 +250,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
             }
         }
 
+        // Kontener trzymający przycisk z dodawaniem nowej nagrody
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -250,10 +271,12 @@ fun RewardScreen(viewModel: SharedViewModel) {
             }
         }
 
+        // Jeżeli kliknięto przycisk, wyświetl ekran tworzenia nagrody
         if (rewardCreating){
 
             popupFinalOffset = 0
 
+                // Popup trzymający ekran tworzenia nowej nagrody
             Popup(
                 offset = IntOffset(0, popupOffset),
                 alignment = Alignment.Center,
@@ -273,6 +296,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
+                        // Pole tekstowe nazywające nagrodę
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -282,8 +306,10 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             label = { Text("How will you reward yourself?") },
                             placeholder = { Text("Enter reward's title.") },
                             singleLine = true,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
+                            keyboardActions = KeyboardActions(
+                                onDone = {keyboardController?.hide()}),
                             shape = RoundedCornerShape(30.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 unfocusedBorderColor = Gray,
                                 unfocusedLabelColor = Gray,
@@ -293,6 +319,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             )
                         )
 
+                        // Pole tekstowe z kosztem nagrody
                         OutlinedTextField(
                             modifier = Modifier
                                 .width(370.dp)
@@ -322,6 +349,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             color = Black
                         )
 
+                        // Przycisk wyboru aplikacji do odblokowania po kupienia nagrodu
                         OutlinedButton(
                             onClick = { appOrWebsiteBlocking = true },
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
@@ -335,9 +363,12 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             )
                         }
 
+                        // Jeżeli kliknięto przycisk wyboru aplikacji do odblokowania, wyświetl
+                        // ekran odpowiadający temu oraz wybór czasu na ile chce się aplikację odblokować
                         if (appOrWebsiteBlocking) {
                             Spacer(modifier = Modifier.height(3.dp))
 
+                            // Pole tekstowe z wyborem czasu na któy aplikacja będzie odblkowana
                             OutlinedTextField(
                                 modifier = Modifier
                                     .width(200.dp)
@@ -360,6 +391,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
 
                         Spacer(modifier = Modifier.height(3.dp))
 
+                        // Przycisk zatwierdzający tworzenie nowej nagrody
                         OutlinedButton(
                             onClick = {
                                 popupFinalOffset = 1500
@@ -380,7 +412,6 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 color = Black
                             )
                         }
-
                     }
                 }
             }
@@ -388,6 +419,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
 
         Divider(color = Gray, thickness = 2.dp)
 
+        // Kontener trzymający aktualną ilość posiadanych kredytów
         Box(
             modifier = Modifier
                 .fillMaxWidth()

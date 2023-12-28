@@ -69,7 +69,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        //stats
+        // STATYSTYKI
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -125,7 +125,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        //rewards
+        // NAGRODY
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -208,7 +208,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        //tasks
+        // ZADANIA
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -374,7 +374,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
         Divider(color = Color.Gray, thickness = 2.dp)
 
-        //credit
+        // KREDYTY
         Box(
             modifier = Modifier
                 .fillMaxWidth()
