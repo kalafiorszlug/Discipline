@@ -3,6 +3,7 @@ package com.example.discipline
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -40,6 +41,20 @@ fun LoginScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(color = Color.White))
     {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End) {
+            Image(
+                modifier = Modifier
+                    .clickable{ navController.navigate(route = DisciplineScreen.InfoScreen.name) }
+                    .padding(10.dp),
+                painter = painterResource(id = R.drawable.info_icon),
+                contentDescription = null
+            )
+        }
+
 
         // Kolumna trzymająca logo i wszystkie przyciski oraz pola tekstowe
         Column(

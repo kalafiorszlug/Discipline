@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">Discipline</string>
     <string name="loginMessage">\"Put your login below\"</string>
@@ -13,5 +13,6 @@
     <string name="mainscreen_statistics">ㅤstatisticsㅤ</string>
     <string name="mainscreen_rewards">ㅤrewardsㅤ</string>
     <string name="mainscreen_tasks">ㅤtasksㅤ</string>
+    <string name="app_info">I personally remember spending 9 hours on YouTube per day, so if you feel bad about the relationship with you phone, I get you perfectly. Throughout last few years technology has become a major distraction. Taking advantage of time spent on our phones keeps getting harder because of the variety of great, effortless pleasures available online. As young, computer-mad people we didn\'t want to cut it all out just because of that. We believe in turning all of those temptations into healthy, driving desires with some convinient management and a bit of digital minimalism. That\'s exactly what we hope to offer by announcing Discipline. Let\'s create a better environment that motivates you to accomplish your goals instead of preventing you from doing the hard work.</string>
 
 </resources>

@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -69,11 +70,86 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        // KREDYTY, USTAWIENIA
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(35f)
+                .background(color = Color.White),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                Image(
+                    modifier = Modifier
+                        .clickable{}
+                        .size(50.dp)
+                        .padding(12.dp),
+                    painter = painterResource(id = R.drawable.settings_icon),
+                    contentDescription = null
+                )
+            }
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ){
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+                    Text(
+                        text = "${viewModel.userName}'s credit: $creditCounter",
+                        fontSize = 22.sp,
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black
+                    )
+                }
+            }
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ){
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+                    Image(
+                        modifier = Modifier
+                            .clickable{}
+                            .size(60.dp)
+                            .padding(10.dp),
+                        painter = painterResource(id = R.drawable.default_user_icon),
+                        contentDescription = null
+                    )
+
+                }
+            }
+        }
+
+        Divider(color = Color.Gray, thickness = 2.dp)
+
         // STATYSTYKI
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(150f)
+                .weight(130f)
                 .align(Alignment.CenterHorizontally)
                 .padding(
                     start = 15.dp,
@@ -99,7 +175,8 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                     Image(
                         modifier = Modifier
-                            .size(170.dp),
+                            .size(155.dp)
+                            .weight(5f),
                         painter = painterResource(R.drawable.graph_icon),
                         contentDescription = null
                     )
@@ -129,7 +206,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(150f)
+                .weight(130f)
                 .padding(
                     start = 15.dp,
                     top = 7.dp,
@@ -163,7 +240,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                         Image(
                             modifier = Modifier
-                                .size(90.dp)
+                                .size(70.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.ig_icon),
                             contentDescription = null
@@ -171,7 +248,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                         Image(
                             modifier = Modifier
-                                .size(90.dp)
+                                .size(70.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.yt_icon),
                             contentDescription = null
@@ -179,7 +256,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                         Image(
                             modifier = Modifier
-                                .size(90.dp)
+                                .size(70.dp)
                                 .weight(1f),
                             painter = painterResource(R.drawable.snap_icon),
                             contentDescription = null
@@ -212,7 +289,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(270f)
+                .weight(300f)
                 .padding(
                     start = 15.dp,
                     top = 7.dp,
@@ -368,35 +445,6 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                             color = Color.Black
                         )
                     }
-                }
-            }
-        }
-
-        Divider(color = Color.Gray, thickness = 2.dp)
-
-        // KREDYTY
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(50f)
-                .background(color = Color.White)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row {
-                    Text(
-                        text = "Credit: $creditCounter",
-                        fontSize = 30.sp,
-                        style = MaterialTheme.typography.body1,
-                        color = Color.Black
-                    )
                 }
             }
         }

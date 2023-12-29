@@ -2,7 +2,10 @@ package com.example.discipline
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -99,7 +102,7 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(
-            onClick = { navController.navigate(route = DisciplineScreen.AppInfo.name) },
+            onClick = { navController.navigate(route = DisciplineScreen.RegisterAppInfo.name) },
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
                 .width(100.dp)

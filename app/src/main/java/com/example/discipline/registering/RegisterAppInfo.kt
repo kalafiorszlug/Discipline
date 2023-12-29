@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +18,7 @@ import com.example.discipline.SharedViewModel
 
 @Composable
 fun AppInfo(navController: NavController, viewModel: SharedViewModel) {
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -41,7 +40,7 @@ fun AppInfo(navController: NavController, viewModel: SharedViewModel) {
             modifier = Modifier
                 .width(300.dp),
 
-        )
+            )
 
         Button(
             onClick = { navController.navigate(route = DisciplineScreen.Config1.name) },

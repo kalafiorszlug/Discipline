@@ -17,7 +17,7 @@ class SharedViewModel: ViewModel() {
     var tasksPayoff = mutableListOf(15, 20, 30, 25, 20, 25, 10, 15)
     var tasksDeadlines = mutableListOf("27.9.2023", "4.9.2023", "-", "-", "-", "30.9.2023", "11.10.2023", "-")
 
-    var userName = ""
+    var userName = "name"
 
     var streak = 0
     var bestStreak = 0

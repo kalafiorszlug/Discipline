@@ -27,7 +27,8 @@ enum class DisciplineScreen() {
     TaskScreen,
     RegisterScreen,
     RegisterScreen2,
-    AppInfo,
+    InfoScreen,
+    RegisterAppInfo,
     Config1,
 }
 
@@ -55,13 +56,14 @@ fun AppNavigator(){
         startDestination = DisciplineScreen.LoginScreen.name
     ){
         composable(route = DisciplineScreen.LoginScreen.name){ LoginScreen(navController = navController)}
+        composable(route = DisciplineScreen.InfoScreen.name){ InfoScreen(navController = navController) }
         composable(route = DisciplineScreen.MainScreen.name){ MainScreen(navController = navController, viewModel)}
         composable(route = DisciplineScreen.RegisterScreen.name) { RegisterScreen(navController = navController, viewModel) }
         composable(route = DisciplineScreen.RegisterScreen2.name) { RegisterScreen2(navController = navController, viewModel) }
         composable(route = DisciplineScreen.StatScreen.name){ StatScreen(navController = navController, viewModel)}
         composable(route = DisciplineScreen.RewardScreen.name){ RewardScreen(viewModel)}
         composable(route = DisciplineScreen.TaskScreen.name){ TaskScreen(viewModel)}
-        composable(route = DisciplineScreen.AppInfo.name) { AppInfo(navController = navController, viewModel) }
+        composable(route = DisciplineScreen.RegisterAppInfo.name) { AppInfo(navController = navController, viewModel) }
         composable(route = DisciplineScreen.Config1.name) { ConfigurationScreen1(navController = navController, viewModel = viewModel) }
     }
 }
