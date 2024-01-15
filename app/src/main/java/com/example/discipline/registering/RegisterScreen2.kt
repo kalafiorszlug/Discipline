@@ -1,14 +1,14 @@
 package com.example.discipline
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -56,19 +56,22 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = viewModel.backgroundColor),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Text(
             text = "Hi ${viewModel.userName}!",
-            style = MaterialTheme.typography.h1
+            style = MaterialTheme.typography.h1,
+            color = viewModel.fontColor
         )
 
         Text(
             text = "Please input your login information",
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.body2,
+            color = viewModel.fontColor
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -83,6 +86,13 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
             onValueChange = {loginFieldState = it },
             label = { Text(text = "Email: ") },
             shape = RoundedCornerShape(30.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                focusedBorderColor = viewModel.focusableColor,
+                focusedLabelColor = viewModel.focusableColor,
+                placeholderColor = viewModel.focusableDefaultColor
+            )
 
         )
 
@@ -96,20 +106,30 @@ fun RegisterScreen2(navController: NavController, viewModel: SharedViewModel) {
             onValueChange = {passwordFieldState = it },
             label = { Text(text = "Password: ") },
             shape = RoundedCornerShape(30.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                focusedBorderColor = viewModel.focusableColor,
+                focusedLabelColor = viewModel.focusableColor,
+                placeholderColor = viewModel.focusableDefaultColor
+            )
 
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(
-            onClick = { navController.navigate(route = DisciplineScreen.RegisterAppInfo.name) },
+        OutlinedButton(
+            onClick = { navController.navigate(route = DisciplineScreen.InfoScreen.name) },
             shape = RoundedCornerShape(28.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+            border = BorderStroke(1.dp, color = viewModel.lines),
             modifier = Modifier
                 .width(100.dp)
         ) {
             Text(
                 text = "SIGN UP",
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.h1,
+                color = viewModel.fontColor
             )
         }
     }

@@ -60,7 +60,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
     val daysOfTheWeek = listOf("sun", "mon", "tue", "wed", "thu", "fri", "sat")
     var numberOfCharts = 1
     val defaultMaxHeight = 200
-    val borderColor = Color.Black
+    val borderColor = viewModel.lines
     val density = LocalDensity.current
     val strokeWidth = with(density) { 2.dp.toPx() }
     val constant = defaultMaxHeight/max(tasksThroughoutTheWeek.max(), 1)
@@ -77,7 +77,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(viewModel.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -98,7 +98,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
 
                 Box(
                     modifier = Modifier
-                        .background(Color.White)
+                        .background(viewModel.backgroundColor)
                         .padding(4.dp)
                         .size(width = 370.dp, height = 230.dp),
                     contentAlignment = Alignment.Center
@@ -152,7 +152,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
                                         textWidth =
                                             with(localDensity) { coordinates.size.width.toDp() }
                                     },
-                                    text = daysOfTheWeek[it])
+                                    text = daysOfTheWeek[it],
+                                    color = viewModel.fontColor)
 
                                 Spacer(modifier = Modifier.width(x))
                             }
@@ -167,7 +168,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Statistics", fontSize = 30.sp, style = MaterialTheme.typography.h1)
+        Text(text = "Statistics", fontSize = 30.sp, style = MaterialTheme.typography.h1, color = viewModel.fontColor)
         
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -178,7 +179,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent,
-                contentColor = Color.Black
+                contentColor = viewModel.fontColor
             ),
             contentPadding = PaddingValues(0.dp),
             shape = RoundedCornerShape(15.dp),
@@ -197,7 +198,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         AnimatedVisibility(
             visible = streakExplanation
         ) {
-            Text(text = "Number of days in a row which you have completed tasks in", fontSize = 14.sp, style = MaterialTheme.typography.h3)
+            Text(text = "Number of days in a row which you have completed tasks in", fontSize = 14.sp, style = MaterialTheme.typography.h3, color = viewModel.fontColor)
         }
 
         // Tekst z ilością kredytów
@@ -207,7 +208,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent,
-                contentColor = Color.Black
+                contentColor = viewModel.fontColor
             ),
             contentPadding = PaddingValues(0.dp),
             shape = RoundedCornerShape(15.dp),
@@ -218,7 +219,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             Text(
                 text = "Total credits collected: ${viewModel.creditsAllTime}",
                 fontSize = 20.sp,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                color = viewModel.fontColor
             )
         }
 
@@ -226,7 +228,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         AnimatedVisibility(
             visible = creditsExplanation
         ) {
-            Text(text = "Number of points that allow you claiming rewards", fontSize = 14.sp, style = MaterialTheme.typography.h3)
+            Text(text = "Number of points that allow you claiming rewards", fontSize = 14.sp, style = MaterialTheme.typography.h3, color = viewModel.fontColor)
         }
 
         // Tekst z ilością wykonanych zadań
@@ -236,7 +238,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent,
-                contentColor = Color.Black
+                contentColor = viewModel.fontColor
             ),
             contentPadding = PaddingValues(0.dp),
             shape = RoundedCornerShape(15.dp),
@@ -247,7 +249,8 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             Text(
                 text = "Total tasks completed: ${viewModel.completedTasks}",
                 fontSize = 20.sp,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                color = viewModel.fontColor
             )
         }
 
@@ -255,12 +258,12 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         AnimatedVisibility(
             visible = tasksExplanation
         ) {
-            Text(text = "Number of tasks completed through out your whole journey", fontSize = 14.sp, style = MaterialTheme.typography.h3)
+            Text(text = "Number of tasks completed through out your whole journey", fontSize = 14.sp, style = MaterialTheme.typography.h3, color = viewModel.fontColor)
         }
 
         // Teksty z rekordami statystyk w aplikacji
-        Text(text = "Best all time streak : ${viewModel.bestStreak} days", fontSize = 16.sp, style = MaterialTheme.typography.body2)
-        Text(text = "Total credits spent: ${viewModel.creditsSpentAllTime}", fontSize = 16.sp, style = MaterialTheme.typography.body2)
+        Text(text = "Best all time streak : ${viewModel.bestStreak} days", fontSize = 16.sp, style = MaterialTheme.typography.body2, color = viewModel.fontColor)
+        Text(text = "Total credits spent: ${viewModel.creditsSpentAllTime}", fontSize = 16.sp, style = MaterialTheme.typography.body2, color = viewModel.fontColor)
 
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.discipline.SharedViewModel
 
@@ -26,6 +25,8 @@ fun ConfigurationScreen1(navController: NavController, viewModel: SharedViewMode
     var firstButtonBgColor = Color.Black
     var secondButtonBgColor = Color.Black
     var thirdButtonBgColor = Color.Black
+
+    viewModel.registering = false
 
     Column(
         modifier = Modifier

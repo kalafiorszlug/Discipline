@@ -42,7 +42,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
     }
 
     val buttonsColors by remember {
-        mutableStateOf(mutableListOf(Color.White, Color.White, Color.White, Color.White, Color.White))
+        mutableStateOf(mutableListOf(Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent))
     }
 
     val todoTextStyles by remember {
@@ -66,7 +66,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White),
+            .background(color = viewModel.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -75,12 +75,11 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(35f)
-                .background(color = Color.White),
+                .background(color = Color.Transparent),
             contentAlignment = Alignment.CenterStart,
         ) {
 
             Spacer(modifier = Modifier.height(10.dp))
-
             Column(
                 modifier = Modifier
                     .fillMaxHeight(),
@@ -113,7 +112,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                         text = "${viewModel.userName}'s credit: $creditCounter",
                         fontSize = 22.sp,
                         style = MaterialTheme.typography.body1,
-                        color = Color.Black
+                        color = viewModel.fontColor
                     )
                 }
             }
@@ -143,7 +142,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
             }
         }
 
-        Divider(color = Color.Gray, thickness = 2.dp)
+        Divider(color = viewModel.lines, thickness = 2.dp)
 
         // STATYSTYKI
         Box(
@@ -161,10 +160,10 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
             OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.StatScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
                     .padding(3.dp)
             ) {
                 Column(
@@ -217,10 +216,10 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
             OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.RewardScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
                     .padding(3.dp)
             ) {
 
@@ -300,10 +299,10 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
             OutlinedButton(
                 onClick = { navController.navigate(route = DisciplineScreen.TaskScreen.name) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
                     .padding(3.dp)
             ) {
 
@@ -330,14 +329,14 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                 ) {
                                     OutlinedButton(
                                         modifier = Modifier
-                                            .border(1.dp, color = Color.Black, shape = CircleShape)
+                                            .border(1.dp, color = viewModel.lines, shape = CircleShape)
                                             .size(15.dp),
                                         colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                         shape = CircleShape,
                                         onClick = {
                                             viewModel.credits += tasksPayoff[it]
                                             credit = viewModel.credits
-                                            buttonsColors[it] = Color.Black
+                                            buttonsColors[it] = viewModel.todoButtonActivatedColor
 
                                             viewModel.tasksTitles.removeAt(it)
                                             tasksTitles = viewModel.tasksTitles
@@ -361,7 +360,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                         todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                                         buttonsClicked[it] = false
                                     } else{
-                                        buttonsColors[it] = Color.White
+                                        buttonsColors[it] = Color.Transparent
                                         todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
                                     }
 
@@ -379,7 +378,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.Normal,
                                             style = todoTextStyles[it],
-                                            color = Color.Black
+                                            color = viewModel.fontColor
                                         )
                                     }
 
@@ -396,7 +395,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                             text = targetContent,
                                             fontSize = 20.sp,
                                             style = MaterialTheme.typography.body2,
-                                            color = Color.Black
+                                            color = viewModel.fontColor
                                         )
                                     }
 
@@ -420,7 +419,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                         text = targetContent,
                                         fontSize = 35.sp,
                                         style = MaterialTheme.typography.h1,
-                                        color = Color.Black
+                                        color = viewModel.fontColor
                                     )
                                 }
                             }

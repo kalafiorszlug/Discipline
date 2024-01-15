@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
@@ -35,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.example.discipline.ui.theme.Purple500
 import java.util.*
 
 @SuppressLint("MutableCollectionMutableState")
@@ -60,7 +60,7 @@ fun TaskScreen(viewModel: SharedViewModel){
     }
 
     val buttonsColors by remember {
-        mutableStateOf(mutableListOf(Color.White))
+        mutableStateOf(mutableListOf(Color.Transparent))
     }
 
     val todoTextStyles by remember {
@@ -112,8 +112,8 @@ fun TaskScreen(viewModel: SharedViewModel){
     // Warunek dorabiania właściwości przycisków do nowo dodanych zadań
     if (tasksTitles.size > buttonsColors.size){
         repeat(tasksTitles.size - buttonsColors.size){
-            buttonsColors += Color.White
-            todoTextStyles += TextStyle(color = Color.Black)
+            buttonsColors += viewModel.lines
+            todoTextStyles += TextStyle(color = viewModel.fontColor)
             buttonsClicked += false
         }
     }
@@ -122,18 +122,20 @@ fun TaskScreen(viewModel: SharedViewModel){
     Column(
 
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = viewModel.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
 
     ) {
 
         // Kontener trzymający wszystkie zadania
+        // Adnotacja urzytkownika kalafior_szlug: Używaj jezyka polskiego, nieudaczniku.
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(9f)
-                .background(color = Color.White)
+                .background(color = viewModel.backgroundColor)
                 .blur(blurRadius.dp)
 
         ) {
@@ -150,7 +152,7 @@ fun TaskScreen(viewModel: SharedViewModel){
 
                 if (tasksTitles.size >= 1){
                     buttonsClicked[0] = false
-                    todoTextStyles[0] = TextStyle(color = Color.Black)
+                    todoTextStyles[0] = TextStyle(color = viewModel.fontColor)
                     repeat(tasksTitles.size){
                         Column() {
 
@@ -166,7 +168,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                 // Przycisk do odznaczenia wykonanego zadania
                                 OutlinedButton(
                                     modifier = Modifier
-                                        .border(1.dp, color = Color.Black, shape = CircleShape)
+                                        .border(1.dp, color = viewModel.lines, shape = CircleShape)
                                         .size(15.dp),
                                     colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                     shape = CircleShape,
@@ -175,7 +177,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                         // Zmienianie wszystkich zmiennych po wykonaniu zadania
                                         viewModel.credits += tasksPayoff[it]
                                         credit = viewModel.credits
-                                        buttonsColors[it] = Color.Black
+                                        buttonsColors[it] = viewModel.todoButtonActivatedColor
 
                                         viewModel.tasksTitles.removeAt(it)
                                         tasksTitles = viewModel.tasksTitles
@@ -197,7 +199,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                     todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough)
                                     buttonsClicked[it] = false
                                 } else{
-                                    buttonsColors[it] = Color.White
+                                    buttonsColors[it] = Color.Transparent
                                     todoTextStyles[it] = LocalTextStyle.current.copy(textDecoration = TextDecoration.None)
                                 }
 
@@ -215,7 +217,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                         text = targetContent,
                                         fontSize = 20.sp,
                                         style = todoTextStyles[it],
-                                        color = Color.Black
+                                        color = viewModel.fontColor
                                     )
                                 }
 
@@ -230,15 +232,11 @@ fun TaskScreen(viewModel: SharedViewModel){
                                     }
                                 ){targetContent->
                                     Text(
-                                        modifier = Modifier
-                                            .background(
-                                                color = Color.LightGray,
-                                                shape = RoundedCornerShape(size = 30.dp)
-                                            ),
                                         text = targetContent,
                                         fontSize = 20.sp,
-                                        style = MaterialTheme.typography.body1,
-                                        color = Color.Black
+                                        fontWeight = FontWeight.Normal,
+                                        style = MaterialTheme.typography.body2,
+                                        color = viewModel.fontColor
                                     )
                                 }
                             }
@@ -294,7 +292,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                 text = targetContent,
                                 fontSize = 35.sp,
                                 style = MaterialTheme.typography.h1,
-                                color = Color.Black
+                                color = viewModel.fontColor
                             )
                         }
                     }
@@ -306,7 +304,7 @@ fun TaskScreen(viewModel: SharedViewModel){
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White))
+                .background(color = viewModel.backgroundColor))
         {
 
             // Przycisk odpowiadający tworzeniu nowego zadania
@@ -321,7 +319,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                     .padding(2.dp)
                     .align(Alignment.Center)
             ) {
-                Text(text = "+ Add a task", style = MaterialTheme.typography.h1, color = Color.Black)
+                Text(text = "+ Add a task", style = MaterialTheme.typography.h1, color = viewModel.fontColor)
             }
         }
 
@@ -339,9 +337,9 @@ fun TaskScreen(viewModel: SharedViewModel){
                 // Kontener trzymający ekran tworzenia nowego zadaniu
                 Box(
                     modifier = Modifier
-                        .background(color = Color.White)
+                        .background(color = viewModel.backgroundColor)
                         .size(400.dp)
-                        .border(width = 2.dp, color = Color.Gray, shape = RoundedCornerShape(16.dp)),
+                        .border(width = 2.dp, color = viewModel.lines, shape = RoundedCornerShape(16.dp)),
                 ) {
 
                     Column(
@@ -366,11 +364,11 @@ fun TaskScreen(viewModel: SharedViewModel){
                                 onDone = {keyboardController?.hide()}),
                             singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Color.Gray,
-                                unfocusedLabelColor = Color.Gray,
-                                focusedBorderColor = Purple500,
-                                focusedLabelColor = Purple500,
-                                placeholderColor = Color.Gray
+                                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                                focusedBorderColor = viewModel.focusableColor,
+                                focusedLabelColor = viewModel.focusableColor,
+                                placeholderColor = viewModel.focusableDefaultColor
                             )
                         )
 
@@ -387,11 +385,11 @@ fun TaskScreen(viewModel: SharedViewModel){
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Color.Gray,
-                                unfocusedLabelColor = Color.Gray,
-                                focusedBorderColor = Purple500,
-                                focusedLabelColor = Purple500,
-                                placeholderColor = Color.Gray
+                                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                                focusedBorderColor = viewModel.focusableColor,
+                                focusedLabelColor = viewModel.focusableColor,
+                                placeholderColor = viewModel.focusableDefaultColor
                             )
                         )
 
@@ -401,17 +399,17 @@ fun TaskScreen(viewModel: SharedViewModel){
                         OutlinedButton(
                             modifier = Modifier
                                 .width(370.dp)
-                                .border(1.dp, color = Color.Black, shape = CircleShape)
+                                .border(1.dp, color = viewModel.lines, shape = CircleShape)
                                 .padding(3.dp),
                             onClick = { deadlineChoosing = true },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             shape = RoundedCornerShape(28.dp),
                         ) {
                             Text(
                                 "Chose a deadline",
                                 fontSize = 16.sp,
                                 style = MaterialTheme.typography.body1,
-                                color = Color.Black
+                                color = viewModel.fontColor
                             )
                         }
 
@@ -456,7 +454,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                                 "Done!",
                                 fontSize = 16.sp,
                                 style = MaterialTheme.typography.h1,
-                                color = Color.Black
+                                color = viewModel.fontColor
                             )
                         }
 
@@ -471,7 +469,7 @@ fun TaskScreen(viewModel: SharedViewModel){
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
+                .background(color = viewModel.backgroundColor)
                 .weight(1f)
         ) {
             Column(
@@ -486,7 +484,7 @@ fun TaskScreen(viewModel: SharedViewModel){
                         text = "Credit: $creditCounter",
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1,
-                        color = Color.Black
+                        color = viewModel.fontColor
                     )
                 }
             }

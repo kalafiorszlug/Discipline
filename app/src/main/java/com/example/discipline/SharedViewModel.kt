@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import java.util.*
 
@@ -24,4 +25,15 @@ class SharedViewModel: ViewModel() {
 
     var completedTasks = 0
 
+    var registering = false
+
+    //kolorystyka
+    var theme = "dark"
+    var backgroundColor = Color.DarkGray
+    var fontColor = Color.White
+    var lines = Color.White
+    var todoButtonColor = Color.DarkGray
+    var todoButtonActivatedColor = Color.White
+    var focusableDefaultColor = Color.LightGray
+    var focusableColor = Color.White
 }

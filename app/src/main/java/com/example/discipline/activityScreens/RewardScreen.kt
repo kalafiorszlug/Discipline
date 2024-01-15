@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.example.discipline.ui.theme.Purple500
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -90,7 +89,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(9f)
-                .background(color = Color.White)
+                .background(color = viewModel.backgroundColor)
                 .blur(blurRadius.dp)
 
         ) {
@@ -117,7 +116,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 displayError = true
                             }
                                   },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                         shape = RoundedCornerShape(28.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -150,7 +149,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             )
 
                             // Tytuł nagrody
-                            Text(text = titles[it], style = MaterialTheme.typography.h2, color = Black)
+                            Text(text = titles[it], style = MaterialTheme.typography.h2, color = viewModel.fontColor)
 
                             Spacer(modifier = Modifier.width(2.dp))
 
@@ -195,9 +194,9 @@ fun RewardScreen(viewModel: SharedViewModel) {
             ) {
                 Box(
                     modifier = Modifier
-                        .background(color = Color.White)
+                        .background(color = viewModel.backgroundColor)
                         .size(400.dp)
-                        .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
+                        .border(width = 2.dp, color = viewModel.lines, shape = RoundedCornerShape(16.dp)),
                 ) {
 
                     // Kolumna trzymająca przycisk potwierdzenia oraz wszystkie napisy
@@ -213,14 +212,14 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 .padding(30.dp),
                             text = "Are you sure you want to buy this reward?",
                             style = MaterialTheme.typography.h1,
-                            color = Black, fontSize = 25.sp)
+                            color = viewModel.fontColor, fontSize = 25.sp)
 
                         // Napis wyświetlający z jaką ilością kredytów zostaniesz po zakupie nagrody
                         Text(modifier = Modifier
                                 .padding(30.dp),
                             text = "After the purchase you will be left with ${viewModel.credits - priceForPurchasePopup} points.",
                             style = MaterialTheme.typography.body1,
-                            color = Black, fontSize = 20.sp)
+                            color = viewModel.fontColor, fontSize = 20.sp)
 
                         // Przycisk potwerdzający kupno nagrody
                         OutlinedButton(
@@ -242,7 +241,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 "Purchase",
                                 fontSize = 16.sp,
                                 style = MaterialTheme.typography.h1,
-                                color = Black
+                                color = viewModel.fontColor
                             )
                         }
                     }
@@ -254,7 +253,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White))
+                .background(color = viewModel.backgroundColor))
         {
             OutlinedButton(
                 onClick = {
@@ -267,7 +266,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                     .padding(2.dp)
                     .align(Alignment.Center)
             ) {
-                Text(text = "+ Add a reward", style = MaterialTheme.typography.h1, color = Black)
+                Text(text = "+ Add a reward", style = MaterialTheme.typography.h1, color = viewModel.fontColor)
             }
         }
 
@@ -284,9 +283,9 @@ fun RewardScreen(viewModel: SharedViewModel) {
             ) {
                 Box(
                     modifier = Modifier
-                        .background(color = Color.White)
+                        .background(color = viewModel.backgroundColor)
                         .size(400.dp)
-                        .border(width = 2.dp, color = Gray, shape = RoundedCornerShape(16.dp)),
+                        .border(width = 2.dp, color = viewModel.lines, shape = RoundedCornerShape(16.dp)),
                 ) {
 
                     Column(
@@ -311,11 +310,11 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 onDone = {keyboardController?.hide()}),
                             shape = RoundedCornerShape(30.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Gray,
-                                unfocusedLabelColor = Gray,
-                                focusedBorderColor = Purple500,
-                                focusedLabelColor = Purple500,
-                                placeholderColor = Gray
+                                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                                focusedBorderColor = viewModel.focusableColor,
+                                focusedLabelColor = viewModel.focusableColor,
+                                placeholderColor = viewModel.focusableDefaultColor
                             )
                         )
 
@@ -332,11 +331,11 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                unfocusedBorderColor = Gray,
-                                unfocusedLabelColor = Gray,
-                                focusedBorderColor = Purple500,
-                                focusedLabelColor = Purple500,
-                                placeholderColor = Gray
+                                unfocusedBorderColor = viewModel.focusableDefaultColor,
+                                unfocusedLabelColor = viewModel.focusableDefaultColor,
+                                focusedBorderColor = viewModel.focusableColor,
+                                focusedLabelColor = viewModel.focusableColor,
+                                placeholderColor = viewModel.focusableDefaultColor
                             )
                         )
 
@@ -346,20 +345,20 @@ fun RewardScreen(viewModel: SharedViewModel) {
                             text = "*optional*",
                             fontSize = 10.sp,
                             style = MaterialTheme.typography.h1,
-                            color = Black
+                            color = viewModel.fontColor
                         )
 
                         // Przycisk wyboru aplikacji do odblokowania po kupienia nagrodu
                         OutlinedButton(
                             onClick = { appOrWebsiteBlocking = true },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             shape = RoundedCornerShape(28.dp),
                         ) {
                             Text(
                                 "Chose an app/website to be the reward",
                                 fontSize = 16.sp,
                                 style = MaterialTheme.typography.body1,
-                                color = Black
+                                color = viewModel.fontColor
                             )
                         }
 
@@ -380,11 +379,11 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 shape = RoundedCornerShape(30.dp),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    unfocusedBorderColor = Gray,
-                                    unfocusedLabelColor = Gray,
-                                    focusedBorderColor = Purple500,
-                                    focusedLabelColor = Purple500,
-                                    placeholderColor = Gray
+                                    unfocusedBorderColor = viewModel.focusableDefaultColor,
+                                    unfocusedLabelColor = viewModel.focusableDefaultColor,
+                                    focusedBorderColor = viewModel.focusableColor,
+                                    focusedLabelColor = viewModel.focusableColor,
+                                    placeholderColor = viewModel.focusableDefaultColor
                                 )
                             )
                         }
@@ -409,7 +408,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                                 "Done!",
                                 fontSize = 16.sp,
                                 style = MaterialTheme.typography.h1,
-                                color = Black
+                                color = viewModel.fontColor
                             )
                         }
                     }
@@ -417,13 +416,13 @@ fun RewardScreen(viewModel: SharedViewModel) {
             }
         }
 
-        Divider(color = Gray, thickness = 2.dp)
+        Divider(color = viewModel.lines, thickness = 2.dp)
 
         // Kontener trzymający aktualną ilość posiadanych kredytów
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
+                .background(color = viewModel.backgroundColor)
                 .weight(1f)
         ) {
             Column(
@@ -438,7 +437,7 @@ fun RewardScreen(viewModel: SharedViewModel) {
                         text = "Credit: $creditCounter",
                         fontSize = 30.sp,
                         style = MaterialTheme.typography.body1,
-                        color = Black
+                        color = viewModel.fontColor
                     )
                 }
             }

@@ -23,11 +23,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.discipline.ui.theme.Purple500
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
     // Zmienne
     var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
@@ -39,7 +38,7 @@ fun LoginScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White))
+            .background(color = viewModel.backgroundColor))
     {
 
         Row(
@@ -68,6 +67,7 @@ fun LoginScreen(navController: NavHostController) {
             Text(
                 text = "Discipline",
                 style = MaterialTheme.typography.h1,
+                color = viewModel.fontColor,
                 fontSize = 80.sp
             )
 
@@ -91,11 +91,11 @@ fun LoginScreen(navController: NavHostController) {
 
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Gray,
-                    unfocusedLabelColor = Color.Gray,
-                    focusedBorderColor = Purple500,
-                    focusedLabelColor = Purple500,
-                    placeholderColor = Color.Gray
+                    unfocusedBorderColor = viewModel.focusableDefaultColor,
+                    unfocusedLabelColor = viewModel.focusableDefaultColor,
+                    focusedBorderColor = viewModel.focusableColor,
+                    focusedLabelColor = viewModel.focusableColor,
+                    placeholderColor = viewModel.focusableDefaultColor
                 )
             )
 
@@ -118,11 +118,11 @@ fun LoginScreen(navController: NavHostController) {
 
                 shape = RoundedCornerShape(30.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Gray,
-                    unfocusedLabelColor = Color.Gray,
-                    focusedBorderColor = Purple500,
-                    focusedLabelColor = Purple500,
-                    placeholderColor = Color.Gray
+                    unfocusedBorderColor = viewModel.focusableDefaultColor,
+                    unfocusedLabelColor = viewModel.focusableDefaultColor,
+                    focusedBorderColor = viewModel.focusableColor,
+                    focusedLabelColor = viewModel.focusableColor,
+                    placeholderColor = viewModel.focusableDefaultColor
                 )
             )
 
@@ -135,15 +135,13 @@ fun LoginScreen(navController: NavHostController) {
 
                 onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
 
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.DarkGray,
-                ),
-                border = BorderStroke(1.dp, color = Color.Gray),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+
+                border = BorderStroke(1.dp, color = viewModel.lines),
                 shape = RoundedCornerShape(28.dp),
 
             ) {
-                Text(text = stringResource(R.string.login_with_password), style = MaterialTheme.typography.body1)
+                Text(text = stringResource(R.string.login_with_password), style = MaterialTheme.typography.body1, color = viewModel.fontColor)
             }
 
             // Spacer(modifier = Modifier.height(5.dp))
@@ -152,11 +150,8 @@ fun LoginScreen(navController: NavHostController) {
             OutlinedButton(
                 onClick = {/*TODO*/},
                 shape = RoundedCornerShape(40.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.DarkGray,
-                ),
-                border = BorderStroke(1.dp, color = Color.Gray),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                border = BorderStroke(1.dp, color = viewModel.lines),
                 modifier = Modifier
                     .width(320.dp)
             ) {
@@ -174,7 +169,7 @@ fun LoginScreen(navController: NavHostController) {
 
                         Spacer(modifier = Modifier.width(10.dp))
 
-                        Text(text = stringResource(R.string.login_with_google), style = MaterialTheme.typography.body1)
+                        Text(text = stringResource(R.string.login_with_google), style = MaterialTheme.typography.body1, color = viewModel.fontColor)
                     }
                 }
             }
@@ -184,16 +179,13 @@ fun LoginScreen(navController: NavHostController) {
             // Przycisk rejestracji
             OutlinedButton(
                 onClick = {navController.navigate(route = DisciplineScreen.RegisterScreen.name)},
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.DarkGray,
-                ),
-                border = BorderStroke(1.dp, color = Color.Gray),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                border = BorderStroke(1.dp, color = viewModel.lines),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
                     .width(320.dp)
             ) {
-                Text(text = stringResource(R.string.sign_up), style = MaterialTheme.typography.body1)
+                Text(text = stringResource(R.string.sign_up), style = MaterialTheme.typography.body1, color = viewModel.lines)
             }
         }
     }
