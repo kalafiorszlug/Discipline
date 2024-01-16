@@ -27,8 +27,8 @@ enum class DisciplineScreen() {
     RegisterScreen,
     RegisterScreen2,
     InfoScreen,
-    RegisterAppInfo,
     Config1,
+    SettingsScreen
 }
 
 class MainActivity : ComponentActivity() {
@@ -63,6 +63,7 @@ fun AppNavigator(){
         composable(route = DisciplineScreen.RewardScreen.name){ RewardScreen(viewModel)}
         composable(route = DisciplineScreen.TaskScreen.name){ TaskScreen(viewModel)}
         composable(route = DisciplineScreen.Config1.name) { ConfigurationScreen1(navController = navController, viewModel = viewModel) }
+        composable(route = DisciplineScreen.SettingsScreen.name) { SettingsScreen(navController = navController, viewModel = viewModel) }
     }
 }
 

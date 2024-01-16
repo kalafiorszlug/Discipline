@@ -28,11 +28,10 @@ class SharedViewModel: ViewModel() {
     var registering = false
 
     //kolorystyka
-    var theme = "dark"
+    var themeSwitch = 0
     var backgroundColor = Color.DarkGray
     var fontColor = Color.White
     var lines = Color.White
-    var todoButtonColor = Color.DarkGray
     var todoButtonActivatedColor = Color.White
     var focusableDefaultColor = Color.LightGray
     var focusableColor = Color.White

@@ -185,7 +185,7 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 modifier = Modifier
                     .width(320.dp)
             ) {
-                Text(text = stringResource(R.string.sign_up), style = MaterialTheme.typography.body1, color = viewModel.lines)
+                Text(text = stringResource(R.string.sign_up), style = MaterialTheme.typography.body1, color = viewModel.fontColor)
             }
         }
     }

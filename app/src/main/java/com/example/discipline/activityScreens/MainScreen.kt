@@ -88,7 +88,9 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
                 Image(
                     modifier = Modifier
-                        .clickable{}
+                        .clickable(
+                            onClick = { navController.navigate(route = DisciplineScreen.SettingsScreen.name) }
+                        )
                         .size(50.dp)
                         .padding(12.dp),
                     painter = painterResource(id = R.drawable.settings_icon),
