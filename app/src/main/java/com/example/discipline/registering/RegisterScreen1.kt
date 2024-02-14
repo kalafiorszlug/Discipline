@@ -39,7 +39,6 @@ fun RegisterScreen(navController: NavController, viewModel: SharedViewModel) {
         Text(
             text = "How should we call you...?",
             style = MaterialTheme.typography.body2,
-            color = viewModel.fontColor
         )
 
         Spacer(modifier = Modifier.height(16.dp))

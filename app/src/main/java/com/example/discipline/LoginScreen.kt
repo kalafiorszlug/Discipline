@@ -9,6 +9,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.sharp.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -44,14 +47,17 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End) {
-            Image(
+            horizontalArrangement = Arrangement.End)
+        {
+
+            Icon(
+                Icons.Rounded.Info,
+                contentDescription = null,
                 modifier = Modifier
-                    .clickable{ navController.navigate(route = DisciplineScreen.InfoScreen.name) }
-                    .padding(10.dp),
-                painter = painterResource(id = R.drawable.info_icon),
-                contentDescription = null
+                    .clickable{navController.navigate(route = DisciplineScreen.InfoScreen.name)}
+                    .padding(10.dp)
             )
+
         }
 
 

@@ -13,9 +13,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -86,16 +90,15 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Image(
+                Icon(
+                    Icons.Rounded.Settings,
+                    contentDescription = null,
                     modifier = Modifier
-                        .clickable(
-                            onClick = { navController.navigate(route = DisciplineScreen.SettingsScreen.name) }
-                        )
+                        .clickable(onClick = {navController.navigate(route = DisciplineScreen.SettingsScreen.name)})
                         .size(50.dp)
-                        .padding(12.dp),
-                    painter = painterResource(id = R.drawable.settings_icon),
-                    contentDescription = null
+                        .padding(12.dp)
                 )
+
             }
 
             Row (
@@ -113,6 +116,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     Text(
                         text = "${viewModel.userName}'s credit: $creditCounter",
                         fontSize = 22.sp,
+                        letterSpacing = 0.sp,
                         style = MaterialTheme.typography.body1,
                         color = viewModel.fontColor
                     )
@@ -131,20 +135,20 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    Image(
+                    Icon(
+                        Icons.Rounded.AccountCircle,
+                        contentDescription = null,
                         modifier = Modifier
-                            .clickable{}
+                            .clickable {  }
                             .size(60.dp)
-                            .padding(10.dp),
-                        painter = painterResource(id = R.drawable.default_user_icon),
-                        contentDescription = null
+                            .padding(10.dp)
                     )
 
                 }
             }
         }
 
-        Divider(color = viewModel.lines, thickness = 2.dp)
+        Divider(color = viewModel.lines, thickness = 0.dp, modifier = Modifier.shadow(10.dp))
 
         // STATYSTYKI
         Box(
@@ -165,7 +169,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(14.dp))
                     .padding(3.dp)
             ) {
                 Column(
@@ -221,7 +225,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(14.dp))
                     .padding(3.dp)
             ) {
 
@@ -304,7 +308,7 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(28.dp))
+                    .border(1.dp, color = viewModel.lines, shape = RoundedCornerShape(14.dp))
                     .padding(3.dp)
             ) {
 
@@ -331,7 +335,11 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
                                 ) {
                                     OutlinedButton(
                                         modifier = Modifier
-                                            .border(1.dp, color = viewModel.lines, shape = CircleShape)
+                                            .border(
+                                                1.dp,
+                                                color = viewModel.lines,
+                                                shape = CircleShape
+                                            )
                                             .size(15.dp),
                                         colors = ButtonDefaults.buttonColors(backgroundColor = buttonsColors[it]),
                                         shape = CircleShape,

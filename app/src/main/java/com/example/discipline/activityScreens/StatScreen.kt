@@ -82,7 +82,11 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         verticalArrangement = Arrangement.Top
     ) {
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Text(text = "STATISTICS", fontSize = 32.sp, style = MaterialTheme.typography.h1, color = viewModel.fontColor)
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Wykres reprezentujący statystyki
         Row(
@@ -168,7 +172,7 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
         
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Statistics", fontSize = 30.sp, style = MaterialTheme.typography.h1, color = viewModel.fontColor)
+
         
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -261,8 +265,10 @@ fun StatScreen(navController: NavController, viewModel: SharedViewModel) {
             Text(text = "Number of tasks completed through out your whole journey", fontSize = 14.sp, style = MaterialTheme.typography.h3, color = viewModel.fontColor)
         }
 
+        Spacer(modifier = Modifier.height(200.dp))
+        
         // Teksty z rekordami statystyk w aplikacji
-        Text(text = "Best all time streak : ${viewModel.bestStreak} days", fontSize = 16.sp, style = MaterialTheme.typography.body2, color = viewModel.fontColor)
+        Text(text = "Best all time streak: ${viewModel.bestStreak} days", fontSize = 16.sp, style = MaterialTheme.typography.body2, color = viewModel.fontColor)
         Text(text = "Total credits spent: ${viewModel.creditsSpentAllTime}", fontSize = 16.sp, style = MaterialTheme.typography.body2, color = viewModel.fontColor)
 
     }
