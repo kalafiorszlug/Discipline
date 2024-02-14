@@ -1,20 +1,23 @@
 package com.example.discipline
 
+import android.graphics.drawable.Icon
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -29,6 +32,9 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
     var todoButtonActivatedColor by remember { mutableStateOf(viewModel.todoButtonActivatedColor) }
     var focusableDefaultColor by remember { mutableStateOf(viewModel.focusableDefaultColor) }
     var focusableColor by remember { mutableStateOf(viewModel.focusableColor) }
+
+    // pierdolnik do pokazywania obecnej sekcji w ustawieniach
+    var currentSetting by remember { mutableStateOf(viewModel.currentSetting) }
 
     val temporaryBackgroundColor: Color by animateColorAsState(if (themeSwitch) viewModel.backgroundColor else backgroundColor,
         animationSpec = tween(500, easing = LinearEasing)
@@ -48,15 +54,45 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Spacer(modifier = Modifier.height(20.dp))
+        //Spacer(modifier = Modifier.height(20.dp))
 
-        Text(
-            text = "theme",
-            style = MaterialTheme.typography.h1,
-            color = temporaryFontColor,
-            fontSize = 20.sp
-        )
-        
+        Row(
+            modifier = Modifier
+                .height(50.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Rounded.ArrowBack,
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable(onClick = { navController.navigate(route = DisciplineScreen.MainScreen.name) })
+                    .size(50.dp)
+                    .padding(12.dp)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "Settings",
+                    style = MaterialTheme.typography.h1,
+                    color = temporaryFontColor,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = currentSetting,
+                    style = MaterialTheme.typography.h1,
+                    color = temporaryFontColor,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
         Spacer(modifier = Modifier.height(20.dp))
 
         Row(modifier = Modifier

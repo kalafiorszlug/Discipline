@@ -84,6 +84,9 @@ fun MainScreen(navController: NavHostController, viewModel: SharedViewModel) {
         ) {
 
             Spacer(modifier = Modifier.height(10.dp))
+
+            // TODO Dlaczego tu jest kolumna??
+            // Wszystkie inne elementy sa osobno gdzie jeden jest w rzedzie a drugi tez w kolumnie
             Column(
                 modifier = Modifier
                     .fillMaxHeight(),

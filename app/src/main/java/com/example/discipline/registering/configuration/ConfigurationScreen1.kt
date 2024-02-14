@@ -2,12 +2,18 @@ package com.example.discipline.registering.configuration
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,13 +24,8 @@ import com.example.discipline.SharedViewModel
 @Composable
 fun ConfigurationScreen1(navController: NavController, viewModel: SharedViewModel) {
 
-    var firstButtonSelected = 0
-    var secondButtonSelected = 0
-    var thirdButtonSelected = 0
-
-    var firstButtonBgColor = Color.Black
-    var secondButtonBgColor = Color.Black
-    var thirdButtonBgColor = Color.Black
+    //val items = listOf("pierwszy tekst", "drugi tekst", "trzeci tekst")
+    //var selectedItem by remember{ mutableStateOf(" ")}
 
     viewModel.registering = false
 
@@ -46,45 +47,7 @@ fun ConfigurationScreen1(navController: NavController, viewModel: SharedViewMode
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // Pierwsze pole wyboru
-            Button(
-                onClick = {
-                          if (firstButtonSelected == 0) {
-                              firstButtonSelected = 1
-                              firstButtonBgColor = Color.Gray
-                          } else {
-                              firstButtonSelected = 0
-                              firstButtonBgColor = Color.Black
-                          }
 
-                          },
-                modifier = Modifier
-                    .height(70.dp)
-                    .width(300.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = firstButtonBgColor)
-            ) {
-                Text(text = "Element listy nr 1")
-            }
-
-            // Drugie pole wyboru
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .height(70.dp)
-                    .width(300.dp)
-            ) {
-                Text(text = "Element listy nr 2")
-            }
-
-            // Trzecie pole wyboru
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .height(70.dp)
-                    .width(300.dp)
-            ) {
-                Text(text = "Element listy nr 3")
-            }
 
         }
 

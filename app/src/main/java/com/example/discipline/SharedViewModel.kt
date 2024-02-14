@@ -27,6 +27,8 @@ class SharedViewModel: ViewModel() {
 
     var registering = false
 
+    var currentSetting = "theme"
+
     //kolorystyka
     var themeSwitch = 0
     var backgroundColor = Color.DarkGray
