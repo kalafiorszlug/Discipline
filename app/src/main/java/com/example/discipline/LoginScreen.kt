@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.sharp.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -35,7 +34,6 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
     var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
     var passwordFieldState by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-
 
     // Kontener całego ekranu
     Box(
@@ -139,7 +137,9 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 modifier = Modifier
                     .width(320.dp),
 
-                onClick = {navController.navigate(route = DisciplineScreen.MainScreen.name)},
+                onClick = {
+                    navController.navigate(route = DisciplineScreen.MainScreen.name)
+                          },
 
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
 
