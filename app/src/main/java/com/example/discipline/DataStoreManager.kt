@@ -23,5 +23,6 @@ class UserStore(private val context: Context) {
         context.dataStore.edit { preferences ->
             preferences[USER_TOKEN_KEY] = token
         }
+
     }
 }

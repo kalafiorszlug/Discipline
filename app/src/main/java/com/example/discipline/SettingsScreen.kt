@@ -90,7 +90,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = "Settings ${tokenText.value}",
+                    text = "Settings ${tokenText}",
                     style = MaterialTheme.typography.h1,
                     color = temporaryFontColor,
                     fontSize = 20.sp,
