@@ -28,7 +28,8 @@ enum class DisciplineScreen() {
     RegisterScreen2,
     InfoScreen,
     Config1,
-    SettingsScreen
+    SettingsScreen,
+    SetupScreen
 }
 
 class MainActivity : ComponentActivity() {
@@ -52,7 +53,7 @@ fun AppNavigator(){
 
     NavHost(
         navController = navController,
-        startDestination = DisciplineScreen.LoginScreen.name
+        startDestination = DisciplineScreen.SetupScreen.name
     ){
         composable(route = DisciplineScreen.LoginScreen.name){ LoginScreen(navController = navController, viewModel)}
         composable(route = DisciplineScreen.InfoScreen.name){ InfoScreen(navController = navController, viewModel) }
@@ -64,6 +65,7 @@ fun AppNavigator(){
         composable(route = DisciplineScreen.TaskScreen.name){ TaskScreen(viewModel)}
         composable(route = DisciplineScreen.Config1.name) { ConfigurationScreen1(navController = navController, viewModel = viewModel) }
         composable(route = DisciplineScreen.SettingsScreen.name) { SettingsScreen(navController = navController, viewModel = viewModel) }
+        composable(route = DisciplineScreen.SetupScreen.name) { SetupScreen(navController = navController, viewModel = viewModel) }
     }
 }
 
