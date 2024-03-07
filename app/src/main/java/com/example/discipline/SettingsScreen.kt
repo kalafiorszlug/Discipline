@@ -6,18 +6,35 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,12 +72,8 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
     )
 
     val context = LocalContext.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val tokenValue = remember {
-        mutableStateOf("")
-    }
     val store = UserStore(context)
-    val tokenText = store.getAccessToken.collectAsState(initial = "")
+    val theme = store.getTheme.collectAsState(initial = "")
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -90,7 +103,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = "Settings ${tokenText}",
+                    text = "Settings ${theme.value}",
                     style = MaterialTheme.typography.h1,
                     color = temporaryFontColor,
                     fontSize = 20.sp,
@@ -133,10 +146,8 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
                     focusableColor = Color.White
                     viewModel.focusableColor = focusableColor
 
-                    tokenValue.value = "dark"
-
                     CoroutineScope(Dispatchers.IO).launch {
-                        store.saveToken(tokenValue.value)
+                        store.saveTheme("dark")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
@@ -170,10 +181,8 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
                     focusableColor = Color.Black
                     viewModel.focusableColor = focusableColor
 
-                    tokenValue.value = "light"
-
                     CoroutineScope(Dispatchers.IO).launch {
-                        store.saveToken(tokenValue.value)
+                        store.saveTheme("light")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
@@ -206,6 +215,10 @@ fun SettingsScreen(navController: NavHostController, viewModel: SharedViewModel)
 
                     focusableColor = Color.White
                     viewModel.focusableColor = focusableColor
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        store.saveTheme("minimalist")
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 border = BorderStroke(1.dp, color = temporaryLinesColor),
