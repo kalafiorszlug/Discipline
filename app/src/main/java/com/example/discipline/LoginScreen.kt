@@ -1,5 +1,6 @@
 package com.example.discipline
 
+import android.content.pm.PackageManager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +28,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,10 +47,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.datastore.data.UserStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
+fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel, packageManager: PackageManager) {
 
     // Zmienne
     var loginFieldState by remember { mutableStateOf(TextFieldValue("")) }
@@ -59,35 +62,7 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
 
     val context = LocalContext.current
     val store = UserStore(context)
-    val theme = store.getTheme.collectAsState(initial = "")
-    viewModel.userName = store.getUsername.collectAsState(initial = "").value
 
-    if (theme.value == "dark"){
-        viewModel.backgroundColor = Color.DarkGray
-        viewModel.fontColor = Color.White
-        viewModel.lines = Color.White
-        viewModel.todoButtonActivatedColor = Color.White
-        viewModel.focusableDefaultColor = Color.LightGray
-        viewModel.focusableColor = Color.White
-    }
-
-    if (theme.value == "light"){
-        viewModel.backgroundColor = Color.White
-        viewModel.fontColor = Color.Black
-        viewModel.lines = Color.LightGray
-        viewModel.todoButtonActivatedColor = Color.Black
-        viewModel.focusableDefaultColor = Color.DarkGray
-        viewModel.focusableColor = Color.Black
-    }
-
-    if (theme.value == "minimalist"){
-        viewModel.backgroundColor = Color.Black
-        viewModel.fontColor = Color.White
-        viewModel.lines = Color.White
-        viewModel.todoButtonActivatedColor = Color.White
-        viewModel.focusableDefaultColor = Color.White
-        viewModel.focusableColor = Color.White
-    }
 
     // Kontener całego ekranu
     Box(
@@ -106,7 +81,7 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
                 Icons.Rounded.Info,
                 contentDescription = null,
                 modifier = Modifier
-                    .clickable{navController.navigate(route = DisciplineScreen.InfoScreen.name)}
+                    .clickable { navController.navigate(route = DisciplineScreen.InfoScreen.name) }
                     .padding(10.dp)
             )
 
@@ -192,6 +167,12 @@ fun LoginScreen(navController: NavHostController, viewModel: SharedViewModel) {
                     .width(320.dp),
 
                 onClick = {
+                    viewModel.isUserLoggedIn = "yes"
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        store.saveLoginInformation(viewModel.isUserLoggedIn)
+                    }
+
                     navController.navigate(route = DisciplineScreen.MainScreen.name)
                           },
 

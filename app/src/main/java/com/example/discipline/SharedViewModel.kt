@@ -1,8 +1,10 @@
 package com.example.discipline
 
+import android.graphics.drawable.Drawable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import java.util.*
+import java.util.Calendar
 
 class SharedViewModel: ViewModel() {
 
@@ -14,9 +16,13 @@ class SharedViewModel: ViewModel() {
     val dayOfTheWeek = (calendar[Calendar.DAY_OF_WEEK])
     val tasksThroughoutTheWeek = mutableListOf(0, 0, 0, 0, 0, 0, 0)
 
-    var tasksTitles = mutableListOf("writing essay", "working out", "meditating", "studying", "programming", "doing homework", "running a marathon", "uranium consumption")
-    var tasksPayoff = mutableListOf(15, 20, 30, 25, 20, 25, 10, 15)
-    var tasksDeadlines = mutableListOf("27.9.2023", "4.9.2023", "-", "-", "-", "30.9.2023", "11.10.2023", "-")
+    var tasksTitles = mutableStateListOf("")
+    var tasksPayoff = mutableListOf(0)
+    var tasksDeadlines = mutableListOf("-")
+    var tasksListBelonging = mutableListOf("")
+
+    var tasksLists = mutableListOf(NavigationItem(title = "Tasks", badgeCount = tasksTitles.size))
+    var tasksOrderCriteria: String? = null
 
     var userName = "name"
 
@@ -29,8 +35,13 @@ class SharedViewModel: ViewModel() {
 
     var currentSetting = "theme"
 
+    var rewards = mutableListOf<Reward>()
+    var rewardsIcons = mutableListOf<Drawable?>()
+    var mainScreenRewardsIndex = 0
+
+    var isUserLoggedIn = "no"
+
     //kolorystyka
-    var themeSwitch = 0
     var backgroundColor = Color.DarkGray
     var fontColor = Color.White
     var lines = Color.White
